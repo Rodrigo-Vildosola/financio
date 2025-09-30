@@ -1,0 +1,31 @@
+# Visual Studio Code
+.vscode/
+
+# Build directories
+build/
+.build/
+
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+CMakeUserPresets.json
+vcpkg_installed/
+
+# Others
+*.log
+*.tmp
+*.bak
+*.swp
+*.env
+
+.DS_store
+__pycache__/
+# external/
+.cache/
+
+terra_init.json
+terra_runtime.json
+terra_destruction.json

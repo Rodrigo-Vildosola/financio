@@ -1,0 +1,13 @@
+# .clang-format
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 0
+AllowShortIfStatementsOnASingleLine: false
+SortIncludes: true
+IncludeBlocks: Regroup
+SpacesInParentheses: false
+SpaceAfterCStyleCast: true
+AlignAfterOpenBracket: Align
+ReflowComments: true
