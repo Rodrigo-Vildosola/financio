@@ -28,6 +28,7 @@ add_subdirectory(external/glm)
 add_subdirectory(external/spdlog)
 add_subdirectory(external/webgpu)
 add_subdirectory(external/glfw3webgpu)
+add_subdirectory(external/IBJts)
 
 
 

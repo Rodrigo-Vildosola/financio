@@ -1,0 +1,3 @@
+@PACKAGE_INIT@
+set(twsapi_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+set(twsapi_LIBRARIES twsapi)
