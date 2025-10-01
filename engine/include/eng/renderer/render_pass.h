@@ -26,6 +26,7 @@ struct RenderPassDesc {
 
     std::vector<RenderPassAttachment> color_attachments;
     RenderPassAttachment depth_stencil_attachment;
+    bool use_depth = false;
 };
 
 using RenderPassID = u64;

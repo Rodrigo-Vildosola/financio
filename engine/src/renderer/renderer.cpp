@@ -43,36 +43,16 @@ ref<RenderPass> Renderer::create_render_pass(const RenderPassDesc& desc) {
         RenderPassAttachment& attachment = final_desc.color_attachments[i];
 
         if (!attachment.view) {
-            ENG_CORE_WARN("Color attachment [{}] has no view. Injecting default target view.", i);
             ENG_CORE_ASSERT(m_target_texture_view, "Target texture view is null! Call begin_frame() before creating a render pass.");
             attachment.view = m_target_texture_view;
-        } else {
-            ENG_CORE_INFO("Color attachment [{}] already has a view set.", i);
         }
-
-        ENG_CORE_INFO("    LoadOp: {}, StoreOp: {}, ClearColor: ({}, {}, {}, {})",
-            attachment.load_op,
-            attachment.store_op,
-            attachment.clear_color.r,
-            attachment.clear_color.g,
-            attachment.clear_color.b,
-            attachment.clear_color.a
-        );
     }
 
     // Debug depth attachment
-    if (!final_desc.depth_stencil_attachment.view) {
-        ENG_CORE_WARN("Depth attachment has no view. Injecting default depth view.");
+    if (final_desc.use_depth && !final_desc.depth_stencil_attachment.view) {
         ENG_CORE_ASSERT(m_depth_texture_view, "Depth texture view is null! Call begin_frame() before creating a render pass.");
         final_desc.depth_stencil_attachment.view = m_depth_texture_view;
-    } else {
-        ENG_CORE_INFO("Depth attachment already has a view set.");
     }
-
-    ENG_CORE_INFO("    Depth Clear: {}, ReadOnly: {}",
-        final_desc.depth_stencil_attachment.clear_depth,
-        final_desc.depth_stencil_attachment.read_only_depth
-    );
 
     auto pass = create_ref<RenderPass>(final_desc, m_queue);
     m_owned_passes.push_back(pass);

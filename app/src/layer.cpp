@@ -73,6 +73,7 @@ void ExampleLayer::on_update(Timestep ts) {
 
     RenderPassDesc main_pas_desc;
     main_pas_desc.name = "MainScene";
+    main_pas_desc.use_depth = false;
 
     // Color attachment
     RenderPassAttachment color_attachment;

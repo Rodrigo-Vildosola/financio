@@ -95,8 +95,6 @@ void Pipeline::create_pipeline(const PipelineSpecification& spec) {
         bgl_desc.entryCount = (u32) entries.size();
         bgl_desc.entries = entries.data();
 
-		ENG_CORE_CRITICAL("Bind {}", group);
-
         m_bind_group_layouts[group] = device.CreateBindGroupLayout(&bgl_desc);
     }
 
