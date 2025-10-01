@@ -7,8 +7,6 @@
 namespace eng {
 
 class CommandQueue;
-class Mesh;
-class MaterialInstance;
 
 struct RenderPassAttachment {
     wgpu::TextureView view = nullptr;
@@ -40,29 +38,6 @@ public:
     void begin();
     void end();
 
-    template<typename T>
-    void submit(const ref<Mesh>& mesh, const ref<MaterialInstance>& material, const T& instance, u32 binding = 0, u32 group = 1) {
-        static_assert(std::is_trivially_copyable_v<T>, "Instance type must be POD");
-
-        const void* ptr = &instance;
-        u32 size = sizeof(T);
-
-        TR_CORE_ASSERT(ptr != nullptr, "Instance pointer is null!");
-        TR_CORE_ASSERT(size > 0, "Instance size must be greater than zero!");
-        
-        this->submit(mesh, material, ptr, size, binding, group);
-    }
-
-
-    void submit(
-        const ref<Mesh>& mesh,
-        const ref<MaterialInstance>& material,
-        const void* instance,
-        u32 size,
-        u32 binding = 0,
-        u32 group = 1
-    );
-
     void add_dependency(RenderPass* pass);
     const std::vector<RenderPass*>& get_dependencies() const;
 
@@ -71,9 +46,6 @@ public:
 
 private:
     struct DrawBatch {
-        ref<Mesh> mesh;
-        ref<MaterialInstance> material;
-
         std::vector<u8> instance_data;
         u32 instance_stride = 0;
         u32 instance_count = 0;

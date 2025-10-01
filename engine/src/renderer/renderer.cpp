@@ -5,16 +5,14 @@
 #include "eng/renderer/render_pass.h"
 #include "engpch.h"
 
-#include "eng/resources/resource_manager.h"
 #include "eng/core/context/command_queue.h"
 #include "eng/renderer/renderer.h"
-#include "eng/renderer/material.h"
 #include "eng/helpers/string.h"
 
 namespace eng {
 
 Renderer::Renderer(Context& ctx) : m_context(ctx), m_queue(*ctx.get_queue()) {
-    m_scene_data = create_scope<SceneData>();
+    // m_scene_data = create_scope<SceneData>();
 }
 
 Renderer::~Renderer() {}
@@ -40,21 +38,19 @@ ref<Pipeline> Renderer::create_pipeline(const PipelineSpecification& spec) {
 ref<RenderPass> Renderer::create_render_pass(const RenderPassDesc& desc) {
     RenderPassDesc final_desc = desc;
 
-    FNC_CORE_INFO("Creating RenderPass: {}", final_desc.name);
-
     // Debug color attachments
     for (size_t i = 0; i < final_desc.color_attachments.size(); ++i) {
         RenderPassAttachment& attachment = final_desc.color_attachments[i];
 
         if (!attachment.view) {
-            FNC_CORE_WARN("Color attachment [{}] has no view. Injecting default target view.", i);
-            FNC_CORE_ASSERT(m_target_texture_view, "Target texture view is null! Call begin_frame() before creating a render pass.");
+            ENG_CORE_WARN("Color attachment [{}] has no view. Injecting default target view.", i);
+            ENG_CORE_ASSERT(m_target_texture_view, "Target texture view is null! Call begin_frame() before creating a render pass.");
             attachment.view = m_target_texture_view;
         } else {
-            FNC_CORE_INFO("Color attachment [{}] already has a view set.", i);
+            ENG_CORE_INFO("Color attachment [{}] already has a view set.", i);
         }
 
-        FNC_CORE_INFO("    LoadOp: {}, StoreOp: {}, ClearColor: ({}, {}, {}, {})",
+        ENG_CORE_INFO("    LoadOp: {}, StoreOp: {}, ClearColor: ({}, {}, {}, {})",
             attachment.load_op,
             attachment.store_op,
             attachment.clear_color.r,
@@ -66,14 +62,14 @@ ref<RenderPass> Renderer::create_render_pass(const RenderPassDesc& desc) {
 
     // Debug depth attachment
     if (!final_desc.depth_stencil_attachment.view) {
-        FNC_CORE_WARN("Depth attachment has no view. Injecting default depth view.");
-        FNC_CORE_ASSERT(m_depth_texture_view, "Depth texture view is null! Call begin_frame() before creating a render pass.");
+        ENG_CORE_WARN("Depth attachment has no view. Injecting default depth view.");
+        ENG_CORE_ASSERT(m_depth_texture_view, "Depth texture view is null! Call begin_frame() before creating a render pass.");
         final_desc.depth_stencil_attachment.view = m_depth_texture_view;
     } else {
-        FNC_CORE_INFO("Depth attachment already has a view set.");
+        ENG_CORE_INFO("Depth attachment already has a view set.");
     }
 
-    FNC_CORE_INFO("    Depth Clear: {}, ReadOnly: {}",
+    ENG_CORE_INFO("    Depth Clear: {}, ReadOnly: {}",
         final_desc.depth_stencil_attachment.clear_depth,
         final_desc.depth_stencil_attachment.read_only_depth
     );
@@ -111,7 +107,7 @@ void Renderer::clear_color(f32 r, f32 g, f32 b, f32 a) {
 }
 
 void Renderer::on_resize(u32 width, u32 height) {
-    FNC_CORE_INFO("Resizing renderer to {}x{}", width, height);
+    ENG_CORE_INFO("Resizing renderer to {}x{}", width, height);
 
     const auto& device = m_context.get_native_device();
 

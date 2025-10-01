@@ -1,18 +1,15 @@
 #include "layer.h"
-#include "terra/core/application.h"
-#include "terra/debug/profiler.h"
-#include "terra/renderer/renderer_api.h"
-#include "terra/renderer/orthographic_camera.h"
-#include "terra/renderer/perspective_camera.h"
+#include "eng/core/application.h"
+#include "eng/debug/profiler.h"
+#include "eng/renderer/renderer_api.h"
 
-#include "terra/resources/resource_manager.h"
-#include "terra/core/timestep.h"
-#include "terra/core/timer.h"
+#include "eng/core/timestep.h"
+#include "eng/core/timer.h"
 
 #include <imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
-using namespace terra;
+using namespace eng;
 
 ExampleLayer::ExampleLayer()
     : Layer("ExampleLayer") {}
@@ -20,21 +17,11 @@ ExampleLayer::ExampleLayer()
 void ExampleLayer::on_attach() {
     PROFILE_FUNCTION();
 
-    FNC_INFO("ExampleLayer attached");
+    ENG_INFO("ExampleLayer attached");
 
     float width = Application::get().get_window().get_width();
     float height = Application::get().get_window().get_height();
     float aspect_ratio = width / height;
-
-    m_camera = create_scope<PerspectiveCamera>(
-        45.0f,                        // Field of view in degrees
-        aspect_ratio,               // width / height
-        0.1f,                 // Near plane
-        100.0f                   // Far plane
-    );
-
-    m_mesh = Mesh::from_file("objects/pyramid.txt");
-    m_mesh_2 = Mesh::from_file("objects/webgpu.txt");
 
     m_shader = RendererAPI::create_shader(
         "shaders/shader.wgsl", 
@@ -43,14 +30,18 @@ void ExampleLayer::on_attach() {
     m_shader->vertex_entry = "vs_main";
     m_shader->fragment_entry = "fs_main";
 
-    m_material = RendererAPI::create_material("BasicMaterial", m_shader);
-    m_material->define_parameter("ubo", 0, MaterialParamType::Custom, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment);
-
-
     PipelineSpecification spec;
     spec.shader = m_shader;
 
-    VertexBufferLayoutSpec vb = Mesh::get_default_layout();
+    VertexBufferLayoutSpec layout;
+    layout.stride = sizeof(f32) * 6;
+    layout.step_mode = wgpu::VertexStepMode::Vertex;
+    layout.attributes = {
+        { 0, wgpu::VertexFormat::Float32x3, 0 },
+        { 1, wgpu::VertexFormat::Float32x3, sizeof(f32) * 3 },
+    };
+
+    VertexBufferLayoutSpec vb = layout;
     spec.vertex_buffers.push_back(vb);
 
     UniformBufferSpec ubo_spec;
@@ -71,19 +62,15 @@ void ExampleLayer::on_attach() {
 
     ref<Pipeline> pipeline = RendererAPI::create_pipeline(spec);
 
-    m_material_instance = m_material->create_instance(pipeline.get());
-
-    generate_pyramid_grid(100, 100, 1.5f); // 10,000 pyramids
-
 }
 
 void ExampleLayer::on_detach() {
-    FNC_INFO("ExampleLayer detached");
+    ENG_INFO("ExampleLayer detached");
 }
 
 void ExampleLayer::on_update(Timestep ts) {
     PROFILE_FUNCTION();
-    FNC_CORE_CRITICAL("Hola 4");
+    ENG_CORE_CRITICAL("Hola 4");
 
 
     RenderPassDesc main_pas_desc;
@@ -118,7 +105,7 @@ void ExampleLayer::on_update(Timestep ts) {
         m_displayed_fps = (float)m_fps_frame_count / m_fps_accumulator;
         m_displayed_frame_time = 1000.0f / m_displayed_fps;  // in milliseconds
 
-        FNC_CORE_INFO("FPS: {:.1f} | Frame Time: {:.2f} ms", m_displayed_fps, m_displayed_frame_time);
+        ENG_CORE_INFO("FPS: {:.1f} | Frame Time: {:.2f} ms", m_displayed_fps, m_displayed_frame_time);
 
         m_fps_accumulator = 0.0f;
         m_fps_frame_count = 0;
@@ -138,30 +125,6 @@ void ExampleLayer::on_update(Timestep ts) {
 
     float dt = ts.get_seconds();
     glm::vec3 offset = movement * m_camera_speed * dt;
-
-    // Move camera in local space
-    m_camera->move(offset);
-
-
-    // float time = Timer::elapsed();
-    {
-        PROFILE_SCOPE("Uniform Creation");
-
-        UniformBlock block;
-        block.u_view = m_camera->get_view_matrix();
-        block.u_proj = m_camera->get_projection_matrix();
-        block.u_time = ts.get_milliseconds();
-
-        m_material_instance->set_parameter("ubo", &block, sizeof(UniformBlock));
-    }
-
-    {
-        PROFILE_SCOPE("Instances Submit");
-
-        for (const InstanceBlock& instance : m_instances) {
-            main_pass->submit(m_mesh, m_material_instance, instance, 0, 1);
-        }
-    }
     
     main_pass->end();
 
@@ -172,13 +135,6 @@ void ExampleLayer::on_update(Timestep ts) {
         glm::vec2 delta = mouse_pos - m_last_mouse_position;
         m_last_mouse_position = mouse_pos;
 
-        float yaw   = delta.x * m_mouse_sensitivity;
-        float pitch = -delta.y * m_mouse_sensitivity;
-
-        glm::vec2 rot = m_camera->get_rotation();
-        rot.x -= pitch;
-        rot.y += yaw;
-        m_camera->set_rotation(rot.x, rot.y);
     }
 
 
@@ -216,45 +172,7 @@ void ExampleLayer::on_ui_render() {
 
     ImGui::Begin("Camera Controls");
 
-    // Position
-    {
-        glm::vec3 pos = m_camera->get_position();
-        if (ImGui::DragFloat3("Position", glm::value_ptr(pos), 0.1f)) {
-            m_camera->set_position(pos);
-        }
-    }
 
-    // Rotation
-    {
-        glm::vec2 rot = m_camera->get_rotation(); // pitch, yaw
-        if (ImGui::DragFloat2("Rotation (Pitch/Yaw)", glm::value_ptr(rot), 1.0f)) {
-            m_camera->set_rotation(rot.x, rot.y);
-        }
-    }
-
-    // Projection params
-    {
-        float fov = m_camera->get_fov();
-        if (ImGui::DragFloat("FOV", &fov, 0.5f, 1.0f, 179.0f)) {
-            m_camera->set_fov(fov);
-        }
-
-        float aspect = m_camera->get_aspect_ratio();
-        // If you want to allow forcing aspect manually:
-        if (ImGui::DragFloat("Aspect Ratio", &aspect, 0.01f, 0.1f, 10.0f)) {
-            m_camera->set_aspect_ratio(aspect);
-        }
-
-        float nearp = m_camera->get_near_plane();
-        if (ImGui::DragFloat("Near Plane", &nearp, 0.01f, 0.01f, m_camera->get_far_plane() - 0.01f)) {
-            m_camera->set_near_plane(nearp);
-        }
-
-        float farp = m_camera->get_far_plane();
-        if (ImGui::DragFloat("Far Plane", &farp, 0.1f, m_camera->get_near_plane() + 0.1f, 1000.0f)) {
-            m_camera->set_far_plane(farp);
-        }
-    }
 
     ImGui::End();
 
@@ -264,20 +182,18 @@ void ExampleLayer::on_ui_render() {
 void ExampleLayer::on_event(Event& event) {
     PROFILE_FUNCTION();
 
-    using namespace terra;
-
     EventDispatcher dispatcher(event);
 
 
     // Handle keyboard events
     if (event.is_in_category(EventCategoryKeyboard)) {
-        FNC_TRACE("ExampleLayer received keyboard event: {}", event.to_string());
+        ENG_TRACE("ExampleLayer received keyboard event: {}", event.to_string());
 
         // Only handle KeyPressedEvent
         if (event.get_event_type() == EventType::KeyPressed) {
             auto& key_event = static_cast<KeyPressedEvent&>(event);
             // if (key_event.get_key_code() == Key::Q) {
-            //     FNC_INFO("Q key pressed, closing application...");
+            //     ENG_INFO("Q key pressed, closing application...");
             //     Application::get().close();  // Triggers m_running = false
             //     event.handled = true;
             // }

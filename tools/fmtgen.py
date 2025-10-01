@@ -69,7 +69,7 @@ def generate_fmt_formatters(
     )
 
     if not input_path.exists():
-        print(f"❌ Error: '{input_path}' not found.")
+        print(f"Error: '{input_path}' not found.")
         return False
 
     content = input_path.read_text()
@@ -104,5 +104,5 @@ struct fmt::formatter<{namespace}::{enum_name}> {{
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(result))
-    print(f"✅ Generated {len(enum_types)} formatters in '{output_path}'")
+    print(f"Generated {len(enum_types)} formatters in '{output_path}'")
     return True

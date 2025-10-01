@@ -16,7 +16,7 @@ public:
     void bind(wgpu::RenderPassEncoder encoder) const;
 
     wgpu::BindGroupLayout get_bind_group_layout(u32 index = 0) const {
-        TR_CORE_ASSERT(index < m_bind_group_layouts.size(), "Invalid bind group layout index");
+        ENG_CORE_ASSERT(index < m_bind_group_layouts.size(), "Invalid bind group layout index");
         return m_bind_group_layouts[index];
     }
 

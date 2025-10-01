@@ -15,10 +15,10 @@
 [submodule "external/nlohmann"]
 	path = external/nlohmann
 	url = https://github.com/Rodrigo-Vildosola/json.git
+[submodule "external/spdlog"]
+	path = external/spdlog
+	url = https://github.com/Rodrigo-Vildosola/spdlog.git
 [submodule "external/imgui"]
 	path = external/imgui
 	url = https://github.com/Rodrigo-Vildosola/imgui.git
 	branch = docking
-[submodule "external/spdlog"]
-	path = external/spdlog
-	url = https://github.com/Rodrigo-Vildosola/spdlog.git

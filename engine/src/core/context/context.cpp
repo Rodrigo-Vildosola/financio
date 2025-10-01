@@ -23,18 +23,18 @@ Context::~Context() {}
 
 void on_device_lost(const wgpu::Device& device, wgpu::DeviceLostReason reason, wgpu::StringView message) {
     std::string msg{message.data, message.length};
-    FNC_CORE_ERROR("on_device_lost: {}: {}", (i32) reason, msg);
+    ENG_CORE_ERROR("on_device_lost: {}: {}", (i32) reason, msg);
 }
 
 void on_uncaptured_error(const wgpu::Device& device, wgpu::ErrorType type, wgpu::StringView message) {
     std::string msg{message.data, message.length};
-    FNC_CORE_ERROR("on_uncaptured_error: {}: {}", (i32) type, msg);
+    ENG_CORE_ERROR("on_uncaptured_error: {}: {}", (i32) type, msg);
 }
 
 
 
 void Context::init(Window* window_handle) {
-	FNC_CORE_ASSERT(window_handle, "Window handle is null!");
+	ENG_CORE_ASSERT(window_handle, "Window handle is null!");
 
 	m_window_handle = window_handle;
 	wgpu::InstanceDescriptor desc = {};
@@ -47,7 +47,7 @@ void Context::init(Window* window_handle) {
 	m_instance = wgpu::CreateInstance(&desc);
 #endif //  WEBGPU_BACKEND_EMSCRIPTEN
 
-	FNC_CORE_ASSERT(m_instance, "WebGPU instance not yet created");
+	ENG_CORE_ASSERT(m_instance, "WebGPU instance not yet created");
 
     m_surface = window_handle->get_surface(m_instance);
 
@@ -80,7 +80,7 @@ void Context::init(Window* window_handle) {
 }
 
 void Context::configure_surface(wgpu::TextureFormat preferred_format) {
-	FNC_CORE_INFO("Configuring swap chain...");
+	ENG_CORE_INFO("Configuring swap chain...");
 
     auto [fb_width, fb_height] = m_window_handle->get_framebuffer_size();
 
@@ -97,7 +97,7 @@ void Context::configure_surface(wgpu::TextureFormat preferred_format) {
 
     m_surface.Configure(&config);
 
-    FNC_CORE_INFO("Surface configured: {}x{} @ format {}", fb_width, fb_height, (i32)preferred_format);
+    ENG_CORE_INFO("Surface configured: {}x{} @ format {}", fb_width, fb_height, (i32)preferred_format);
 }
 
 wgpu::TextureView Context::get_next_surface_view() {
@@ -114,11 +114,11 @@ wgpu::TextureView Context::get_next_surface_view() {
 
 	if (surface_texture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal &&
 		surface_texture.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
-		FNC_CORE_ERROR("Failed to acquire surface texture! Status = {}", surface_texture.status);
+		ENG_CORE_ERROR("Failed to acquire surface texture! Status = {}", surface_texture.status);
 		return nullptr;
 	}
 	if (surface_texture.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
-		FNC_CORE_WARN("Acquired surface texture is suboptimal. You should reconfigure the surface.");
+		ENG_CORE_WARN("Acquired surface texture is suboptimal. You should reconfigure the surface.");
 	}
 
 	wgpu::TextureViewDescriptor view_desc = {};

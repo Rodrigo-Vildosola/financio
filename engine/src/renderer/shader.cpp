@@ -2,9 +2,26 @@
 #include "eng/helpers/error.h"
 #include "eng/helpers/string.h"
 #include "eng/helpers/user_data.h"
-#include "eng/resources/resource_manager.h"
 
 namespace eng {
+
+std::filesystem::path get_asset_path(const std::string& relative_path) {
+    return std::filesystem::path(ENGINE_ASSETS_DIR) / relative_path;
+}
+
+std::string read_file_as_string(const std::string& relative_path) {
+    std::filesystem::path full_path = get_asset_path(relative_path);
+    std::ifstream file(full_path);
+    
+    if (!file.is_open()) {
+        ENG_CORE_ERROR("Failed to open file: {}", full_path.string());
+        return {};
+    }
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
+}
 
 Shader::~Shader() {}
 
@@ -33,10 +50,10 @@ Shader Shader::create_from_wgsl(Context& ctx, std::string_view source, std::stri
             compile_ok.request_ended = true;
             if (status == wgpu::PopErrorScopeStatus::Success && error_type == wgpu::ErrorType::NoError) {
                 compile_ok.result = true;
-                FNC_CORE_TRACE("WGPU: Shader compiled successfully.");
+                ENG_CORE_TRACE("WGPU: Shader compiled successfully.");
             } else {
                 compile_ok.result = false;
-                FNC_CORE_ERROR("WGPU validation failed: {}", std::string_view(message.data, message.length));
+                ENG_CORE_ERROR("WGPU validation failed: {}", std::string_view(message.data, message.length));
             }
         }
     );
@@ -44,7 +61,7 @@ Shader Shader::create_from_wgsl(Context& ctx, std::string_view source, std::stri
     // WGPU_POP_ERROR_SCOPE_CAPTURE_BOOL(device, &compile_ok);
 
     if (!compile_ok.result) {
-        FNC_CORE_ERROR("Shader “{}” failed to compile", label);
+        ENG_CORE_ERROR("Shader “{}” failed to compile", label);
         // You can choose to throw, or continue with a null module:
     }
 
@@ -53,7 +70,7 @@ Shader Shader::create_from_wgsl(Context& ctx, std::string_view source, std::stri
 
 
 Shader Shader::from_file(Context& ctx, const std::string& path, std::string label) {
-    std::string source = ResourceManager::read_file_as_string(path);
+    std::string source = read_file_as_string(path);
 
     Shader shader = create_from_wgsl(ctx, source, label);
     shader.m_source = std::move(source);

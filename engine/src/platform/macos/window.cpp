@@ -7,13 +7,17 @@
 #include "eng/events/key_event.h"
 #include "eng/renderer/renderer.h"
 
+#include <GLFW/glfw3.h>
+#include <glfw3webgpu.h>
+
+
 namespace eng {
 
 	static uint8_t s_GLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
-		FNC_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+		ENG_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
 	MacOSWindow::MacOSWindow(const WindowProps& props)
@@ -36,21 +40,21 @@ namespace eng {
 		m_data.width = props.width;
 		m_data.height = props.height;
 
-		FNC_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
+		ENG_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
 		if (s_GLFWWindowCount == 0)
 		{
-			FNC_CORE_INFO("Initializing GLFW");
+			ENG_CORE_INFO("Initializing GLFW");
 
 			int success = glfwInit();
-			FNC_CORE_ASSERT(success, "Could not initialize GLFW!");
+			ENG_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		{
 			m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
-			FNC_CORE_ASSERT(m_window, "Failed to create GLFW window");
+			ENG_CORE_ASSERT(m_window, "Failed to create GLFW window");
 			++s_GLFWWindowCount;
 		}
 
@@ -69,7 +73,7 @@ namespace eng {
 		});
 
 		glfwSetWindowContentScaleCallback(m_window, [](GLFWwindow*, float xscale, float yscale) {
-			FNC_CORE_INFO("DPI scale changed: {}, {}", xscale, yscale);
+			ENG_CORE_INFO("DPI scale changed: {}, {}", xscale, yscale);
 			// Resize render targets, UI, etc.
 		});
 
@@ -159,7 +163,7 @@ namespace eng {
 		--s_GLFWWindowCount;
 		if (s_GLFWWindowCount == 0)
 		{
-			FNC_CORE_INFO("Terminating GLFW");
+			ENG_CORE_INFO("Terminating GLFW");
 			glfwTerminate();
 		}
 	}

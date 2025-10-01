@@ -4,7 +4,7 @@
 #include "eng/core/application.h"
 #include "eng/debug/profiler.h"
 
-#ifdef FNC_PLATFORM_MACOS
+#ifdef ENG_PLATFORM_MACOS
 
 extern eng::Application* eng::create_application(eng::CommandLineArgs args);
 

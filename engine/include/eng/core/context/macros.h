@@ -24,7 +24,7 @@
 //         ud->result = handle;                                                            \
 //     } else {                                                                            \
 //         std::string_view msg{message.data, message.length};                             \
-//         FNC_CORE_ERROR("{} failed: {}", #fn, msg);                                       \
+//         ENG_CORE_ERROR("{} failed: {}", #fn, msg);                                       \
 //     }                                                                                   \
 //     ud->request_ended = true;                                                           \
 // }
@@ -37,9 +37,9 @@
 // {                                                                                \
 //     std::string msg{message.data, message.length};                               \
 //     if (msg.empty()) {                                                           \
-//         FNC_CORE_ERROR("{}: {}", #fn, reason);                                    \
+//         ENG_CORE_ERROR("{}: {}", #fn, reason);                                    \
 //     } else {                                                                     \
-//         FNC_CORE_ERROR("{}: {}: {}", #fn, reason, msg);                           \
+//         ENG_CORE_ERROR("{}: {}: {}", #fn, reason, msg);                           \
 //     }                                                                            \
 // }
 

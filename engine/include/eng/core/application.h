@@ -26,7 +26,7 @@ struct CommandLineArgs {
     char** args = nullptr;
 
     const char* operator[](i32 index) const {
-        FNC_CORE_ASSERT(index < count, "Index out of bounds for CommandLineArgs");
+        ENG_CORE_ASSERT(index < count, "Index out of bounds for CommandLineArgs");
         return args[index];
     }
 };

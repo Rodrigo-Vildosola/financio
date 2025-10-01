@@ -7,20 +7,20 @@
 #include "eng/core/assert.h"
 
 
-#ifdef FNC_DEBUG
-	#if defined(FNC_PLATFORM_WINDOWS)
-		#define FNC_DEBUGBREAK() __debugbreak()
-	#elif defined(FNC_PLATFORM_LINUX)
+#ifdef ENG_DEBUG
+	#if defined(ENG_PLATFORM_WINDOWS)
+		#define ENG_DEBUGBREAK() __debugbreak()
+	#elif defined(ENG_PLATFORM_LINUX)
 		#include <signal.h>
-		#define FNC_DEBUGBREAK() raise(SIGTRAP)
-	#elif defined(FNC_PLATFORM_MACOS)
+		#define ENG_DEBUGBREAK() raise(SIGTRAP)
+	#elif defined(ENG_PLATFORM_MACOS)
         #include <signal.h>
-        #define FNC_DEBUGBREAK() raise(SIGTRAP)
+        #define ENG_DEBUGBREAK() raise(SIGTRAP)
 	#endif
 
-	// #define FNC_ENABLE_ASSERTS
+	// #define ENG_ENABLE_ASSERTS
 #else
-	#define FNC_DEBUGBREAK()
+	#define ENG_DEBUGBREAK()
 #endif
 
 namespace eng {

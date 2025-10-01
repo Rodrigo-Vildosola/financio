@@ -21,7 +21,6 @@ public:
     static void clear_color(f32 r, f32 g, f32 b, f32 a);
 
     static ref<Shader> create_shader(const std::string& path, const std::string& label = "");
-    static ref<Material> create_material(const std::string& name, const ref<Shader>& shader);
 
     static ref<Pipeline> create_pipeline(const PipelineSpecification& spec);
 

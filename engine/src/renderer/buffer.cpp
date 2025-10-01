@@ -26,7 +26,7 @@ void fetch_buffer_data_sync(wgpu::Instance instance, wgpu::Buffer bufferB, std::
         if (status == wgpu::MapAsyncStatus::Success) {
             user_data->result = true;
         } else {
-            FNC_CORE_ERROR("Could not map buffer B! Status: {}, message: {}", (u32)status, message.data);
+            ENG_CORE_ERROR("Could not map buffer B! Status: {}, message: {}", (u32)status, message.data);
         }
     };
 
@@ -188,9 +188,9 @@ void Buffer::example(wgpu::Instance instance, wgpu::Device device, wgpu::Queue q
         buffer2,
         [](const void* data) {
             auto* mapped = static_cast<const uint8_t*>(data);
-            FNC_CORE_INFO("Mapped Buffer Data:");
+            ENG_CORE_INFO("Mapped Buffer Data:");
             for (size_t i = 0; i < 16; ++i) {
-                FNC_CORE_INFO("  [{}] = {}", i, static_cast<i32>(mapped[i]));
+                ENG_CORE_INFO("  [{}] = {}", i, static_cast<i32>(mapped[i]));
             }
         }
     );

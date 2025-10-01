@@ -3,6 +3,7 @@
 #include "eng/core/logger.h"
 #include "eng/core/timestep.h"
 
+#include "eng/renderer/renderer_api.h"
 #include "eng/core/window.h"
 #include "eng/debug/profiler.h"
 
@@ -15,19 +16,20 @@ Application::Application(const std::string& name, CommandLineArgs args)
 {
     PROFILE_FUNCTION();
 
-    FNC_CORE_ASSERT(!s_instance, "Application already exists!");
+    ENG_CORE_ASSERT(!s_instance, "Application already exists!");
     s_instance = this;
 
-    FNC_CORE_INFO("Creating window");
+    ENG_CORE_INFO("Creating window");
     m_window = Window::create(WindowProps(name));
-	m_window->set_event_cb(FNC_BIND_EVENT_FN(Application::on_event));
+	m_window->set_event_cb(ENG_BIND_EVENT_FN(Application::on_event));
 
     m_context = Context::create();
     m_context->init(m_window.get());
 
+    RendererAPI::init(m_context.get());
 
-    #if !defined(FNC_RELEASE)
-        FNC_CORE_INFO("Creating ImGui layer");
+    #if !defined(ENG_RELEASE)
+        ENG_CORE_INFO("Creating ImGui layer");
         m_ui_layer = new UILayer();
         push_overlay(m_ui_layer);
     #endif
@@ -51,8 +53,8 @@ void Application::push_overlay(Layer* layer) {
 
 void Application::on_event(Event& e) {
     EventDispatcher dispatcher(e);
-    dispatcher.dispatch<WindowCloseEvent>(FNC_BIND_EVENT_FN(Application::on_window_close));
-    dispatcher.dispatch<WindowResizeEvent>(FNC_BIND_EVENT_FN(Application::on_window_resize));
+    dispatcher.dispatch<WindowCloseEvent>(ENG_BIND_EVENT_FN(Application::on_window_close));
+    dispatcher.dispatch<WindowResizeEvent>(ENG_BIND_EVENT_FN(Application::on_window_resize));
 
     for (auto it = m_layer_stack.rbegin(); it != m_layer_stack.rend(); ++it)
     {
@@ -87,19 +89,24 @@ void Application::run() {
             accumulator -= fixed_dt;
         }
 
+        RendererAPI::begin_frame();
+
         if (!m_minimized) {
             for (Layer* layer : m_layer_stack) {
                 layer->on_update(timestep);
             }
         }
 
-        #if !defined(FNC_RELEASE)
+        #if !defined(ENG_RELEASE)
             m_ui_layer->begin();
             for (Layer* layer : m_layer_stack) {
                 layer->on_ui_render();
             }
             m_ui_layer->end();
 		#endif
+
+        RendererAPI::end_frame();
+
 
         m_window->on_update();
 

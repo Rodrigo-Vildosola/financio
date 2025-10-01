@@ -21,7 +21,7 @@ void Pipeline::bind(wgpu::RenderPassEncoder render_pass) const {
 	PROFILE_FUNCTION();
 
     if (!m_pipeline) {
-        FNC_CORE_ERROR("Tried to bind a null pipeline!");
+        ENG_CORE_ERROR("Tried to bind a null pipeline!");
         return;
     }
 
@@ -95,7 +95,7 @@ void Pipeline::create_pipeline(const PipelineSpecification& spec) {
         bgl_desc.entryCount = (u32) entries.size();
         bgl_desc.entries = entries.data();
 
-		FNC_CORE_CRITICAL("Bind {}", group);
+		ENG_CORE_CRITICAL("Bind {}", group);
 
         m_bind_group_layouts[group] = device.CreateBindGroupLayout(&bgl_desc);
     }

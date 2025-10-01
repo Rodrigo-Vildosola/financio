@@ -3,8 +3,6 @@
 #include "eng/renderer/renderer_api.h"
 #include "eng/renderer/renderer.h"
 #include "eng/renderer/shader.h"
-#include "eng/renderer/material.h"
-#include "eng/renderer/material_instance.h"
 
 namespace eng {
 

@@ -1,11 +1,11 @@
-#include <terra/terra.h>
-#include <terra/core/entry_point.h>
+#include <eng/enginio.h>
+#include <eng/core/entry_point.h>
 #include "layer.h"
 
-class ExampleGame : public terra::Application {
+class ExampleGame : public eng::Application {
 public:
-    ExampleGame(terra::CommandLineArgs args)
-        : terra::Application("My Example Game", args) 
+    ExampleGame(eng::CommandLineArgs args)
+        : eng::Application("My Example Game", args) 
     {
         push_layer(new ExampleLayer());
     }
@@ -14,6 +14,6 @@ public:
 
 };
 
-terra::Application* terra::create_application(terra::CommandLineArgs args) {
+eng::Application* eng::create_application(eng::CommandLineArgs args) {
     return new ExampleGame(args);
 }

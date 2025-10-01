@@ -93,7 +93,7 @@
 //     // Example: Using named parameters
 //     custom_instance->set_parameter_float("u_intensity", 3.0f);
     
-//     FNC_CORE_INFO("Material system example completed successfully!");
+//     ENG_CORE_INFO("Material system example completed successfully!");
     
 //     // Cleanup
 //     MaterialManager::shutdown();
@@ -141,7 +141,7 @@
 //     advanced_material->set_default_value("u_use_texture", (void*) {0}, sizeof(i32));
 //     advanced_material->set_default_value("u_uv_offset", uv_offset, 2 * sizeof(f32));
     
-//     FNC_CORE_INFO("Advanced material created with multiple parameter types!");
+//     ENG_CORE_INFO("Advanced material created with multiple parameter types!");
     
 //     MaterialManager::shutdown();
 // }

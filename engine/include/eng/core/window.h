@@ -45,7 +45,7 @@ namespace eng {
 
 		virtual void* get_native_window() const = 0;
 
-		// virtual wgpu::Surface get_surface(wgpu::Instance wgpu_instance) const = 0;
+		virtual wgpu::Surface get_surface(wgpu::Instance wgpu_instance) const = 0;
 
 
 		static scope<Window> create(const WindowProps& props = WindowProps());

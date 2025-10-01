@@ -4,21 +4,21 @@
 #include "eng/core/macros.h"
 #include <filesystem>
 
-#ifdef FNC_ENABLE_ASSERTS
+#ifdef ENG_ENABLE_ASSERTS
 
 	// Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
 	// provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
-	#define FNC_INTERNAL_ASSERT_IMPL(type, check, msg, ...) { if(!(check)) { TR##type##ERROR(msg, __VA_ARGS__); __builtin_trap(); } }
-	#define FNC_INTERNAL_ASSERT_WITH_MSG(type, check, ...) FNC_INTERNAL_ASSERT_IMPL(type, check, "Assertion failed: {0}", __VA_ARGS__)
-	#define FNC_INTERNAL_ASSERT_NO_MSG(type, check) FNC_INTERNAL_ASSERT_IMPL(type, check, "Assertion '{0}' failed at {1}:{2}", FNC_STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
+	#define ENG_INTERNAL_ASSERT_IMPL(type, check, msg, ...) { if(!(check)) { TR##type##ERROR(msg, __VA_ARGS__); __builtin_trap(); } }
+	#define ENG_INTERNAL_ASSERT_WITH_MSG(type, check, ...) ENG_INTERNAL_ASSERT_IMPL(type, check, "Assertion failed: {0}", __VA_ARGS__)
+	#define ENG_INTERNAL_ASSERT_NO_MSG(type, check) ENG_INTERNAL_ASSERT_IMPL(type, check, "Assertion '{0}' failed at {1}:{2}", ENG_STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
 
-	#define FNC_INTERNAL_ASSERT_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
-	#define FNC_INTERNAL_ASSERT_GET_MACRO(...) FNC_EXPAND_MACRO( FNC_INTERNAL_ASSERT_GET_MACRO_NAME(__VA_ARGS__, FNC_INTERNAL_ASSERT_WITH_MSG, FNC_INTERNAL_ASSERT_NO_MSG) )
+	#define ENG_INTERNAL_ASSERT_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
+	#define ENG_INTERNAL_ASSERT_GET_MACRO(...) ENG_EXPAND_MACRO( ENG_INTERNAL_ASSERT_GET_MACRO_NAME(__VA_ARGS__, ENG_INTERNAL_ASSERT_WITH_MSG, ENG_INTERNAL_ASSERT_NO_MSG) )
 
 	// Currently accepts at least the condition and one additional parameter (the message) being optional
-	#define FNC_ASSERT(...) FNC_EXPAND_MACRO( FNC_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_, __VA_ARGS__) )
-	#define FNC_CORE_ASSERT(...) FNC_EXPAND_MACRO( FNC_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_CORE_, __VA_ARGS__) )
+	#define ENG_ASSERT(...) ENG_EXPAND_MACRO( ENG_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_, __VA_ARGS__) )
+	#define ENG_CORE_ASSERT(...) ENG_EXPAND_MACRO( ENG_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_CORE_, __VA_ARGS__) )
 #else
-	#define FNC_ASSERT(...)
-	#define FNC_CORE_ASSERT(...)
+	#define ENG_ASSERT(...)
+	#define ENG_CORE_ASSERT(...)
 #endif

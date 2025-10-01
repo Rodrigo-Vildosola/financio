@@ -46,7 +46,7 @@ def print_frame_stats(scope_df):
 
 
 def main():
-    file_path = "terra_runtime.json"
+    file_path = "eng_runtime.json"
     function_name = "Getting Current Texture"
 
     df = load_profiler_json(file_path)

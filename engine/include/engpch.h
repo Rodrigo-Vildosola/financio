@@ -16,3 +16,7 @@
 #include "eng/core/base.h"
 #include "eng/core/logger.h"
 #include "eng/core/timer.h"
+
+#include <webgpu/webgpu_cpp.h>
+#include <webgpu/webgpu_cpp_print.h>
+#include <eng/helpers/webgpu_fmt_formatters.h>

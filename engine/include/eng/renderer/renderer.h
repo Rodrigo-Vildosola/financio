@@ -4,9 +4,6 @@
 #include "eng/core/timestep.h"
 #include "eng/renderer/buffer.h"
 #include "eng/renderer/pipeline.h"
-#include "eng/renderer/material_instance.h"
-#include "eng/renderer/camera.h"
-#include "eng/renderer/mesh.h"
 #include "eng/renderer/render_pass.h"
 
 namespace eng {
@@ -42,7 +39,7 @@ public:
     void begin_frame();
     void end_frame();
     
-    void begin_scene(const Camera& camera);
+    void begin_scene();
     void end_scene();
 
     void invalidate_surface_view();
@@ -64,20 +61,13 @@ public:
 
 
 private:
-    struct SceneData {
-        const Camera* camera;
-    };
-    scope<SceneData> m_scene_data;
+    // struct SceneData {    };
+    // scope<SceneData> m_scene_data;
 
     Context&   m_context;
     CommandQueue&    m_queue;
-
+    
     std::vector<ref<RenderPass>> m_owned_passes;
-
-
-    // std::unordered_map<RenderPassID, ref<RenderPass>> m_render_passes;
-    // RenderPassID m_next_pass_id = 1;
-    // RenderPass* m_active_pass = nullptr;
 
     RendererStats m_stats;
 
