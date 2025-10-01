@@ -70,8 +70,6 @@ void ExampleLayer::on_detach() {
 
 void ExampleLayer::on_update(Timestep ts) {
     PROFILE_FUNCTION();
-    ENG_CORE_CRITICAL("Hola 4");
-
 
     RenderPassDesc main_pas_desc;
     main_pas_desc.name = "MainScene";
@@ -170,11 +168,9 @@ void ExampleLayer::on_ui_render() {
         ImGui::End();
     }
 
-    ImGui::Begin("Camera Controls");
+    // ImGui::Begin("Camera Controls");
 
-
-
-    ImGui::End();
+    // ImGui::End();
 
 
 }

@@ -20,7 +20,7 @@ namespace eng {
         log_sinks[0]->set_pattern("%^[%T] %n: %v%$");
         log_sinks[1]->set_pattern("[%T] [%l] %n: %v");
 
-        core_logger = std::make_shared<spdlog::logger>("TERRA", begin(log_sinks), end(log_sinks));
+        core_logger = std::make_shared<spdlog::logger>("ENGINIO", begin(log_sinks), end(log_sinks));
         spdlog::register_logger(core_logger);
         core_logger->set_level(spdlog::level::trace);
         core_logger->flush_on(spdlog::level::trace);
@@ -30,7 +30,7 @@ namespace eng {
         client_logger->set_level(spdlog::level::trace);
         client_logger->flush_on(spdlog::level::trace);
 
-        only_file_logger = std::make_shared<spdlog::logger>("TERRA_F", log_sinks[1]);
+        only_file_logger = std::make_shared<spdlog::logger>("ENG_F", log_sinks[1]);
         spdlog::register_logger(only_file_logger);
         only_file_logger->set_level(spdlog::level::trace);
     }

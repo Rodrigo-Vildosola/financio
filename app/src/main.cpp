@@ -1,5 +1,5 @@
 #include <eng/enginio.h>
-#include <eng/core/entry_point.h>
+#include <eng/core/entry_point.cpp>
 #include "layer.h"
 
 class ExampleGame : public eng::Application {

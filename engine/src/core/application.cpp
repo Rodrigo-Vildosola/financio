@@ -28,11 +28,9 @@ Application::Application(const std::string& name, CommandLineArgs args)
 
     RendererAPI::init(m_context.get());
 
-    #if !defined(ENG_RELEASE)
-        ENG_CORE_INFO("Creating ImGui layer");
-        m_ui_layer = new UILayer();
-        push_overlay(m_ui_layer);
-    #endif
+    ENG_CORE_INFO("Creating ImGui layer");
+    m_ui_layer = new UILayer();
+    push_overlay(m_ui_layer);
 }
 
 Application::~Application() {
@@ -97,13 +95,11 @@ void Application::run() {
             }
         }
 
-        #if !defined(ENG_RELEASE)
-            m_ui_layer->begin();
-            for (Layer* layer : m_layer_stack) {
-                layer->on_ui_render();
-            }
-            m_ui_layer->end();
-		#endif
+        m_ui_layer->begin();
+        for (Layer* layer : m_layer_stack) {
+            layer->on_ui_render();
+        }
+        m_ui_layer->end();
 
         RendererAPI::end_frame();
 
