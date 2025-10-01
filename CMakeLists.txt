@@ -74,3 +74,24 @@ if (BUILD_TYPE_UPPER STREQUAL "RELEASE" OR BUILD_TYPE_UPPER STREQUAL "RELWITHDEB
 elseif (BUILD_TYPE_UPPER STREQUAL "TESTING")
     target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_TESTING=1)
 endif()
+
+
+# add_executable(example_glfw_wgpu
+#     external/imgui/examples/example_glfw_wgpu/main.cpp
+#     external/imgui/backends/imgui_impl_glfw.cpp
+#     external/imgui/backends/imgui_impl_wgpu.cpp
+# )
+
+# target_compile_definitions(example_glfw_wgpu PUBLIC IMGUI_IMPL_WEBGPU_BACKEND_DAWN)
+
+# target_include_directories(example_glfw_wgpu PUBLIC
+#     external/imgui
+#     external/imgui/backends
+# )
+
+# target_link_libraries(example_glfw_wgpu PUBLIC
+#     imgui
+#     glfw
+#     webgpu
+#     glfw3webgpu
+# )

@@ -169,6 +169,10 @@ void ExampleLayer::on_ui_render() {
         ImGui::End();
     }
 
+    auto show = true;
+
+    ImGui::ShowDemoWindow(&show);
+
     // ImGui::Begin("Camera Controls");
 
     // ImGui::End();
