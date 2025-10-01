@@ -2,7 +2,7 @@ file(GLOB SOURCES "*.cpp" "protobufUnix/*.cc")
 file(GLOB HEADERS "*.h" "protobufUnix/*.h")
 
 set(twsapi_VERSION 9.79.02)
-add_library(twsapi SHARED ${SOURCES})
+add_library(twsapi STATIC ${SOURCES})
 
 # Include dirs for normal headers + protobuf
 target_include_directories(twsapi PRIVATE

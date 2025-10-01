@@ -61,6 +61,50 @@ def generate_cmake_args(build_type="Debug"):
     cmake_args += [f"-D{k}={v}" for k, v in defines.items()]
     return cmake_args
 
+def build_intelrdfp():
+    logging.info("Checking Intel Decimal FP library...")
+
+    out_lib_dir = Path(BUILD_DIR) / "lib"
+    out_lib_dir.mkdir(parents=True, exist_ok=True)
+
+    # check for prebuilt lib
+    candidates = ["libbid.dylib", "libbid.so", "libbid.a"]
+    for cand in candidates:
+        if (out_lib_dir / cand).exists():
+            logging.info(f"Found existing Intel RDFP library: {cand}, skipping build.")
+            return
+
+    # build needed
+    logging.info("No prebuilt lib found, building Intel RDFP (this may take a while)...")
+    work_dir = Path(BUILD_DIR) / "_deps" / "intelrdfp-src"
+    src_dir = Path("external/IntelRDFPMathLib20U3/LIBRARY")
+
+    if work_dir.exists():
+        shutil.rmtree(work_dir)
+    shutil.copytree(src_dir, work_dir)
+
+    make_cmd = [
+        "make", "-s",
+        "CC=gcc -w",    # silent and suppress warnings
+        "CALL_BY_REF=0", "GLOBAL_RND=0", "GLOBAL_FLAGS=0", "UNCHANGED_BINARY_FLAGS=0"
+    ]
+    run_cmd(make_cmd, cwd=work_dir)
+
+    # detect built artifact
+    built_lib = None
+    for cand in candidates:
+        if (work_dir / cand).exists():
+            built_lib = work_dir / cand
+            break
+
+    if not built_lib:
+        logging.error("Intel DFP lib build did not produce any of libbid.so/libbid.dylib/libbid.a")
+        sys.exit(1)
+
+    shutil.copy(built_lib, out_lib_dir / built_lib.name)
+    logging.info(f"Staged {built_lib.name} to {out_lib_dir}")
+
+
 def run_cmd(cmd, cwd=None, fail_msg=None):
     try:
         logging.info(colored(f"Running: {' '.join(cmd)}", LogColor.OKBLUE))
@@ -98,6 +142,9 @@ def configure_cmake(build_type):
 
 def build(parallel=True, verbose=False):
     logging.info("Building project...")
+
+    build_intelrdfp()
+    
     build_cmd = ["cmake", "--build", BUILD_DIR]
     if parallel:
         build_cmd += ["--parallel", str(os.cpu_count())]

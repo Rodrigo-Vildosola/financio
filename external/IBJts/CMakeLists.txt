@@ -64,35 +64,11 @@ if( IBKR_BUILD_TESTCPPCLIENT )
 endif()
 
 # Intel Decimal Floating Point Math Library integration
-include(ExternalProject)
-
-ExternalProject_Add(intelrdfp
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/IntelRDFPMathLib20U3/LIBRARY
-    CONFIGURE_COMMAND ""   # no configure step
-    BUILD_COMMAND make CC=gcc CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0
-
-    BUILD_IN_SOURCE 1
-    INSTALL_COMMAND ""     # no install
-)
-
-add_library(bid SHARED IMPORTED)
-add_dependencies(bid intelrdfp)
-
-# copy the .so into build tree
-add_custom_command(TARGET intelrdfp POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/lib
-    COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_SOURCE_DIR}/external/IntelRDFPMathLib20U3/LIBRARY/libbid.so
-        ${CMAKE_BINARY_DIR}/lib/libbid.so
-)
-
-# update the IMPORTED_LOCATION so consumers link to the build-tree copy
-set_target_properties(bid PROPERTIES
-    IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libbid.so
-)
-
-# link twsapi against the library
+add_library(bid SHARED IMPORTED GLOBAL)
+set_target_properties(bid PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libbid.so)
 target_link_libraries(twsapi PRIVATE bid)
+
+
 
 set(CLANG_FORMAT_EXCLUDE_PATTERNS "build" "vcpkg")
 file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h *.c)
