@@ -1,15 +1,18 @@
 
+#include "financio/client/base_wrapper.h"
 #include "financio/client/ring_buffer.h"
-#include "financio/types/request_types.h"
 #include "financio/types/event_types.h"
 
 // IB API headers
-#include <twsapi/EClientSocket.h>
-#include <twsapi/EWrapper.h>
-#include <twsapi/EReader.h>
 #include <twsapi/Contract.h>
 
-class TradingWrapper : public EWrapper {
+/**
+ * TradingWrapper
+ * --------------
+ * Implements a minimal set of Interactive Brokers EWrapper callbacks.
+ * Converts IB events into TradingEvent objects and pushes them into the ring buffer.
+ */
+class TradingWrapper : public BaseEWrapper {
 public:
     TradingWrapper(RingBuffer<TradingEvent, 1024>& evQueue);
 
@@ -31,7 +34,6 @@ public:
     // ---- Historical data ----
     void historicalData(TickerId reqId, const Bar& bar) override;
     void historicalDataEnd(i32 reqId, const std::string& start, const std::string& end) override;
-
 
 private:
     RingBuffer<TradingEvent, 1024>& m_ev_queue;

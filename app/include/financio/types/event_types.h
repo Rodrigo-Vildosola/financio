@@ -1,7 +1,12 @@
 #pragma once
 
-#include "financio/types/base.h"
 #include <variant>
+
+#include <twsapi/Execution.h>
+#include <twsapi/bar.h>
+#include <twsapi/TickAttrib.h>
+
+#include "financio/types/base.h"
 
 
 enum class TradingEventType : uint8_t {
@@ -34,7 +39,7 @@ struct ErrorData {
 struct TickPriceData {
     f64 price;     // price value
     i32 field;     // IB TickType (BID, ASK, LAST, etc.)
-    i32 attribMask;// Encoded TickAttrib flags (delayed, pastLimit, preOpen, etc.)
+    TickAttrib attrib;// Encoded TickAttrib flags (delayed, pastLimit, preOpen, etc.)
 };
 
 // TickSize: streaming size update (bid/ask/last size, volume, etc.)
@@ -53,15 +58,14 @@ struct OrderStatusData {
 
 // OrderFilled: final execution details when an order is completely filled
 struct OrderFilledData {
-    f64 fillPrice; // price at which it was filled
-    f64 qty;       // quantity filled
+    // f64 fillPrice; // price at which it was filled
+    // f64 qty;       // quantity filled
+    Execution exec;   // Execution
 };
 
 // HistoricalBar: OHLCV bar for historical data requests
 struct HistoricalBarData {
-    f64 open, high, low, close; // OHLC values
-    f64 volume;                 // trade volume
-    Text date;                  // bar timestamp, e.g. "20250202 09:30"
+    Bar bar;
 };
 
 // HistoricalEnd: marks the end of a historical data stream
@@ -111,6 +115,6 @@ using TradingPayload = std::variant<
 /// This is pushed from TradingWorker to main thread for processing.
 struct TradingEvent {
     TradingEventType type; // discriminator for which payload is active
-    i32 id;                // tickerId, orderId, or reqId depending on event
+    i64 id;                // tickerId, orderId, or reqId depending on event
     TradingPayload payload;// actual event data
 };
