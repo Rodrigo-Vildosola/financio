@@ -179,7 +179,7 @@ private:
 
 public:
 	// events
-	#include "EWrapper_prototypes.h"
+	#include "twsapi/EWrapper_prototypes.h"
 
 
 private:
