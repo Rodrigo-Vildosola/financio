@@ -1,7 +1,9 @@
 #pragma once
 
 #include "financio/client/ring_buffer.h"
-#include "financio/client/states.h"
+#include "financio/types/request_types.h"
+#include "financio/types/event_types.h"
+
 #include "financio/client/wrapper.h"
 
 // IB API headers

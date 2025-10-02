@@ -3,73 +3,76 @@
 #include "financio/types/base.h"
 
 enum class TradingEventType : uint8_t {
-    Connected,
-    Disconnected,
-    Error,
+    Connected,      // Successfully connected
+    Disconnected,   // Lost connection
+    Error,          // API or network error
 
-    TickPrice,
-    TickSize,
-    OrderStatus,
-    OrderFilled,
+    TickPrice,      // Streaming price update
+    TickSize,       // Streaming size update
+    OrderStatus,    // Order status update
+    OrderFilled,    // Final fill confirmation
 
-    HistoricalBar,
-    HistoricalEnd,
+    HistoricalBar,  // One historical bar
+    HistoricalEnd,  // End of historical response
 
-    AccountSummary,
-    PortfolioUpdate,
-    NewsHeadline
+    AccountSummary, // Key/value account data
+    PortfolioUpdate,// Position update
+    NewsHeadline    // News event
 };
 
 // TradingEvent: pushed from TradingWorker -> main thread
 struct TradingEvent {
     TradingEventType type;
-    int32_t id; // tickerId, orderId, reqId
+    i32 id; // tickerId, orderId, reqId depending on type
 
     union {
-        // --- Connection / Errors
+        // Error
         struct {
-            int32_t code;
+            i32 code;
             char message[MSG_LEN];
         } error;
 
-        // --- Market data
+        // Tick price
         struct {
-            double price;
-            int32_t field;     // BID, ASK, LAST, etc.
-            uint32_t attribMask; // TickAttrib encoded
+            f64 price;
+            i32 field;       // IB TickType (BID, ASK, LAST, etc.)
+            u32 attribMask;  // Encoded TickAttrib flags
         } tickPrice;
 
+        // Tick size
         struct {
-            int32_t field;
-            double size;
+            i32 field;
+            f64 size;
         } tickSize;
 
-        // --- Orders
+        // Order status
         struct {
             char status[STATUS_LEN]; // "Submitted", "Filled", etc.
-            double filled;
-            double remaining;
-            double avgFillPrice;
+            f64 filled;
+            f64 remaining;
+            f64 avgFillPrice;
         } orderStatus;
 
+        // Filled execution
         struct {
-            double fillPrice;
-            double qty;
+            f64 fillPrice;
+            f64 qty;
         } orderFilled;
 
-        // --- Historical data
+        // Historical bar
         struct {
-            double open, high, low, close;
-            double volume;
+            f64 open, high, low, close;
+            f64 volume;
             char date[16]; // e.g. "20250202 09:30"
         } bar;
 
+        // Historical complete
         struct {
             char start[16];
             char end[16];
         } historicalEnd;
 
-        // --- Account/Portfolio
+        // Account summary
         struct {
             char account[16];
             char key[32];
@@ -77,14 +80,15 @@ struct TradingEvent {
             char currency[8];
         } accountSummary;
 
+        // Portfolio update
         struct {
             char account[16];
             char symbol[SYMBOL_LEN];
-            double position;
-            double avgCost;
+            f64 position;
+            f64 avgCost;
         } portfolio;
 
-        // --- News
+        // News headline
         struct {
             char provider[16];
             char headline[MSG_LEN];

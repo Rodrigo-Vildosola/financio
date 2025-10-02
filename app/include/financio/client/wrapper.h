@@ -1,6 +1,7 @@
 
 #include "financio/client/ring_buffer.h"
-#include "financio/client/states.h"
+#include "financio/types/request_types.h"
+#include "financio/types/event_types.h"
 
 // IB API headers
 #include <twsapi/EClientSocket.h>

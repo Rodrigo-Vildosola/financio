@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 // Signed integer aliases
 using i8  = std::int8_t;
@@ -17,6 +18,9 @@ using u64 = std::uint64_t;
 // Floating-point aliases
 using f32 = float;
 using f64 = double;
+
+using Text = std::string; 
+
 
 // Fixed buffer sizes
 constexpr u64 MSG_LEN     = 256; // error strings, headlines

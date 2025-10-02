@@ -3,59 +3,58 @@
 #include "financio/types/base.h"
 
 // TradingRequestType: operations the main thread can ask the worker to do.
-enum class TradingRequestType : uint8_t {
+enum class TradingRequestType : u8 {
     Connect,             // Connect to TWS/Gateway
     Disconnect,          // Disconnect
-    SubscribeMarketData, // Subscribe to streaming quotes
+    SubscribeMarketData, // Start streaming quotes
     UnsubscribeMarketData,
-    PlaceOrder,          // Submit an order
-    CancelOrder,         // Cancel existing order
+    PlaceOrder,          // Submit order
+    CancelOrder,         // Cancel order
     RequestHistorical,   // Request historical bars
-    RequestAccountData,  // Positions, balances
-    RequestNews          // News subscriptions
+    RequestAccountData,  // Account/position snapshot
+    RequestNews          // Subscribe news feed
 };
 
 // TradingRequest: posted by main/UI to the TradingWorker thread.
 struct TradingRequest {
     TradingRequestType type;
-    int32_t id; // tickerId, orderId, reqId depending on request
+    i32 id; // tickerId, orderId, reqId
 
     union {
-        // --- Connect
+        // Connection params
         struct {
             char host[64];
-            int32_t port;
-            int32_t clientId;
+            i32 port;
+            i32 clientId;
         } connect;
 
-        // --- Market data subscription
+        // Market data
         struct {
-            char symbol[SYMBOL_LEN];   // e.g. "AAPL"
-            char exchange[EXCHANGE_LEN]; // e.g. "SMART"
-            char currency[CURRENCY_LEN]; // e.g. "USD"
-            char secType[8];           // e.g. "STK", "OPT", "FUT"
+            char symbol[SYMBOL_LEN];
+            char exchange[EXCHANGE_LEN];
+            char currency[CURRENCY_LEN];
+            char secType[8]; // "STK", "OPT", "FUT"
         } marketData;
 
-        // --- Place order
+        // Order placement
         struct {
-            double quantity;
-            double limitPrice;
-            double stopPrice;
-            char action[4]; // "BUY"/"SELL"
+            f64 quantity;
+            f64 limitPrice;
+            f64 stopPrice;
+            char action[4];   // "BUY"/"SELL"
             char orderType[8]; // "MKT", "LMT", "STP"
         } order;
 
-        // --- Historical data request
+        // Historical data
         struct {
             char symbol[SYMBOL_LEN];
             char exchange[EXCHANGE_LEN];
             char currency[CURRENCY_LEN];
             char secType[8];
-
-            char durationStr[16];  // "1 D", "1 W", etc.
-            char barSize[8];       // "1 min", "1 hour"
-            char whatToShow[16];   // "TRADES", "MIDPOINT", etc.
-            int useRTH;            // Regular trading hours only
+            char durationStr[16]; // "1 D", "1 W", "1 Y"
+            char barSize[8];      // "1 min", "1 day"
+            char whatToShow[16];  // "TRADES", "MIDPOINT"
+            i32 useRTH;           // 1 = RTH only
         } historical;
     };
 };
