@@ -13,11 +13,11 @@ struct alignas(16) InstanceBlock {
     glm::vec4 color;   // 16 bytes
 };
 
-class ExampleLayer : public eng::Layer
+class RootLayer : public eng::Layer
 {
 public:
-	ExampleLayer();
-	virtual ~ExampleLayer() = default;
+	RootLayer();
+	virtual ~RootLayer() = default;
 
 	virtual void on_attach() override;
 	virtual void on_detach() override;

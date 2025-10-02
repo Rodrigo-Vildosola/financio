@@ -1,4 +1,5 @@
-#include "layer.h"
+#include "financio/root_layer.h"
+
 #include "eng/core/application.h"
 #include "eng/debug/profiler.h"
 #include "eng/renderer/renderer_api.h"
@@ -11,13 +12,13 @@
 
 using namespace eng;
 
-ExampleLayer::ExampleLayer()
-    : Layer("ExampleLayer") {}
+RootLayer::RootLayer()
+    : Layer("RootLayer") {}
 
-void ExampleLayer::on_attach() {
+void RootLayer::on_attach() {
     PROFILE_FUNCTION();
 
-    ENG_INFO("ExampleLayer attached");
+    ENG_INFO("RootLayer attached");
 
     float width = Application::get().get_window().get_width();
     float height = Application::get().get_window().get_height();
@@ -64,11 +65,11 @@ void ExampleLayer::on_attach() {
 
 }
 
-void ExampleLayer::on_detach() {
-    ENG_INFO("ExampleLayer detached");
+void RootLayer::on_detach() {
+    ENG_INFO("RootLayer detached");
 }
 
-void ExampleLayer::on_update(Timestep ts) {
+void RootLayer::on_update(Timestep ts) {
     PROFILE_FUNCTION();
 
     RenderPassDesc main_pas_desc;
@@ -139,7 +140,7 @@ void ExampleLayer::on_update(Timestep ts) {
 
 }
 
-void ExampleLayer::on_physics_update(Timestep fixed_ts) {
+void RootLayer::on_physics_update(Timestep fixed_ts) {
     PROFILE_SCOPE("Updating Pyramids");
 
     float t = Timer::elapsed();
@@ -152,7 +153,7 @@ void ExampleLayer::on_physics_update(Timestep fixed_ts) {
 }
 
 
-void ExampleLayer::on_ui_render() {
+void RootLayer::on_ui_render() {
     PROFILE_FUNCTION();
 
     {
@@ -180,7 +181,7 @@ void ExampleLayer::on_ui_render() {
 
 }
 
-void ExampleLayer::on_event(Event& event) {
+void RootLayer::on_event(Event& event) {
     PROFILE_FUNCTION();
 
     EventDispatcher dispatcher(event);
@@ -188,7 +189,7 @@ void ExampleLayer::on_event(Event& event) {
 
     // Handle keyboard events
     if (event.is_in_category(EventCategoryKeyboard)) {
-        ENG_TRACE("ExampleLayer received keyboard event: {}", event.to_string());
+        ENG_TRACE("RootLayer received keyboard event: {}", event.to_string());
 
         // Only handle KeyPressedEvent
         if (event.get_event_type() == EventType::KeyPressed) {
