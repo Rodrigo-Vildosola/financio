@@ -20,6 +20,11 @@ if(WIN32)
     target_link_libraries(twsapi PUBLIC ws2_32)
 endif()
 
+add_library(bid STATIC IMPORTED GLOBAL)
+set_target_properties(bid PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libbid.a
+)
+
 find_package(Protobuf REQUIRED)
 find_package(absl REQUIRED COMPONENTS log check hash strings)
 
@@ -29,6 +34,7 @@ target_link_libraries(twsapi PRIVATE
     absl::check
     absl::hash
     absl::strings
+    bid
 )
 
 if(MSVC)

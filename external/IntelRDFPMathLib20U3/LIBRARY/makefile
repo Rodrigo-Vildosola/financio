@@ -369,14 +369,14 @@ $(SRC_DIR)/bid_functions.h : $(SRC_DIR)/bid_gcc_intrinsics.h
 	touch $@
 endif
 
-BID_LIB = $(LIB_DIR)/libbid.so
+BID_LIB = $(LIB_DIR)/libbid.a
 
 lib : $(BID_LIB)
 
 $(BID_LIB) :: $(LIB_DIR)/.directory_exists
 
 $(BID_LIB) :: $(ALL_BID_OBJS)
-	gcc -o $@ $^ -shared
+	ar rcs $@ $^
 
 .PHONY : cleanLib realCleanLib
 

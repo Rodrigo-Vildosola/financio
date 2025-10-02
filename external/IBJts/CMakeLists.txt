@@ -64,9 +64,9 @@ if( IBKR_BUILD_TESTCPPCLIENT )
 endif()
 
 # Intel Decimal Floating Point Math Library integration
-add_library(bid SHARED IMPORTED GLOBAL)
-set_target_properties(bid PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libbid.so)
-target_link_libraries(twsapi PRIVATE bid)
+# add_library(bid SHARED IMPORTED GLOBAL)
+# set_target_properties(bid PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libbid.so)
+# target_link_libraries(twsapi PRIVATE bid)
 
 
 
