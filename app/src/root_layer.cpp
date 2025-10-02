@@ -12,21 +12,18 @@
 
 using namespace eng;
 
-RootLayer::RootLayer()
-    : Layer("RootLayer") {}
+RootLayer::RootLayer() : Layer("RootLayer") {}
 
 void RootLayer::on_attach() {
     PROFILE_FUNCTION();
 
-    ENG_INFO("RootLayer attached");
-
-    float width = Application::get().get_window().get_width();
-    float height = Application::get().get_window().get_height();
-    float aspect_ratio = width / height;
+    f32 width = Application::get().get_window().get_width();
+    f32 height = Application::get().get_window().get_height();
+    f32 aspect_ratio = width / height;
 
     m_shader = RendererAPI::create_shader(
         "shaders/shader.wgsl", 
-        "Triangle Shader Module"
+        "Basic Shader Module"
     );
     m_shader->vertex_entry = "vs_main";
     m_shader->fragment_entry = "fs_main";
@@ -62,7 +59,6 @@ void RootLayer::on_attach() {
     spec.storages = { sb_spec };
 
     ref<Pipeline> pipeline = RendererAPI::create_pipeline(spec);
-
 }
 
 void RootLayer::on_detach() {
@@ -95,62 +91,12 @@ void RootLayer::on_update(Timestep ts) {
 
     RendererAPI::clear_color(0.1f, 0.1f, 0.1f, 1.0f);
     main_pass->begin();
-    // RendererAPI::begin_scene(*m_camera);
 
-    float delta_time = ts.get_seconds();
-    m_fps_accumulator += delta_time;
-    m_fps_frame_count++;
 
-    if (m_fps_accumulator >= 1.0f) {
-        m_displayed_fps = (float)m_fps_frame_count / m_fps_accumulator;
-        m_displayed_frame_time = 1000.0f / m_displayed_fps;  // in milliseconds
-
-        ENG_CORE_INFO("FPS: {:.1f} | Frame Time: {:.2f} ms", m_displayed_fps, m_displayed_frame_time);
-
-        m_fps_accumulator = 0.0f;
-        m_fps_frame_count = 0;
-    }
-
-    glm::vec3 movement(0.0f);
-
-    if (m_keys[Key::W]) movement.z += 1.0f;
-    if (m_keys[Key::S]) movement.z -= 1.0f;
-    if (m_keys[Key::A]) movement.x -= 1.0f;
-    if (m_keys[Key::D]) movement.x += 1.0f;
-    if (m_keys[Key::E]) movement.y += 1.0f;
-    if (m_keys[Key::Q]) movement.y -= 1.0f;
-
-    if (glm::length(movement) > 0.0f)
-        movement = glm::normalize(movement);
-
-    float dt = ts.get_seconds();
-    glm::vec3 offset = movement * m_camera_speed * dt;
-    
     main_pass->end();
-
-    if (m_mouse_dragging) {
-        Application& app = Application::get();
-        glm::vec2 mouse_pos = app.get_window().get_mouse_position();
-
-        glm::vec2 delta = mouse_pos - m_last_mouse_position;
-        m_last_mouse_position = mouse_pos;
-
-    }
-
-
 }
 
-void RootLayer::on_physics_update(Timestep fixed_ts) {
-    PROFILE_SCOPE("Updating Pyramids");
-
-    float t = Timer::elapsed();
-    for (auto& instance : m_instances) {
-        glm::vec3 pos = glm::vec3(instance.model[3]);
-        float wave = sin(t + pos.x * 0.1f + pos.z * 0.1f);
-        instance.model = glm::translate(glm::mat4(1.0f), pos + glm::vec3(0.0f, wave * 0.5f, 0.0f));
-    }
-
-}
+void RootLayer::on_physics_update(Timestep fixed_ts) {}
 
 
 void RootLayer::on_ui_render() {
@@ -168,6 +114,7 @@ void RootLayer::on_ui_render() {
         ImGui::Text("Vertex Count: %u", stats.vertex_count);
         ImGui::Text("Index Count: %u", stats.index_count);
         ImGui::End();
+
     }
 
     auto show = true;

@@ -4,17 +4,16 @@
 
 #include "financio/root_layer.h"
 
-class ExampleApp : public eng::Application {
+class FinancioApp : public eng::Application {
 public:
-    ExampleApp(eng::CommandLineArgs args) : eng::Application("My Example Application", args) 
+    FinancioApp(eng::CommandLineArgs args) : eng::Application("Financio App", args) 
     {
         push_layer(new RootLayer());
     }
 
-    ~ExampleApp() {}
-
+    ~FinancioApp() {}
 };
 
 eng::Application* eng::create_application(eng::CommandLineArgs args) {
-    return new ExampleApp(args);
+    return new FinancioApp(args);
 }
