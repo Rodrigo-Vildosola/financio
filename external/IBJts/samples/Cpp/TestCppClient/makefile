@@ -1,7 +1,7 @@
 CXX=g++
 CXXFLAGS=-pthread -Wall -Wno-switch -Wpedantic -Wno-unused-function -std=c++11
 ROOT_DIR=../../../source/cppclient
-BASE_SRC_DIR=${ROOT_DIR}/client
+BASE_SRC_DIR=${ROOT_DIR}/twsapi
 PROTOBUF_DIR=$(BASE_SRC_DIR)/protobufUnix
 INCLUDES=-I${BASE_SRC_DIR} -I${ROOT_DIR} -I${PROTOBUF_DIR}
 SOURCE_DIR=${BASE_SRC_DIR}

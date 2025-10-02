@@ -77,6 +77,6 @@ private:
     friend int ::main(int argc, char** argv);
 };
 
-Application* create_application(CommandLineArgs args);  // implemented by the game
+Application* create_application(CommandLineArgs args);  // implemented by the application
 
 } // namespace eng

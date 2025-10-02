@@ -9,12 +9,12 @@
 #include "Execution.h"
 #include "Order.h"
 #include "OrderCancel.h"
-#include "Order.pb.h"
-#include "CancelOrderRequest.pb.h"
-#include "GlobalCancelRequest.pb.h"
-#include "ExecutionRequest.pb.h"
-#include "OrderCancel.pb.h"
-#include "PlaceOrderRequest.pb.h"
+#include "protobufUnix/Order.pb.h"
+#include "protobufUnix/CancelOrderRequest.pb.h"
+#include "protobufUnix/GlobalCancelRequest.pb.h"
+#include "protobufUnix/ExecutionRequest.pb.h"
+#include "protobufUnix/OrderCancel.pb.h"
+#include "protobufUnix/PlaceOrderRequest.pb.h"
 
 class EClientUtils {
 

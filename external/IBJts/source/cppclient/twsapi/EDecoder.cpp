@@ -18,8 +18,8 @@
 #include "Utils.h"
 #include "IneligibilityReason.h"
 #include "EClient.h"
-#include "ExecutionDetails.pb.h"
-#include "ExecutionDetailsEnd.pb.h"
+#include "protobufUnix/ExecutionDetails.pb.h"
+#include "protobufUnix/ExecutionDetailsEnd.pb.h"
 
 #include <string.h>
 #include <cstdlib>

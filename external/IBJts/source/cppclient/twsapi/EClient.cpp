@@ -22,8 +22,8 @@
 #include "EClientException.h"
 #include "Utils.h"
 #include "EClientUtils.h"
-#include "ExecutionFilter.pb.h"
-#include "ExecutionRequest.pb.h"
+#include "protobufUnix/ExecutionFilter.pb.h"
+#include "protobufUnix/ExecutionRequest.pb.h"
 
 #include <sstream>
 #include <iomanip>

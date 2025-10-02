@@ -1,14 +1,19 @@
 file(GLOB SOURCES "*.cpp" "protobufUnix/*.cc")
-file(GLOB HEADERS "*.h" "protobufUnix/*.h")
+file(GLOB HEADERS "*.h")
 
 set(twsapi_VERSION 9.79.02)
+find_package(Protobuf REQUIRED)
+find_package(absl REQUIRED COMPONENTS log check hash strings)
+
 add_library(twsapi STATIC ${SOURCES})
 
-# Include dirs for normal headers + protobuf
-target_include_directories(twsapi PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/protobufUnix
+target_include_directories(twsapi
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/protobufUnix
+        ${Protobuf_INCLUDE_DIRS}
 )
+
 
 # Link libraries
 if(WIN32)
@@ -39,8 +44,8 @@ set_target_properties(twsapi PROPERTIES
     PUBLIC_HEADER "${HEADERS}"
 )
 
-install(TARGETS twsapi EXPORT twsapi-targets
-    PUBLIC_HEADER DESTINATION include/twsapi
-    LIBRARY DESTINATION lib
-)
+# install(TARGETS twsapi EXPORT twsapi-targets
+#     PUBLIC_HEADER DESTINATION include/twsapi
+#     LIBRARY DESTINATION lib
+# )
 

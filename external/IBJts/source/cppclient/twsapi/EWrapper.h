@@ -25,12 +25,12 @@
 #include "Decimal.h"
 #include "HistoricalSession.h"
 
-#include "ExecutionDetails.pb.h"
-#include "ExecutionDetailsEnd.pb.h"
-#include "ErrorMessage.pb.h"
-#include "OpenOrder.pb.h"
-#include "OpenOrdersEnd.pb.h"
-#include "OrderStatus.pb.h"
+#include "protobufUnix/ExecutionDetails.pb.h"
+#include "protobufUnix/ExecutionDetailsEnd.pb.h"
+#include "protobufUnix/ErrorMessage.pb.h"
+#include "protobufUnix/OpenOrder.pb.h"
+#include "protobufUnix/OpenOrdersEnd.pb.h"
+#include "protobufUnix/OrderStatus.pb.h"
 
 enum TickType { BID_SIZE, BID, ASK, ASK_SIZE, LAST, LAST_SIZE,
 				HIGH, LOW, VOLUME, CLOSE,

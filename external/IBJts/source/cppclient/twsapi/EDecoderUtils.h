@@ -18,9 +18,9 @@
 #include "VolumeCondition.h"
 #include "PercentChangeCondition.h"
 
-#include "ExecutionDetails.pb.h"
-#include "Order.pb.h"
-#include "OrderState.pb.h"
+#include "protobufUnix/ExecutionDetails.pb.h"
+#include "protobufUnix/Order.pb.h"
+#include "protobufUnix/OrderState.pb.h"
 
 class EDecoderUtils {
 

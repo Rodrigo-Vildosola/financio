@@ -8,14 +8,14 @@ target_link_libraries(${APP_NAME} ${ENGINE_NAME})
 
 target_include_directories(${APP_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/app/src
-    ${CMAKE_SOURCE_DIR}/external/glm  # <-- Add this if GLM is local
+    ${CMAKE_SOURCE_DIR}/external/glm
+    ${CMAKE_SOURCE_DIR}/external/IBJts/source/cppclient
 )
 
 target_link_libraries(${APP_NAME}
     imgui
     glm
-    # nlohmann_json::nlohmann_json
-    # stb
+    twsapi
 )
 
 target_compile_definitions(${APP_NAME} PUBLIC APP_ASSETS_DIR="${APP_ASSETS_DIR}")

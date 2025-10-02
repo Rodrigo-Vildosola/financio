@@ -56,7 +56,7 @@ if(${ENABLE_LINTER})
     endif()
 endif()
 
-add_subdirectory("source/cppclient/client/")
+add_subdirectory("source/cppclient/twsapi/")
 option(IBKR_BUILD_TESTCPPCLIENT "Whether or not to build the TWS API example/test client" FALSE)
 if( IBKR_BUILD_TESTCPPCLIENT )
     find_package( Threads )
@@ -122,13 +122,3 @@ set(CONF_INCLUDE_DIRS "\${twsapi_CMAKE_DIR}/${REL_INCLUDE_DIR}")
 configure_file(twsapiConfig.cmake.in "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/twsapiConfig.cmake" @ONLY)
 # ... for both
 configure_file(twsapiConfigVersion.cmake.in "${PROJECT_BINARY_DIR}/twsapiConfigVersion.cmake" @ONLY)
-
-# Install the twsapiConfig.cmake and twsapiConfigVersion.cmake
-install(FILES
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/twsapiConfig.cmake"
-  "${PROJECT_BINARY_DIR}/twsapiConfigVersion.cmake"
-  DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
-
-# Install the export set for use with the install-tree
-install(EXPORT twsapi-targets DESTINATION
-  "${INSTALL_CMAKE_DIR}" COMPONENT dev)

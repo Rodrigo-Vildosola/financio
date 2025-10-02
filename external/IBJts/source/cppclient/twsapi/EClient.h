@@ -17,10 +17,10 @@
 #include "WshEventData.h"
 #include "OrderCancel.h"
 #include "EDecoder.h"
-#include "ExecutionRequest.pb.h"
-#include "PlaceOrderRequest.pb.h"
-#include "CancelOrderRequest.pb.h"
-#include "GlobalCancelRequest.pb.h"
+#include "protobufUnix/ExecutionRequest.pb.h"
+#include "protobufUnix/PlaceOrderRequest.pb.h"
+#include "protobufUnix/CancelOrderRequest.pb.h"
+#include "protobufUnix/GlobalCancelRequest.pb.h"
 
 namespace ibapi {
 namespace client_constants {

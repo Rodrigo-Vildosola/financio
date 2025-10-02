@@ -1,19 +1,20 @@
 #include <eng/enginio.h>
 #include <eng/core/entry_point.cpp>
+#include <twsapi/EClientSocket.h>
 #include "layer.h"
 
-class ExampleGame : public eng::Application {
+class ExampleApp : public eng::Application {
 public:
-    ExampleGame(eng::CommandLineArgs args)
-        : eng::Application("My Example Game", args) 
+    ExampleApp(eng::CommandLineArgs args)
+        : eng::Application("My Example Application", args) 
     {
         push_layer(new ExampleLayer());
     }
 
-    ~ExampleGame() {}
+    ~ExampleApp() {}
 
 };
 
 eng::Application* eng::create_application(eng::CommandLineArgs args) {
-    return new ExampleGame(args);
+    return new ExampleApp(args);
 }
