@@ -8,7 +8,8 @@
 #include "eng/core/timer.h"
 
 #include <imgui.h>
-#include <glm/gtc/type_ptr.hpp>
+#include <implot/implot.h>
+
 
 using namespace eng;
 
@@ -17,83 +18,42 @@ RootLayer::RootLayer() : Layer("RootLayer") {}
 void RootLayer::on_attach() {
     PROFILE_FUNCTION();
 
-    f32 width = Application::get().get_window().get_width();
-    f32 height = Application::get().get_window().get_height();
-    f32 aspect_ratio = width / height;
+    m_worker.start();
 
-    m_shader = RendererAPI::create_shader(
-        "shaders/shader.wgsl", 
-        "Basic Shader Module"
-    );
-    m_shader->vertex_entry = "vs_main";
-    m_shader->fragment_entry = "fs_main";
+    // Example: auto-connect when layer attaches
+    TradingRequest req;
+    req.type = TradingRequestType::Connect;
+    req.id   = 0;
+    req.payload = ConnectRequest{ "127.0.0.1", 4002, 1 };
+    m_worker.postRequest(req);
 
-    PipelineSpecification spec;
-    spec.shader = m_shader;
+#if 0
+    setup_pipeline();
+#endif
 
-    VertexBufferLayoutSpec layout;
-    layout.stride = sizeof(f32) * 6;
-    layout.step_mode = wgpu::VertexStepMode::Vertex;
-    layout.attributes = {
-        { 0, wgpu::VertexFormat::Float32x3, 0 },
-        { 1, wgpu::VertexFormat::Float32x3, sizeof(f32) * 3 },
-    };
-
-    VertexBufferLayoutSpec vb = layout;
-    spec.vertex_buffers.push_back(vb);
-
-    UniformBufferSpec ubo_spec;
-    ubo_spec.binding = 0;
-    ubo_spec.group = 0;
-    ubo_spec.size = sizeof(UniformBlock);
-    ubo_spec.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
-
-    spec.uniforms = { ubo_spec };
-
-    StorageBufferSpec sb_spec;
-    sb_spec.binding = 0;
-    sb_spec.group = 1;
-    sb_spec.size = sizeof(InstanceBlock);
-    sb_spec.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
-
-    spec.storages = { sb_spec };
-
-    ref<Pipeline> pipeline = RendererAPI::create_pipeline(spec);
 }
 
 void RootLayer::on_detach() {
     ENG_INFO("RootLayer detached");
+
+    m_worker.stop();
 }
 
 void RootLayer::on_update(Timestep ts) {
     PROFILE_FUNCTION();
 
-    RenderPassDesc main_pas_desc;
-    main_pas_desc.name = "MainScene";
-    main_pas_desc.use_depth = false;
+    TradingEvent ev;
+    while (m_worker.pollEvent(ev)) {
+        handle_event(ev);
+    }
 
-    // Color attachment
-    RenderPassAttachment color_attachment;
-    color_attachment.load_op = wgpu::LoadOp::Clear;
-    color_attachment.store_op = wgpu::StoreOp::Store;
-    color_attachment.clear_color = {0.1f, 0.1f, 0.1f, 1.0f};
-    main_pas_desc.color_attachments.push_back(color_attachment);
-
-    // Depth attachment
-    RenderPassAttachment depth_attachment;
-    depth_attachment.load_op = wgpu::LoadOp::Clear;
-    depth_attachment.store_op = wgpu::StoreOp::Store;
-    depth_attachment.clear_depth = 1.0f;
-    depth_attachment.read_only_depth = false;
-    main_pas_desc.depth_stencil_attachment = depth_attachment;
-
-    auto main_pass = RendererAPI::create_render_pass(main_pas_desc);
-
+#if 0
+    ref<RenderPass> main_pass = create_main_pass();
     RendererAPI::clear_color(0.1f, 0.1f, 0.1f, 1.0f);
     main_pass->begin();
 
-
     main_pass->end();
+#endif
 }
 
 void RootLayer::on_physics_update(Timestep fixed_ts) {}
@@ -106,9 +66,6 @@ void RootLayer::on_ui_render() {
         const auto& stats = RendererAPI::get_stats();
 
         ImGui::Begin("Renderer Stats");
-        ImGui::Text("FPS: %.1f", m_displayed_fps);
-        ImGui::Text("Frame Time: %.2f ms", m_displayed_frame_time);
-        ImGui::Separator();
         ImGui::Text("Draw Calls: %u", stats.draw_calls);
         ImGui::Text("Mesh Count: %u", stats.mesh_count);
         ImGui::Text("Vertex Count: %u", stats.vertex_count);
@@ -120,6 +77,47 @@ void RootLayer::on_ui_render() {
     auto show = true;
 
     ImGui::ShowDemoWindow(&show);
+
+    ImGui::Begin("Trading");
+    if (ImGui::Button("Subscribe AAPL")) {
+        TradingRequest req;
+        req.type = TradingRequestType::SubscribeMarketData;
+        req.id   = 1; // tickerId
+        req.payload = MarketDataRequest{ "AAPL", "SMART", "USD", "STK" };
+        m_worker.postRequest(req);
+    }
+
+    if (ImGui::Button("Request AAPL Historical")) {
+        TradingRequest req;
+        req.type = TradingRequestType::RequestHistorical;
+        req.id   = 2; // reqId
+        req.payload = HistoricalRequest{
+            "AAPL", "SMART", "USD", "STK",
+            "1 D", "5 mins", "TRADES", 1
+        };
+        m_worker.postRequest(req);
+        m_hist_bars.clear();
+    }
+
+    // Plot if we have bars
+    if (!m_hist_bars.empty()) {
+        if (ImPlot::BeginPlot("AAPL Historical Close")) {
+            std::vector<f64> xs, closes;
+            xs.reserve(m_hist_bars.size());
+            closes.reserve(m_hist_bars.size());
+
+            for (size_t i = 0; i < m_hist_bars.size(); i++) {
+                xs.push_back((f64)i); // index as x
+                closes.push_back(m_hist_bars[i].close);
+            }
+
+            ImPlot::PlotLine("Close", xs.data(), closes.data(), (i32)xs.size());
+            ImPlot::EndPlot();
+        }
+    }
+    ImGui::End();
+
+
 
     // ImGui::Begin("Camera Controls");
 
@@ -173,4 +171,100 @@ void RootLayer::on_event(Event& event) {
         }
         return false;
     });
+}
+
+
+void RootLayer::handle_event(const TradingEvent& ev) {
+    switch (ev.type) {
+        case TradingEventType::Connected:
+            ENG_INFO("Connected to IB, nextValidId={}", ev.id);
+            break;
+        case TradingEventType::Error: {
+            const auto& err = std::get<ErrorData>(ev.payload);
+            ENG_ERROR("IB Error {}: {}", err.code, err.message);
+            break;
+        }
+        case TradingEventType::TickPrice: {
+            const auto& tick = std::get<TickPriceData>(ev.payload);
+            ENG_TRACE("Price update: id={} price={} field={}", ev.id, tick.price, tick.field);
+            break;
+        }
+        case TradingEventType::HistoricalBar: {
+            const auto& bar = std::get<HistoricalBarData>(ev.payload).bar;
+            m_hist_bars.push_back(bar);
+            break;
+        }
+        case TradingEventType::HistoricalEnd: {
+            ENG_INFO("Historical download complete for reqId={}", ev.id);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+void RootLayer::setup_pipeline() {
+    ref<Shader> shader = RendererAPI::create_shader(
+        "shaders/shader.wgsl", 
+        "Basic Shader Module"
+    );
+    shader->vertex_entry = "vs_main";
+    shader->fragment_entry = "fs_main";
+
+    PipelineSpecification spec;
+    spec.shader = shader;
+
+    VertexBufferLayoutSpec layout;
+    layout.stride = sizeof(f32) * 6;
+    layout.step_mode = wgpu::VertexStepMode::Vertex;
+    layout.attributes = {
+        { 0, wgpu::VertexFormat::Float32x3, 0 },
+        { 1, wgpu::VertexFormat::Float32x3, sizeof(f32) * 3 },
+    };
+
+    VertexBufferLayoutSpec vb = layout;
+    spec.vertex_buffers.push_back(vb);
+
+    UniformBufferSpec ubo_spec;
+    ubo_spec.binding = 0;
+    ubo_spec.group = 0;
+    ubo_spec.size = sizeof(UniformBlock);
+    ubo_spec.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
+
+    spec.uniforms = { ubo_spec };
+
+    StorageBufferSpec sb_spec;
+    sb_spec.binding = 0;
+    sb_spec.group = 1;
+    sb_spec.size = sizeof(InstanceBlock);
+    sb_spec.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
+
+    spec.storages = { sb_spec };
+
+    ref<Pipeline> pipeline = RendererAPI::create_pipeline(spec);
+}
+
+ref<RenderPass> RootLayer::create_main_pass() {
+
+    RenderPassDesc main_pas_desc;
+    main_pas_desc.name = "RootScene";
+    main_pas_desc.use_depth = false;
+
+    // Color attachment
+    RenderPassAttachment color_attachment;
+    color_attachment.load_op = wgpu::LoadOp::Clear;
+    color_attachment.store_op = wgpu::StoreOp::Store;
+    color_attachment.clear_color = {0.1f, 0.1f, 0.1f, 1.0f};
+    main_pas_desc.color_attachments.push_back(color_attachment);
+
+    // Depth attachment
+    RenderPassAttachment depth_attachment;
+    depth_attachment.load_op = wgpu::LoadOp::Clear;
+    depth_attachment.store_op = wgpu::StoreOp::Store;
+    depth_attachment.clear_depth = 1.0f;
+    depth_attachment.read_only_depth = false;
+    main_pas_desc.depth_stencil_attachment = depth_attachment;
+
+    return RendererAPI::create_render_pass(main_pas_desc);
 }

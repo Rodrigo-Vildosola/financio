@@ -1,4 +1,4 @@
-#include "financio/client/wrapper.h"
+#include "financio/client/trading_wrapper.h"
 
 
 TradingWrapper::TradingWrapper(RingBuffer<TradingEvent, 1024>& evQueue) : m_ev_queue(evQueue) {}

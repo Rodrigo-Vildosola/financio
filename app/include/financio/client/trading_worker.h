@@ -1,9 +1,9 @@
 #pragma once
 
-#include "financio/client/ring_buffer.h"
+#include "financio/core/ring_buffer.h"
 #include "financio/types/request_types.h"
 #include "financio/types/event_types.h"
-#include "financio/client/wrapper.h"
+#include "financio/client/trading_wrapper.h"
 
 // IB API headers
 #include <twsapi/EClientSocket.h>

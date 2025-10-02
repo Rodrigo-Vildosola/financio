@@ -1,6 +1,5 @@
 #include <eng/enginio.h>
 #include <eng/core/entry_point.cpp>
-#include <twsapi/EClientSocket.h>
 
 #include "financio/root_layer.h"
 

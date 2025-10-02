@@ -73,7 +73,7 @@ void Application::run() {
     // render loop
     // -----------
     while (m_running) {
-        break;
+        // break;
         PROFILE_SCOPE("Render loop");
 
         f32 time = Timer::elapsed();

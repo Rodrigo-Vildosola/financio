@@ -1,5 +1,7 @@
 #pragma once
 
+#include "financio/client/trading_worker.h"
+
 #include <eng/enginio.h>
 
 struct alignas(16) UniformBlock {
@@ -28,28 +30,18 @@ public:
 	void on_event(eng::Event& e) override;
 
 private:
-	eng::ref<eng::Shader> m_shader;
-
-	eng::scope<eng::Pipeline> m_pipeline;
-
-	eng::f32 m_cycle = 10;
-
-private:
-    float m_fps_accumulator = 0.0f;
-    int m_fps_frame_count = 0;
-    float m_fps_timer = 0.0f;
-
-    float m_displayed_fps = 0.0f;
-    float m_displayed_frame_time = 0.0f;
+    TradingWorker m_worker;
 
 	glm::vec2 m_last_mouse_position = {};
 	bool m_mouse_dragging = false;
 
 	bool m_keys[512] = {}; // Keyboard state array
-	float m_camera_speed = 5.0f;  // units per second
-	float m_mouse_sensitivity = 0.1f;
 
-	std::vector<InstanceBlock> m_instances;
+	void handle_event(const TradingEvent& ev);
 
+	void setup_pipeline();
+	eng::ref<eng::RenderPass> create_main_pass();
+
+	std::vector<Bar> m_hist_bars;
 
 };
