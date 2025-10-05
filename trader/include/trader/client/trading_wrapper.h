@@ -1,7 +1,7 @@
 
-#include "financio/client/base_wrapper.h"
-#include "financio/core/ring_buffer.h"
-#include "financio/types/event_types.h"
+#include "trader/client/base_wrapper.h"
+#include "trader/core/ring_buffer.h"
+#include "trader/types/event_types.h"
 
 // IB API headers
 #include <twsapi/Contract.h>

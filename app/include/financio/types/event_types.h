@@ -6,7 +6,7 @@
 #include <twsapi/bar.h>
 #include <twsapi/TickAttrib.h>
 
-#include "trader/types/base.h"
+#include "financio/types/base.h"
 
 
 enum class TradingEventType : uint8_t {

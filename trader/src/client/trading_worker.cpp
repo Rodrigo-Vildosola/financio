@@ -3,7 +3,7 @@
 
 #include <twsapi/Order.h>
 
-#include "financio/client/trading_worker.h"
+#include "trader/client/trading_worker.h"
 
 TradingWorker::TradingWorker() : m_wrapper(m_ev_queue), m_client(&m_wrapper, &m_os_signal) {}
 

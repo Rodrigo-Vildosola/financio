@@ -29,7 +29,6 @@ add_subdirectory(external/spdlog)
 add_subdirectory(external/webgpu)
 add_subdirectory(external/glfw3webgpu)
 add_subdirectory(external/ibkr)
-add_subdirectory(external/zmq)
 
 
 file(GLOB IMGUI_SRC

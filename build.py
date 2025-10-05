@@ -49,6 +49,7 @@ def generate_cmake_args(build_type="Debug"):
     defines = {
         "ENGINE_NAME": config.ENGINE_NAME,
         "APP_NAME": config.APP_NAME,
+        "TRADER_NAME": config.TRADER_NAME,
         "CMAKE_CXX_STANDARD": config.CXX_STANDARD,
         "CMAKE_BUILD_TYPE": build_type,
         "WEBGPU_BACKEND": "DAWN",

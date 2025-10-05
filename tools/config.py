@@ -4,6 +4,7 @@ import platform
 # Project names
 ENGINE_NAME = "enginio"
 APP_NAME = "financio"
+TRADER_NAME = "Tradio"
 
 # Build
 BUILD_DIR = ".build"
