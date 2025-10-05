@@ -10,7 +10,7 @@ target_link_libraries(${APP_NAME} ${ENGINE_NAME})
 target_include_directories(${APP_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/app/include
     ${CMAKE_SOURCE_DIR}/external/glm
-    ${CMAKE_SOURCE_DIR}/external/IBJts/source/cppclient
+    ${CMAKE_SOURCE_DIR}/external/ibkr/source/cppclient
 )
 
 target_link_libraries(${APP_NAME}
