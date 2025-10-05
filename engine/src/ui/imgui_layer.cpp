@@ -4,6 +4,8 @@
 #include "eng/core/base.h"
 #include "eng/renderer/renderer_api.h"
 
+#include "eng/ui/implot.h"
+
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_wgpu.h>
@@ -22,6 +24,8 @@ void UILayer::on_attach() {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
+
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -62,6 +66,8 @@ void UILayer::on_attach() {
 void UILayer::on_detach() {
     ImGui_ImplWGPU_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
 }
 

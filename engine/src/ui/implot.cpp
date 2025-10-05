@@ -128,9 +128,9 @@ You can read releases logs https://github.com/epezent/implot/releases for more d
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
-#include "implot/implot.h"
+#include "eng/ui/implot.h"
 #ifndef IMGUI_DISABLE
-#include "implot/implot_internal.h"
+#include "eng/ui/implot_internal.h"
 
 #include <stdlib.h>
 

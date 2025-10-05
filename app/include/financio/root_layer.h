@@ -42,6 +42,15 @@ private:
 	void setup_pipeline();
 	eng::ref<eng::RenderPass> create_main_pass();
 
+	static constexpr int MAX_LOG_LINES = 2000;
+    std::deque<std::string> m_event_log;
+
 	std::vector<Bar> m_hist_bars;
+
+	void add_log(const std::string& msg) {
+        if (m_event_log.size() >= MAX_LOG_LINES)
+            m_event_log.pop_front();
+        m_event_log.push_back(msg);
+    }
 
 };

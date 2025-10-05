@@ -1,6 +1,7 @@
 #include "financio/root_layer.h"
 
 #include "eng/core/application.h"
+#include "eng/core/logger.h"
 #include "eng/debug/profiler.h"
 #include "eng/renderer/renderer_api.h"
 
@@ -8,7 +9,10 @@
 #include "eng/core/timer.h"
 
 #include <imgui.h>
-#include <implot/implot.h>
+#include <eng/ui/implot.h>
+
+#include <eng/enginio.h>
+
 
 
 using namespace eng;
@@ -44,6 +48,8 @@ void RootLayer::on_update(Timestep ts) {
 
     TradingEvent ev;
     while (m_worker.pollEvent(ev)) {
+        ENG_DEBUG("TradingEvent received: type={}, id={}", (int)ev.type, ev.id);
+
         handle_event(ev);
     }
 
@@ -93,7 +99,7 @@ void RootLayer::on_ui_render() {
         req.id   = 2; // reqId
         req.payload = HistoricalRequest{
             "AAPL", "SMART", "USD", "STK",
-            "1 D", "5 mins", "TRADES", 1
+            "2 D", "5 mins", "TRADES", 1
         };
         m_worker.postRequest(req);
         m_hist_bars.clear();
@@ -115,6 +121,30 @@ void RootLayer::on_ui_render() {
             ImPlot::EndPlot();
         }
     }
+    ImGui::End();
+
+    ImGui::Begin("Trading Log");
+
+    if (ImGui::Button("Clear")) {
+        m_event_log.clear();
+    }
+    ImGui::SameLine();
+    static bool autoScroll = true;
+    ImGui::Checkbox("Auto-scroll", &autoScroll);
+
+    ImGui::Separator();
+
+    ImGui::BeginChild("LogScrollRegion", ImVec2(0, 0), false,
+                      ImGuiWindowFlags_HorizontalScrollbar);
+
+    for (const auto& line : m_event_log) {
+        ImGui::TextUnformatted(line.c_str());
+    }
+
+    if (autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+        ImGui::SetScrollHereY(1.0f);
+
+    ImGui::EndChild();
     ImGui::End();
 
 
@@ -176,32 +206,54 @@ void RootLayer::on_event(Event& event) {
 
 void RootLayer::handle_event(const TradingEvent& ev) {
     switch (ev.type) {
-        case TradingEventType::Connected:
-            ENG_INFO("Connected to IB, nextValidId={}", ev.id);
+        case TradingEventType::Connected: {
+            std::string msg = "Connected to IB (nextValidId=" + std::to_string(ev.id) + ")";
+            ENG_INFO("{}", msg);
+            add_log(msg);
             break;
+        }
+        case TradingEventType::Disconnected: {
+            add_log("Disconnected from IB");
+            ENG_WARN("Disconnected from IB");
+            break;
+        }
         case TradingEventType::Error: {
             const auto& err = std::get<ErrorData>(ev.payload);
-            ENG_ERROR("IB Error {}: {}", err.code, err.message);
+            std::string msg = "Error " + std::to_string(err.code) + ": " + err.message;
+            ENG_ERROR("{}", msg);
+            add_log(msg);
             break;
         }
         case TradingEventType::TickPrice: {
             const auto& tick = std::get<TickPriceData>(ev.payload);
-            ENG_TRACE("Price update: id={} price={} field={}", ev.id, tick.price, tick.field);
+            std::string msg = "TickPrice id=" + std::to_string(ev.id) +
+                              " field=" + std::to_string(tick.field) +
+                              " price=" + std::to_string(tick.price);
+            ENG_TRACE("{}", msg);
+            add_log(msg);
             break;
         }
         case TradingEventType::HistoricalBar: {
             const auto& bar = std::get<HistoricalBarData>(ev.payload).bar;
-            m_hist_bars.push_back(bar);
+            std::string msg = "HistBar " + std::to_string(ev.id) +
+                              " O=" + std::to_string(bar.open) +
+                              " H=" + std::to_string(bar.high) +
+                              " L=" + std::to_string(bar.low) +
+                              " C=" + std::to_string(bar.close) +
+                              " Vol=" + std::to_string(bar.volume);
+            ENG_DEBUG("{}", msg);
+            add_log(msg);
             break;
         }
-        case TradingEventType::HistoricalEnd: {
-            ENG_INFO("Historical download complete for reqId={}", ev.id);
+        default: {
+            std::string msg = "Unhandled event type=" + std::to_string((int)ev.type);
+            ENG_DEBUG("{}", msg);
+            add_log(msg);
             break;
         }
-        default:
-            break;
     }
 }
+
 
 
 void RootLayer::setup_pipeline() {
