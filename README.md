@@ -1,117 +1,132 @@
-# Terra Engine
+# Financio App
 
-**Terra** is a **research-focused**, **work-in-progress** C++ game engine built for **learning high-performance rendering architectures**. It uses **WebGPU via Dawn**, supports **cross-platform rendering**, and emphasizes **data-oriented design (DOD)**, modular abstractions, and efficient multi-pass rendering.
+## Overview
 
-> ⚠️ Not production-ready — Terra is a personal exploration tool for experimenting with real-time rendering and modern engine design.
-
-
-## Features
-
-* **Cross-Platform Rendering** with [Dawn (WebGPU)](https://dawn.googlesource.com/)
-* **Data-Oriented Design** — minimal indirection, better cache locality
-* **Abstracted Renderer Architecture** — pipelines, materials, passes, instances
-* **ImGui** UI integration
-* **Layer System** for modular game logic
-* **JSON Profiling** to Chrome Tracing
-* **High-performance** instancing and batching support
+**Financio** is an experimental, high-performance trading and investment application built using **IMGUI**, **GLFW**, **WebGPU**, and the **IBKR TWS API**.
+The purpose is to automate savings, analyze portfolio performance, backtest investment strategies, and execute them in **live** or **paper trading** mode.
+The system provides a flexible **strategy engine** capable of interpreting and running modular trading strategies.
 
 
-## Build Instructions
+## Architecture
 
-### Prerequisites
+The project uses a layered engine architecture designed for real-time financial analysis and visualization.
 
-* Python 3.6+
-* CMake ≥ 3.16
-* C++20-compatible compiler (tested with Clang and MSVC)
-* Git (with submodule support)
+### Core Components
 
-### Dependencies (included via submodules)
+* **eng::Application**
 
-* [GLFW](https://www.glfw.org/)
-* [ImGui](https://github.com/ocornut/imgui)
-* [glm](https://github.com/g-truc/glm)
-* [spdlog](https://github.com/gabime/spdlog)
-* [WebGPU (Dawn)](https://dawn.googlesource.com/dawn)
-* [glfw3webgpu](https://github.com/eliemichel/glfw3webgpu) for native GLFW surface creation with WebGPU
+  * Manages the main loop, layer stack, event dispatching, and rendering.
+  * Initializes the renderer and UI systems.
 
+* **RootLayer**
 
-### Setup & Build
+  * The main operational layer handling trading events, user interactions, and rendering of charts and logs.
+  * Starts and manages the trading worker thread connected to Interactive Brokers (IBKR).
 
-```bash
-# 1. Clone and initialize submodules
-git clone https://github.com/Rodrigo-Vildosola/terra.git
-cd terra
-python build.py init
+* **Worker System**
 
-# 2. Build the engine (Debug by default)
-python build.py build
+  * Manages asynchronous trading requests and events (connect, subscribe, historical data, etc.).
+  * Decouples UI rendering from I/O and trading communication.
 
-# 3. Run the example game
-python build.py run
-```
+* **RendererAPI**
 
-You can also use:
+  * Abstract rendering interface using WebGPU.
+  * Responsible for graphics context initialization, frame handling, and statistics.
 
-```bash
-python build.py all
-```
+* **UILayer**
 
-To check dependencies, build, and run the game in one go.
+  * Provides integration with **ImGui** and **ImPlot** for UI and data visualization.
 
 
-## WebGPU Distribution
+## Current Functionality
 
-Terra uses the [**WebGPU-distribution**](https://github.com/eliemichel/WebGPU-distribution) system by [@eliemichel](https://github.com/eliemichel) to simplify native WebGPU integration with CMake:
+### Implemented Features
 
+1. **IBKR Connection**
 
-> Terra explicitly uses the **Dawn** backend with **precompiled binaries**, though source builds are supported.
+   * Establishes a connection with the Interactive Brokers Trader Workstation (TWS) or Gateway.
+   * Example connection parameters:
 
-See [`external/webgpu`](external/webgpu) for full setup and integration.
+     ```
+     Host: 127.0.0.1
+     Port: 4002
+     Client ID: 1
+     ```
 
+2. **Market Data Subscription**
 
-## Project Structure
+   * Subscribes to live tick data for a given symbol.
+   * Example: `AAPL` market data via the “SMART” exchange in USD.
 
-```
-terra/
-├── engine/               # Core engine modules (rendering, math, input, etc.)
-├── game/                 # Your actual game or sandbox
-├── external/             # Git submodules and 3rd-party libraries
-├── tools/                # Python tools for build/config/formatting
-├── build.py              # Python-based CMake driver
-└── CMakeLists.txt        # Root CMake config
-```
+3. **Historical Data Requests**
 
+   * Requests historical bars (OHLCV) for a symbol and plots them using **ImPlot**.
+   * Example: Two days of 5-minute bars for AAPL.
 
-## Profiling & Performance
+4. **UI Panels**
 
-Terra supports **Chrome Tracing**-compatible profiling via its `terra/debug/profiler.h`. Use `PROFILE_FUNCTION()` or `PROFILE_SCOPE("name")` to annotate code.
+   * **Trading Panel:** Buttons for data requests and plotting.
+   * **Trading Log:** Scrollable log of incoming events (ticks, errors, connection status).
+   * **Renderer Stats:** Draw call, vertex, and mesh statistics.
 
-To visualize:
+5. **Event System**
 
-1. Run your app
-2. Look for the generated `profile.json` file
-3. Open it in `chrome://tracing/`
+   * Handles asynchronous events from trading operations.
+   * Event types include connection, error, tick price, and historical bar.
 
-> On macOS, use **Xcode Instruments** or `dtrace` for deeper, system-level profiling.
+6. **Layer and Event Dispatch**
 
-
-## Inspirations & Credits
-
-Terra is built as a **learning engine**, inspired by two major educational resources:
-
-* 🎓 [**Learn WebGPU** by @eliemichel](https://github.com/eliemichel/LearnWebGPU): for its **modern C++** bindings, **native WebGPU setup**, and **cross-platform rendering approach**.
-* 🛠️ [**TheCherno’s Game Engine Series**](https://www.youtube.com/c/TheCherno): for its **layered architecture**, **logging/assertion systems**, and general **engine structure patterns**.
-
-This engine combines the **data-driven rendering concepts** from *Learn WebGPU* with the **game-layered application model** taught by *TheCherno*, building a hybrid designed for both **experimentation** and **high-performance graphics learning**.
-
-### Other Resources
-
-* [WebGPU-distribution](https://github.com/eliemichel/WebGPU-distribution)
-* [WebGPU-C++](https://github.com/eliemichel/WebGPU-Cpp)
-* [glfw3webgpu](https://github.com/eliemichel/glfw3webgpu)
+   * Keyboard, mouse, and application events are routed through an event dispatcher.
+   * Layers can attach, detach, and respond independently.
 
 
+## Planned Features
 
-## License
+### 1. Strategy Engine
 
-This project is open-source and available under the MIT License.
+* A modular engine capable of reading strategy definitions (in JSON, Lua, or custom DSL).
+* Executes strategies in both backtesting and live environments.
+* Supports signals, rules, and parameterized logic.
+
+### 2. Portfolio Simulation and Backtesting
+
+* Test portfolios using historical data.
+* Measure performance metrics such as Sharpe ratio, drawdown, and volatility.
+* Compare multiple strategies side by side.
+
+### 3. Live and Paper Trading
+
+* Execution engine will route orders to IBKR via the same API connection.
+* Paper mode will simulate fills and track positions.
+
+### 4. Analytics and Visualization
+
+* Extend ImPlot usage for portfolio performance charts, allocation breakdowns, and correlation matrices.
+* Add configurable dashboards for strategies.
+
+### 5. Persistence Layer
+
+* Local data storage for:
+
+  * Historical data caching.
+  * Strategy definitions.
+  * Simulation results.
+
+### 6. Scripting Interface
+
+* Allow custom strategies and rules via embedded scripting (potentially Lua or Python).
+
+
+
+## Roadmap Summary
+
+| Milestone                | Goal                                       | Status  |
+| ------------------------ | ------------------------------------------ | ------- |
+| Core Engine & Rendering  | Setup WebGPU, IMGUI, GLFW framework        | Done    |
+| IBKR Connectivity        | Establish event-based API interface        | Done    |
+| Historical Data Plotting | Visualize with ImPlot                      | Done    |
+| Strategy Engine          | Load, execute, and simulate strategies     | Planned |
+| Portfolio Simulation     | Multi-asset backtesting and analytics      | Planned |
+| Live Trading Mode        | Order routing via IBKR                     | Planned |
+| UI Enhancements          | Dashboards, settings, multi-strategy views | Planned |
+
