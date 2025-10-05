@@ -21,13 +21,17 @@ void TradingWorker::stop() {
     if (!m_running) return;
     m_running = false;
 
+    m_os_signal.issueSignal();
+
     if (m_thread.joinable()) {
         m_thread.join();
     }
 }
 
 bool TradingWorker::postRequest(const TradingRequest& req) {
-    return m_req_queue.push(req);
+    const bool ok = m_req_queue.push(req);
+    if (ok) m_os_signal.issueSignal();
+    return ok;
 }
 
 bool TradingWorker::pollEvent(TradingEvent& ev) {

@@ -29,3 +29,5 @@ __pycache__/
 eng_init.json
 eng_runtime.json
 eng_destruction.json
+
+project.prompt

@@ -241,6 +241,7 @@ void RootLayer::handle_event(const TradingEvent& ev) {
                               " L=" + std::to_string(bar.low) +
                               " C=" + std::to_string(bar.close) +
                               " Vol=" + std::to_string(bar.volume);
+            m_hist_bars.push_back(bar);
             ENG_DEBUG("{}", msg);
             add_log(msg);
             break;
