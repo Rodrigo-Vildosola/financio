@@ -114,9 +114,8 @@ The project uses a layered engine architecture designed for real-time financial 
 
 ### 6. Scripting Interface
 
-* Allow custom strategies and rules via embedded scripting (potentially Lua or Python).
-
-
+* Strategies will start as JSON rule sets, then gain Python support via pybind11.
+The engine will expose core functions like get_price() and place_order() for Python scripts, allowing custom logic while keeping execution controlled and sandboxed.
 
 ## Roadmap Summary
 
