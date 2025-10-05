@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.16)
 
 project(FinancioProject)
 
+# # Prevent CMake from finding system-wide Abseil packages
+# set(absl_DIR "${CMAKE_SOURCE_DIR}/external/protobuf/third_party/abseil-cpp/cmake" CACHE PATH "Abseil path override" FORCE)
+# set(ABSL_USE_EXTERNAL_PROJECT OFF CACHE BOOL "" FORCE)
+
+
 # Use passed-in vars from Python
 set(CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,14 +25,18 @@ set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/assets")
 set(ENGINE_NAME ${ENGINE_NAME})
 set(APP_NAME ${APP_NAME})
 
-# Dependencies
-add_subdirectory(external/glfw)
-add_subdirectory(external/stb)
-add_subdirectory(external/nlohmann)
-add_subdirectory(external/glm)
-add_subdirectory(external/spdlog)
-add_subdirectory(external/webgpu)
-add_subdirectory(external/glfw3webgpu)
+# Engine Deps
+# add_subdirectory(external/glfw)
+# add_subdirectory(external/glfw3webgpu)
+# add_subdirectory(external/webgpu)
+# add_subdirectory(external/glm)
+# add_subdirectory(external/stb)
+# add_subdirectory(external/nlohmann)
+# add_subdirectory(external/spdlog)
+
+# IPC and Trading Deps
+# add_subdirectory(external/abseil)
+# add_subdirectory(external/protobuf)
 add_subdirectory(external/ibkr)
 
 
@@ -41,8 +50,8 @@ add_library(imgui STATIC ${IMGUI_SRC})
 target_include_directories(imgui PUBLIC external/imgui)
 
 # Targets
-add_subdirectory(engine)
-add_subdirectory(app)
+# add_subdirectory(engine)
+# add_subdirectory(app)
 add_subdirectory(trader)
 
 # Add optimization flags for GCC and Clang
@@ -57,23 +66,23 @@ endif()
 
 
 
-if (FNC_ENABLE_ASSERTS)
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_ASSERTS)
-endif()
+# if (FNC_ENABLE_ASSERTS)
+#     target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_ASSERTS)
+# endif()
 
-if (FNC_ENABLE_DEBUG_LOGGING)
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_DEBUG_LOGGING)
-endif()
+# if (FNC_ENABLE_DEBUG_LOGGING)
+#     target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_DEBUG_LOGGING)
+# endif()
 
 
 
-string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
+# string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
 
-if (BUILD_TYPE_UPPER STREQUAL "RELEASE" OR BUILD_TYPE_UPPER STREQUAL "RELWITHDEBINFO")
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_RELEASE=1)
-elseif (BUILD_TYPE_UPPER STREQUAL "TESTING")
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_TESTING=1)
-endif()
+# if (BUILD_TYPE_UPPER STREQUAL "RELEASE" OR BUILD_TYPE_UPPER STREQUAL "RELWITHDEBINFO")
+#     target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_RELEASE=1)
+# elseif (BUILD_TYPE_UPPER STREQUAL "TESTING")
+#     target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_TESTING=1)
+# endif()
 
 
 # add_executable(example_glfw_wgpu

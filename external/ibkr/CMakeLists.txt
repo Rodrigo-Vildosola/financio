@@ -56,10 +56,11 @@ if(${ENABLE_LINTER})
     endif()
 endif()
 
-add_subdirectory("src/cppclient/twsapi/")
+add_subdirectory("src/twsapi/")
+
 option(IBKR_BUILD_TESTCPPCLIENT "Whether or not to build the TWS API example/test client" FALSE)
-if( IBKR_BUILD_TESTCPPCLIENT )
-    find_package( Threads )
+if(IBKR_BUILD_TESTCPPCLIENT)
+    find_package(Threads)
     add_subdirectory("samples/Cpp/TestCppClient/")
 endif()
 
@@ -72,14 +73,14 @@ endif()
 
 set(CLANG_FORMAT_EXCLUDE_PATTERNS "build" "vcpkg")
 file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h *.c)
-foreach (SOURCE_FILE ${ALL_SOURCE_FILES})
+foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
     foreach (EXCLUDE_PATTERN ${CLANG_FORMAT_EXCLUDE_PATTERNS})
         string(FIND ${SOURCE_FILE} ${EXCLUDE_PATTERN} PROJECT_TRDPARTY_DIR_FOUND)
         if (NOT ${PROJECT_TRDPARTY_DIR_FOUND} EQUAL -1)
             list(REMOVE_ITEM ALL_SOURCE_FILES ${SOURCE_FILE})
-        endif ()
+        endif()
     endforeach()
-endforeach ()
+endforeach()
 
 find_program(FORMAT clang-format clang-format-10)
 add_custom_target(
@@ -109,8 +110,6 @@ include_directories(
   "${PROJECT_SOURCE_DIR}"   # to find foo/foo.h
   "${PROJECT_BINARY_DIR}")  # to find foo/config.h
 
-export(TARGETS twsapi FILE "${PROJECT_BINARY_DIR}/twsapiConfig.cmake")
-export(PACKAGE twsapi)
 
 # Create the twsapiConfig.cmake and twsapiConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}" "${INSTALL_INCLUDE_DIR}")

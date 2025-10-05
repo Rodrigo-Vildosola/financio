@@ -36,8 +36,8 @@ To install the above run the following commands:
 "Protobuf C++ library" for MS Visual Studio can be downloaded from: https://vcpkg.io/en/package/protobuf.html (This site is owned and maintained by Microsoft Corp)
 Vcpkg details are here: https://devblogs.microsoft.com/cppblog/vcpkg-is-now-included-with-visual-studio/
 
-To generate C++ proto file for Windows, goto "source" directory and run:
-    protoc --proto_path=./proto --cpp_out=./cppclient/client/protobuf proto/*.proto
+To generate C++ proto file for Windows, goto "src" directory and run:
+    protoc --proto_path=./proto --cpp_out=./twsapi/protobuf proto/*.proto
 
 Linux: to build and run C++ application under Linux the following software is required: Protobuf for Linux library
 To install the above run the following commands:
@@ -45,8 +45,8 @@ To install the above run the following commands:
 
 "Protobuf for Linux" library installation details are here: https://protobuf.dev/installation/)
 
-To generate C++ proto file for Linux, goto "source" directory and run:
-    protoc --proto_path=./proto --experimental_allow_proto3_optional --cpp_out=./cppclient/client/protobufUnix proto/*.proto
+To generate C++ proto file for Linux, goto "src" directory and run:
+    protoc --proto_path=./proto --experimental_allow_proto3_optional --cpp_out=./twsapi/protobufUnix proto/*.proto
 
 
 ---------------------------------------------------------------------------------------------
