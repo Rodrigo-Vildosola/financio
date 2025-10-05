@@ -29,7 +29,7 @@ add_subdirectory(external/spdlog)
 add_subdirectory(external/webgpu)
 add_subdirectory(external/glfw3webgpu)
 add_subdirectory(external/ibkr)
-
+add_subdirectory(external/zmq)
 
 
 file(GLOB IMGUI_SRC
@@ -44,6 +44,7 @@ target_include_directories(imgui PUBLIC external/imgui)
 # Targets
 add_subdirectory(engine)
 add_subdirectory(app)
+add_subdirectory(trader)
 
 # Add optimization flags for GCC and Clang
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

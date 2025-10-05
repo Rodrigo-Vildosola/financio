@@ -31,3 +31,4 @@ eng_runtime.json
 eng_destruction.json
 
 project.prompt
+external/zmq
