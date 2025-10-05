@@ -78,7 +78,7 @@ def build_intelrdfp():
     # build needed
     logging.info("No prebuilt lib found, building Intel RDFP (this may take a while)...")
     work_dir = Path(BUILD_DIR) / "_deps" / "intelrdfp-src"
-    src_dir = Path("external/IntelRDFPMathLib20U3/LIBRARY")
+    src_dir = Path("external/intel_decimal/LIBRARY")
 
     if work_dir.exists():
         shutil.rmtree(work_dir)

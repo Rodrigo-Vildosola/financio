@@ -56,7 +56,7 @@ if(${ENABLE_LINTER})
     endif()
 endif()
 
-add_subdirectory("source/cppclient/twsapi/")
+add_subdirectory("src/cppclient/twsapi/")
 option(IBKR_BUILD_TESTCPPCLIENT "Whether or not to build the TWS API example/test client" FALSE)
 if( IBKR_BUILD_TESTCPPCLIENT )
     find_package( Threads )
