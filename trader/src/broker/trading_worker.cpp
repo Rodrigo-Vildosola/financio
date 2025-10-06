@@ -79,15 +79,14 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
                 // You can call this separately if lifecycle messages are routed differently.
                 // Example left for completeness.
                 ENG_WARN("CONTROL_CONNECT received via TradingCommand; should come from lifecycle instead.");
-                break;
-            }
 
-            const auto& conn = cmd.connect();
-            bool connected = m_client.eConnect(conn.host().c_str(), conn.port(), conn.client_id());
+                const auto& conn = cmd.connect();
+                bool connected = m_client.eConnect(conn.host().c_str(), conn.port(), conn.client_id());
 
-            if (connected) {
-                m_reader = std::make_unique<EReader>(&m_client, &m_os_signal);
-                m_reader->start();
+                if (connected) {
+                    m_reader = std::make_unique<EReader>(&m_client, &m_os_signal);
+                    m_reader->start();
+                }
             }
             break;
         }
