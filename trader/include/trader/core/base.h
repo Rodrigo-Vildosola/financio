@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <string>
 
+namespace trader {
+
 // Signed integer aliases
 using i8  = std::int8_t;
 using i16 = std::int16_t;
@@ -28,3 +30,5 @@ constexpr u64 STATUS_LEN  = 32;  // order status strings
 constexpr u64 SYMBOL_LEN  = 16;  // ticker symbols ("AAPL", "ES", etc.)
 constexpr u64 EXCHANGE_LEN = 16; // exchange identifiers ("SMART", "NYSE")
 constexpr u64 CURRENCY_LEN = 8;  // currencies ("USD", "EUR")
+
+}

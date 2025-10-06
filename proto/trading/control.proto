@@ -2,33 +2,60 @@ syntax = "proto3";
 
 package financio.trading;
 
-import "google/protobuf/timestamp.proto";
 import "trading/common.proto";
+import "trading/lifecycle.proto";
 
-// Control and status flow for UI <-> Trader lifecycle.
+// Messages sent UI -> Trader to initiate trading operations.
 
-message StartTrader {}
-message StopTrader {}
 
-message ConnectIbkr {
-  string host      = 1;
-  int32  port      = 2;
-  int32  client_id = 3;
+
+message SubscribeMarketData {
+  string symbol    = 1;
+  string exchange  = 2;
+  string currency  = 3;
+  string sec_type  = 4;
 }
 
-message DisconnectIbkr {}
+message UnsubscribeMarketData {
+  string symbol    = 1;
+  string exchange  = 2;
+  string currency  = 3;
+  string sec_type  = 4;
+}
 
-message UiCommand {
-  oneof cmd {
-    StartTrader   start           = 1;
-    StopTrader    stop            = 2;
-    ConnectIbkr   connect_ibkr    = 3;
-    DisconnectIbkr disconnect_ibkr = 4;
+message PlaceOrder {
+  double quantity   = 1;
+  double limit_px   = 2;
+  double stop_px    = 3;
+  string action     = 4; // "BUY"/"SELL"
+  string order_type = 5; // "MKT","LMT","STP"
+}
+
+message CancelOrder {
+  int32 order_id = 1;
+}
+
+
+message HistoricalData {
+  string symbol       = 1;
+  string exchange     = 2;
+  string currency     = 3;
+  string sec_type     = 4;
+  string duration_str = 5;
+  string bar_size     = 6;
+  string what_to_show = 7;
+  int32  use_rth      = 8;
+}
+
+message ControlMessage {
+  ControlType type = 1;
+  int32 id         = 2;
+  oneof payload {
+    ConnectBroker     connect       = 10;
+    SubscribeMarketData  sub_mkt_data    = 11;
+    UnsubscribeMarketData unsub_mkt_data = 12;
+    PlaceOrder place_order               = 13;
+    CancelOrder cancel_order             = 14;
+    HistoricalData  req_historical_data  = 15;
   }
-}
-
-message TraderStatusUpdate {
-  TraderStatus status = 1;
-  string message      = 2;
-  google.protobuf.Timestamp ts = 3;
 }

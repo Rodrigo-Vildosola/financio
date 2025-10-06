@@ -6,45 +6,45 @@ package financio.trading;
 
 // Common primitives and enums shared by all modules.
 
-// ---------- Trader lifecycle ----------
-enum TraderStatus {
-  TRADER_STATUS_UNKNOWN          = 0;
-  TRADER_STATUS_STARTING         = 1;
-  TRADER_STATUS_READY            = 2;
-  TRADER_STATUS_IBKR_CONNECTING  = 3;
-  TRADER_STATUS_IBKR_CONNECTED   = 4;
-  TRADER_STATUS_IBKR_DISCONNECTED = 5;
-  TRADER_STATUS_ERROR            = 6;
+// ---------- BACKEND lifecycle ----------
+enum BackendStatus {
+  BACKEND_STATUS_UNKNOWN           = 0;
+  BACKEND_STATUS_STARTING          = 1;
+  BACKEND_STATUS_READY             = 2;
+  BACKEND_STATUS_IBKR_CONNECTING   = 3;
+  BACKEND_STATUS_IBKR_CONNECTED    = 4;
+  BACKEND_STATUS_IBKR_DISCONNECTED = 5;
+  BACKEND_STATUS_ERROR             = 6;
 }
 
 // ---------- Request and event type enums ----------
-enum RequestType {
-  REQUEST_TYPE_UNSPECIFIED = 0;
-  CONNECT                  = 1;
-  DISCONNECT               = 2;
-  SUBSCRIBE_MARKET_DATA    = 3;
-  UNSUBSCRIBE_MARKET_DATA  = 4;
-  PLACE_ORDER              = 5;
-  CANCEL_ORDER             = 6;
-  REQUEST_HISTORICAL       = 7;
-  REQUEST_ACCOUNT_DATA     = 8;
-  REQUEST_NEWS             = 9;
+enum ControlType {
+  CONTROL_UNSPECIFIED  = 0;
+  CONTROL_CONNECT      = 1;
+  CONTROL_DISCONNECT   = 2;
+  CONTROL_SUB_MKT      = 3;
+  CONTROL_UNSUB_MKT    = 4;
+  CONTROL_PLACE_ORDER  = 5;
+  CONTROL_CANCEL_ORDER = 6;
+  CONTROL_HISTORICAL   = 7;
+  CONTROL_ACCOUNT_DATA = 8;
+  CONTROL_NEWS         = 9;
 }
 
-enum EventType {
-  EVENT_TYPE_UNSPECIFIED = 0;
-  CONNECTED              = 1; 
-  DISCONNECTED           = 2; 
-  ERROR_EVT              = 3; 
-  TICK_PRICE             = 10;
-  TICK_SIZE              = 11;
-  ORDER_STATUS           = 12;
-  ORDER_FILLED           = 13;
-  HISTORICAL_BAR         = 20;
-  HISTORICAL_END         = 21;
-  ACCOUNT_SUMMARY        = 30;
-  PORTFOLIO_UPDATE       = 31;
-  NEWS_HEADLINE          = 32;
+enum StateType {
+  STATE_UNSPECIFIED   = 0;
+  STATE_CONNECTED     = 1;
+  STATE_DISCONNECTED  = 2;
+  STATE_ERROR         = 3;
+  STATE_TICK_PRICE    = 10;
+  STATE_TICK_SIZE     = 11;
+  STATE_ORDER_STATUS  = 12;
+  STATE_ORDER_FILLED  = 13;
+  STATE_HIST_BAR      = 20;
+  STATE_HIST_END      = 21;
+  STATE_ACCOUNT_SUM   = 30;
+  STATE_PORTFOLIO     = 31;
+  STATE_NEWS          = 32;
 }
 
 // ---------- Common structs ----------
@@ -61,15 +61,22 @@ message TickAttribPB {
 }
 
 message ExecutionPB {
-  string exec_id   = 1;
-  string time      = 2;
-  string acct      = 3;
-  string exchange  = 4;
-  string side      = 5;
-  double qty       = 6;
-  double price     = 7;
-  int64  order_id  = 8;
-  double avg_price = 9;
+  string exec_id     = 1;  // IBKR execution ID
+  string time        = 2;  // Execution timestamp
+  string acct_number = 3;  // Account code
+  string exchange    = 4;  // Executing exchange
+  string side        = 5;  // "BOT" / "SLD"
+  double shares      = 6;  // Executed quantity
+  double price       = 7;  // Execution price
+  int64  perm_id     = 8;  // Permanent order ID
+  int32  client_id   = 9;  // Client ID
+  int64  order_id    = 10; // Local order ID
+  double cum_qty     = 11; // Cumulative quantity filled
+  double avg_price   = 12; // Average fill price
+  string order_ref   = 13; // IBKR order ref string
+  string model_code  = 14; // Model portfolio code
+  int32  last_liquidity = 15; // Last liquidity flag (0–4)
+  bool   pending_price_revision = 16; // IBKR internal
 }
 
 

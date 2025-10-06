@@ -1,8 +1,9 @@
 #pragma once
 
 #include "trader/core/ring_buffer.h"
-#include "trader/core/request_types.h"
-#include "trader/core/event_types.h"
+#include "trading/control.pb.h"
+#include "trading/state.pb.h"
+
 #include "trader/broker/trading_wrapper.h"
 
 // IB API headers
@@ -13,6 +14,9 @@
 #include <thread>
 #include <atomic>
 #include <memory>
+
+namespace trader {
+
 
 /**
  * TradingWorker
@@ -32,22 +36,24 @@ public:
     void stop();
 
     // API for main thread
-    bool postRequest(const TradingRequest& req);
-    bool pollEvent(TradingEvent& ev);
+    bool postRequest(const financio::trading::ControlMessage& c_msq);
+    bool pollEvent(financio::trading::StateMessage& s_msg);
 
 private:
     void run();
-    void handleRequest(const TradingRequest& req);
+    void handleRequest(const financio::trading::ControlMessage& c_msq);
 
 private:
     std::atomic<bool> m_running{false};
     std::thread m_thread;
 
-    RingBuffer<TradingRequest, QUEUE_SIZE> m_req_queue;
-    RingBuffer<TradingEvent, QUEUE_SIZE> m_ev_queue;
+    RingBuffer<financio::trading::ControlMessage, QUEUE_SIZE> m_control_queue;
+    RingBuffer<financio::trading::StateMessage, QUEUE_SIZE> m_state_queue;
 
     TradingWrapper m_wrapper;         // translates IB callbacks -> TradingEvent
     EReaderOSSignal m_os_signal;      // IB signaling
     EClientSocket m_client;           // IB client socket
     std::unique_ptr<EReader> m_reader; // IB reader (must be heap)
 };
+
+}

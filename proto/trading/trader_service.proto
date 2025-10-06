@@ -2,39 +2,39 @@ syntax = "proto3";
 
 package financio.trading;
 
-import "trading/requests.proto";
-import "trading/events.proto";
+import "trading/lifecycle.proto";
 import "trading/control.proto";
+import "trading/state.proto";
 
 // Unified envelopes
-message UiToTrader {
+message FrontendToBackend {
   oneof kind {
-    UiCommand     control = 1;
-    ClientRequest trading = 2;
+    FrontendCommand     control = 1;
+    ControlMessage      message = 2;
   }
 }
 
-message TraderToUi {
+message BackendToFrontend {
   oneof kind {
-    TraderStatusUpdate status = 1;
-    ServerEvent        event  = 2;
+    BackendStatusUpdate status   = 1;
+    StateMessage        state   = 2;
   }
 }
 
 // Main bidirectional session
-service Trader {
-  rpc Session(stream UiToTrader) returns (stream TraderToUi);
+service TradingLink {
+  rpc Session(stream ControlMessage) returns (stream StateMessage);
 }
 
 // Simple health check
-message PingRequest { 
+message HealthPing { 
     string note = 1; 
 }
 
-message PongReply { 
+message HealthPong { 
     string note = 1; 
 }
 
 service TraderControl {
-  rpc CheckHealth(PingRequest) returns (PongReply);
+  rpc CheckHealth(HealthPing) returns (HealthPong);
 }

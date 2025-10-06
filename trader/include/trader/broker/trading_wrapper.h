@@ -1,11 +1,13 @@
 
 #include "trader/broker/base_wrapper.h"
 #include "trader/core/ring_buffer.h"
-#include "trader/core/event_types.h"
+#include "trading/state.pb.h"
 
 // IB API headers
 #include <twsapi/Contract.h>
 
+
+namespace trader {
 /**
  * TradingWrapper
  * --------------
@@ -14,7 +16,7 @@
  */
 class TradingWrapper : public BaseEWrapper {
 public:
-    TradingWrapper(RingBuffer<TradingEvent, 1024>& evQueue);
+    TradingWrapper(RingBuffer<financio::trading::StateMessage, 1024>& s_queue);
 
     // ---- Core connection lifecycle ----
     void nextValidId(OrderId orderId) override;
@@ -36,5 +38,7 @@ public:
     void historicalDataEnd(i32 reqId, const std::string& start, const std::string& end) override;
 
 private:
-    RingBuffer<TradingEvent, 1024>& m_ev_queue;
+    RingBuffer<financio::trading::StateMessage, 1024>& m_state_queue;
 };
+
+}

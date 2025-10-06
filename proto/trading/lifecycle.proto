@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package financio.trading;
+
+import "google/protobuf/timestamp.proto";
+import "trading/common.proto";
+
+// Lifecycle and connectivity control for Frontend <-> Backend interaction.
+
+message StartBackend {}
+message StopBackend {}
+
+message ConnectBroker {
+  string host      = 1;
+  int32  port      = 2;
+  int32  client_id = 3;
+}
+
+message DisconnectBroker {}
+
+message FrontendCommand {
+  oneof cmd {
+    StartBackend     start_backend     = 1;
+    StopBackend      stop_backend      = 2;
+    ConnectBroker    connect_broker    = 3;
+    DisconnectBroker disconnect_broker = 4;
+  }
+}
+
+message BackendStatusUpdate {
+  BackendStatus status = 1;
+  string message       = 2;
+  google.protobuf.Timestamp ts = 3;
+}

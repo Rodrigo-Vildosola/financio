@@ -2,6 +2,7 @@
 
 // IB API
 #include <twsapi/EWrapper.h>              // brings in forward decls & typedefs used below
+#include "trader/core/base.h"
 
 // No-op base that satisfies all pure virtual methods in EWrapper.
 // Derive your real wrapper from this and override only what you need.

@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package financio.trading;
+
+import "google/protobuf/timestamp.proto";
+import "trading/common.proto";
+
+// Messages sent Trader -> UI to reflect trading data and outcomes.
+
+message Error {
+  int32 code = 1;
+  string message = 2;
+}
+
+message TickPrice {
+  double price   = 1;
+  int32  field   = 2;
+  TickAttribPB attrib = 3;
+}
+
+message TickSize {
+  int32 field = 1;
+  double size = 2;
+}
+
+message OrderStatus {
+  string status       = 1;
+  double filled       = 2;
+  double remaining    = 3;
+  double avg_fill_px  = 4;
+}
+
+message OrderFill {
+  ExecutionPB exec = 1;
+}
+
+message HistoricalBar {
+  BarPB bar = 1;
+}
+
+message HistoricalEnd {
+  string start = 1;
+  string end   = 2;
+}
+
+message AccountSummary {
+  string account  = 1;
+  string key      = 2;
+  string value    = 3;
+  string currency = 4;
+}
+
+message PortfolioPosition {
+  string account   = 1;
+  string symbol    = 2;
+  double position  = 3;
+  double avg_cost  = 4;
+}
+
+message NewsHeadline {
+  string provider  = 1;
+  string headline  = 2;
+}
+
+message StateMessage {
+  StateType type = 1;
+  int64 id       = 2;
+  google.protobuf.Timestamp ts = 3;
+
+  oneof payload {
+    Error           error            = 10;
+    TickPrice       tick_price       = 11;
+    TickSize        tick_size        = 12;
+    OrderStatus     order_status     = 13;
+    OrderFill     order_filled     = 14;
+    HistoricalBar   hist_bar         = 20;
+    HistoricalEnd   hist_end         = 21;
+    AccountSummary          account_summary  = 30;
+    PortfolioPosition       portfolio_update = 31;
+    NewsHeadline            news_headline    = 32;
+  }
+}

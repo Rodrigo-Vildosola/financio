@@ -108,15 +108,16 @@ def build_intelrdfp():
 def needs_proto_regen():
     newest_proto = max(p.stat().st_mtime for p in Path("proto/trading").glob("*.proto"))
     try:
-        oldest_gen = min(p.stat().st_mtime for p in Path("proto/trading/generated").glob("*.pb.h"))
+        oldest_gen = min(p.stat().st_mtime for p in Path("proto/generated/trading").glob("*.pb.h"))
         return newest_proto > oldest_gen
     except ValueError:
         return True
 
 def generate_protos():
     logging.info("Generating protobuf and gRPC files...")
+
     proto_dir = Path("proto/trading")
-    out_dir = proto_dir / "generated"
+    out_dir = Path("proto/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     proto_files = [str(p) for p in proto_dir.glob("*.proto")]
@@ -132,14 +133,14 @@ def generate_protos():
 
     cmd = [
         protoc,
-        f"-Iproto",
-        f"--cpp_out={out_dir}",
-        f"--grpc_out={out_dir}",
+        "-Iproto",                      # base import path
+        f"--cpp_out={out_dir}",         # C++ output
+        f"--grpc_out={out_dir}",        # gRPC output
         f"--plugin=protoc-gen-grpc={grpc_plugin}",
     ] + proto_files
 
     run_cmd(cmd)
-    logging.info(colored("Protobuf/gRPC code generated successfully.", LogColor.OKGREEN))
+    logging.info(colored(f"Generated C++ protobuf files in {out_dir}", LogColor.OKGREEN))
 
 def run_cmd(cmd, cwd=None, fail_msg=None):
     try:
@@ -170,6 +171,12 @@ def check_dependencies():
     else:
         logging.info(colored("All dependencies are present.", LogColor.OKGREEN))
 
+def codegen():
+    if needs_proto_regen():
+        generate_protos()
+    
+    build_intelrdfp()
+
 def configure_cmake(build_type):
     logging.info(f"Configuring CMake ({build_type})...")
     os.makedirs(BUILD_DIR, exist_ok=True)
@@ -178,11 +185,6 @@ def configure_cmake(build_type):
 
 def build(parallel=True, verbose=False):
     logging.info("Building project...")
-
-    if needs_proto_regen():
-        generate_protos()
-    
-    build_intelrdfp()
 
     build_cmd = ["cmake", "--build", BUILD_DIR]
     if parallel:
@@ -246,10 +248,12 @@ def main():
         run_executable()
     elif args.command == "build":
         check_dependencies()
+        codegen()
         configure_cmake(args.config)
         build(parallel=not args.no_parallel, verbose=args.verbose)
     elif args.command == "all":
         check_dependencies()
+        codegen()
         configure_cmake(args.config)
         build(parallel=not args.no_parallel, verbose=args.verbose)
         run_executable()
