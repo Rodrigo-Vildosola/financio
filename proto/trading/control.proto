@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package financio.trading;
+
+import "google/protobuf/timestamp.proto";
+import "trading/common.proto";
+
+// Control and status flow for UI <-> Trader lifecycle.
+
+message StartTrader {}
+message StopTrader {}
+
+message ConnectIbkr {
+  string host      = 1;
+  int32  port      = 2;
+  int32  client_id = 3;
+}
+
+message DisconnectIbkr {}
+
+message UiCommand {
+  oneof cmd {
+    StartTrader   start           = 1;
+    StopTrader    stop            = 2;
+    ConnectIbkr   connect_ibkr    = 3;
+    DisconnectIbkr disconnect_ibkr = 4;
+  }
+}
+
+message TraderStatusUpdate {
+  TraderStatus status = 1;
+  string message      = 2;
+  google.protobuf.Timestamp ts = 3;
+}

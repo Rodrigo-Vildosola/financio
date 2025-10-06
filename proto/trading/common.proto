@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package financio.trading;
+
+// import "google/protobuf/timestamp.proto";
+
+// Common primitives and enums shared by all modules.
+
+// ---------- Trader lifecycle ----------
+enum TraderStatus {
+  TRADER_STATUS_UNKNOWN          = 0;
+  TRADER_STATUS_STARTING         = 1;
+  TRADER_STATUS_READY            = 2;
+  TRADER_STATUS_IBKR_CONNECTING  = 3;
+  TRADER_STATUS_IBKR_CONNECTED   = 4;
+  TRADER_STATUS_IBKR_DISCONNECTED = 5;
+  TRADER_STATUS_ERROR            = 6;
+}
+
+// ---------- Request and event type enums ----------
+enum RequestType {
+  REQUEST_TYPE_UNSPECIFIED = 0;
+  CONNECT                  = 1;
+  DISCONNECT               = 2;
+  SUBSCRIBE_MARKET_DATA    = 3;
+  UNSUBSCRIBE_MARKET_DATA  = 4;
+  PLACE_ORDER              = 5;
+  CANCEL_ORDER             = 6;
+  REQUEST_HISTORICAL       = 7;
+  REQUEST_ACCOUNT_DATA     = 8;
+  REQUEST_NEWS             = 9;
+}
+
+enum EventType {
+  EVENT_TYPE_UNSPECIFIED = 0;
+  CONNECTED              = 1; 
+  DISCONNECTED           = 2; 
+  ERROR_EVT              = 3; 
+  TICK_PRICE             = 10;
+  TICK_SIZE              = 11;
+  ORDER_STATUS           = 12;
+  ORDER_FILLED           = 13;
+  HISTORICAL_BAR         = 20;
+  HISTORICAL_END         = 21;
+  ACCOUNT_SUMMARY        = 30;
+  PORTFOLIO_UPDATE       = 31;
+  NEWS_HEADLINE          = 32;
+}
+
+// ---------- Common structs ----------
+
+message DecimalPB { int64 mantissa = 1; int32 scale = 2; }
+
+message TickAttribPB {
+  bool can_auto_execute = 1;
+  bool past_limit       = 2;
+  bool pre_open         = 3;
+  bool bid_past_low     = 4; // LEFT FROM DEBUG
+  bool ask_past_high    = 5; // LEFT FROM DEBUG
+  bool delayed          = 6; // LEFT FROM DEBUG
+}
+
+message ExecutionPB {
+  string exec_id   = 1;
+  string time      = 2;
+  string acct      = 3;
+  string exchange  = 4;
+  string side      = 5;
+  double qty       = 6;
+  double price     = 7;
+  int64  order_id  = 8;
+  double avg_price = 9;
+}
+
+
+message BarPB {
+  string time   = 1;
+  double open   = 2;
+  double high   = 3;
+  double low    = 4;
+  double close  = 5;
+  double wap    = 6;
+  double volume = 7;
+  int32  count  = 8;
+}
+
+message ExecutionFilterPB {
+  int32  client_id  = 1;
+  string acct_code  = 2;
+  string time       = 3;
+  string symbol     = 4;
+  string sec_type   = 5;
+  string exchange   = 6;
+  string side       = 7;
+  int32  last_n_days = 8;
+}

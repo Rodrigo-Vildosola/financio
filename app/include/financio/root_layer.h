@@ -1,8 +1,7 @@
 #pragma once
 
-#include "financio/client/trading_worker.h"
-
 #include <eng/enginio.h>
+#include <queue>
 
 struct alignas(16) UniformBlock {
     glm::mat4 u_view;
@@ -30,22 +29,18 @@ public:
 	void on_event(eng::Event& e) override;
 
 private:
-    TradingWorker m_worker;
-
 	glm::vec2 m_last_mouse_position = {};
 	bool m_mouse_dragging = false;
 
 	bool m_keys[512] = {}; // Keyboard state array
 
-	void handle_event(const TradingEvent& ev);
+	// void handle_event(const TradingEvent& ev);
 
 	void setup_pipeline();
 	eng::ref<eng::RenderPass> create_main_pass();
 
 	static constexpr int MAX_LOG_LINES = 2000;
     std::deque<std::string> m_event_log;
-
-	std::vector<Bar> m_hist_bars;
 
 	void add_log(const std::string& msg) {
         if (m_event_log.size() >= MAX_LOG_LINES)

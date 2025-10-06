@@ -22,15 +22,6 @@ RootLayer::RootLayer() : Layer("RootLayer") {}
 void RootLayer::on_attach() {
     PROFILE_FUNCTION();
 
-    m_worker.start();
-
-    // Example: auto-connect when layer attaches
-    TradingRequest req;
-    req.type = TradingRequestType::Connect;
-    req.id   = 0;
-    req.payload = ConnectRequest{ "127.0.0.1", 4002, 1 };
-    m_worker.postRequest(req);
-
 #if 0
     setup_pipeline();
 #endif
@@ -39,19 +30,17 @@ void RootLayer::on_attach() {
 
 void RootLayer::on_detach() {
     ENG_INFO("RootLayer detached");
-
-    m_worker.stop();
 }
 
 void RootLayer::on_update(Timestep ts) {
     PROFILE_FUNCTION();
 
-    TradingEvent ev;
-    while (m_worker.pollEvent(ev)) {
-        ENG_DEBUG("TradingEvent received: type={}, id={}", (int)ev.type, ev.id);
+    // TradingEvent ev;
+    // while (m_worker.pollEvent(ev)) {
+    //     ENG_DEBUG("TradingEvent received: type={}, id={}", (int)ev.type, ev.id);
 
-        handle_event(ev);
-    }
+    //     handle_event(ev);
+    // }
 
 #if 0
     ref<RenderPass> main_pass = create_main_pass();
@@ -86,41 +75,41 @@ void RootLayer::on_ui_render() {
 
     ImGui::Begin("Trading");
     if (ImGui::Button("Subscribe AAPL")) {
-        TradingRequest req;
-        req.type = TradingRequestType::SubscribeMarketData;
-        req.id   = 1; // tickerId
-        req.payload = MarketDataRequest{ "AAPL", "SMART", "USD", "STK" };
-        m_worker.postRequest(req);
+        // TradingRequest req;
+        // req.type = TradingRequestType::SubscribeMarketData;
+        // req.id   = 1; // tickerId
+        // req.payload = MarketDataRequest{ "AAPL", "SMART", "USD", "STK" };
+        // m_worker.postRequest(req);
     }
 
     if (ImGui::Button("Request AAPL Historical")) {
-        TradingRequest req;
-        req.type = TradingRequestType::RequestHistorical;
-        req.id   = 2; // reqId
-        req.payload = HistoricalRequest{
-            "AAPL", "SMART", "USD", "STK",
-            "2 D", "5 mins", "TRADES", 1
-        };
-        m_worker.postRequest(req);
-        m_hist_bars.clear();
+        // TradingRequest req;
+        // req.type = TradingRequestType::RequestHistorical;
+        // req.id   = 2; // reqId
+        // req.payload = HistoricalRequest{
+        //     "AAPL", "SMART", "USD", "STK",
+        //     "2 D", "5 mins", "TRADES", 1
+        // };
+        // m_worker.postRequest(req);
+        // m_hist_bars.clear();
     }
 
     // Plot if we have bars
-    if (!m_hist_bars.empty()) {
-        if (ImPlot::BeginPlot("AAPL Historical Close")) {
-            std::vector<f64> xs, closes;
-            xs.reserve(m_hist_bars.size());
-            closes.reserve(m_hist_bars.size());
+    // if (!m_hist_bars.empty()) {
+    //     if (ImPlot::BeginPlot("AAPL Historical Close")) {
+    //         std::vector<f64> xs, closes;
+    //         xs.reserve(m_hist_bars.size());
+    //         closes.reserve(m_hist_bars.size());
 
-            for (size_t i = 0; i < m_hist_bars.size(); i++) {
-                xs.push_back((f64)i); // index as x
-                closes.push_back(m_hist_bars[i].close);
-            }
+    //         for (size_t i = 0; i < m_hist_bars.size(); i++) {
+    //             xs.push_back((f64)i); // index as x
+    //             closes.push_back(m_hist_bars[i].close);
+    //         }
 
-            ImPlot::PlotLine("Close", xs.data(), closes.data(), (i32)xs.size());
-            ImPlot::EndPlot();
-        }
-    }
+    //         ImPlot::PlotLine("Close", xs.data(), closes.data(), (i32)xs.size());
+    //         ImPlot::EndPlot();
+    //     }
+    // }
     ImGui::End();
 
     ImGui::Begin("Trading Log");
@@ -204,56 +193,56 @@ void RootLayer::on_event(Event& event) {
 }
 
 
-void RootLayer::handle_event(const TradingEvent& ev) {
-    switch (ev.type) {
-        case TradingEventType::Connected: {
-            std::string msg = "Connected to IB (nextValidId=" + std::to_string(ev.id) + ")";
-            ENG_INFO("{}", msg);
-            add_log(msg);
-            break;
-        }
-        case TradingEventType::Disconnected: {
-            add_log("Disconnected from IB");
-            ENG_WARN("Disconnected from IB");
-            break;
-        }
-        case TradingEventType::Error: {
-            const auto& err = std::get<ErrorData>(ev.payload);
-            std::string msg = "Error " + std::to_string(err.code) + ": " + err.message;
-            ENG_ERROR("{}", msg);
-            add_log(msg);
-            break;
-        }
-        case TradingEventType::TickPrice: {
-            const auto& tick = std::get<TickPriceData>(ev.payload);
-            std::string msg = "TickPrice id=" + std::to_string(ev.id) +
-                              " field=" + std::to_string(tick.field) +
-                              " price=" + std::to_string(tick.price);
-            ENG_TRACE("{}", msg);
-            add_log(msg);
-            break;
-        }
-        case TradingEventType::HistoricalBar: {
-            const auto& bar = std::get<HistoricalBarData>(ev.payload).bar;
-            std::string msg = "HistBar " + std::to_string(ev.id) +
-                              " O=" + std::to_string(bar.open) +
-                              " H=" + std::to_string(bar.high) +
-                              " L=" + std::to_string(bar.low) +
-                              " C=" + std::to_string(bar.close) +
-                              " Vol=" + std::to_string(bar.volume);
-            m_hist_bars.push_back(bar);
-            ENG_DEBUG("{}", msg);
-            add_log(msg);
-            break;
-        }
-        default: {
-            std::string msg = "Unhandled event type=" + std::to_string((int)ev.type);
-            ENG_DEBUG("{}", msg);
-            add_log(msg);
-            break;
-        }
-    }
-}
+// void RootLayer::handle_event(const TradingEvent& ev) {
+//     switch (ev.type) {
+//         case TradingEventType::Connected: {
+//             std::string msg = "Connected to IB (nextValidId=" + std::to_string(ev.id) + ")";
+//             ENG_INFO("{}", msg);
+//             add_log(msg);
+//             break;
+//         }
+//         case TradingEventType::Disconnected: {
+//             add_log("Disconnected from IB");
+//             ENG_WARN("Disconnected from IB");
+//             break;
+//         }
+//         case TradingEventType::Error: {
+//             const auto& err = std::get<ErrorData>(ev.payload);
+//             std::string msg = "Error " + std::to_string(err.code) + ": " + err.message;
+//             ENG_ERROR("{}", msg);
+//             add_log(msg);
+//             break;
+//         }
+//         case TradingEventType::TickPrice: {
+//             const auto& tick = std::get<TickPriceData>(ev.payload);
+//             std::string msg = "TickPrice id=" + std::to_string(ev.id) +
+//                               " field=" + std::to_string(tick.field) +
+//                               " price=" + std::to_string(tick.price);
+//             ENG_TRACE("{}", msg);
+//             add_log(msg);
+//             break;
+//         }
+//         case TradingEventType::HistoricalBar: {
+//             const auto& bar = std::get<HistoricalBarData>(ev.payload).bar;
+//             std::string msg = "HistBar " + std::to_string(ev.id) +
+//                               " O=" + std::to_string(bar.open) +
+//                               " H=" + std::to_string(bar.high) +
+//                               " L=" + std::to_string(bar.low) +
+//                               " C=" + std::to_string(bar.close) +
+//                               " Vol=" + std::to_string(bar.volume);
+//             m_hist_bars.push_back(bar);
+//             ENG_DEBUG("{}", msg);
+//             add_log(msg);
+//             break;
+//         }
+//         default: {
+//             std::string msg = "Unhandled event type=" + std::to_string((int)ev.type);
+//             ENG_DEBUG("{}", msg);
+//             add_log(msg);
+//             break;
+//         }
+//     }
+// }
 
 
 

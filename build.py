@@ -105,6 +105,41 @@ def build_intelrdfp():
     shutil.copy(built_lib, out_lib_dir / built_lib.name)
     logging.info(f"Staged {built_lib.name} to {out_lib_dir}")
 
+def needs_proto_regen():
+    newest_proto = max(p.stat().st_mtime for p in Path("proto/trading").glob("*.proto"))
+    try:
+        oldest_gen = min(p.stat().st_mtime for p in Path("proto/trading/generated").glob("*.pb.h"))
+        return newest_proto > oldest_gen
+    except ValueError:
+        return True
+
+def generate_protos():
+    logging.info("Generating protobuf and gRPC files...")
+    proto_dir = Path("proto/trading")
+    out_dir = proto_dir / "generated"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    proto_files = [str(p) for p in proto_dir.glob("*.proto")]
+    protoc = shutil.which("protoc")
+    grpc_plugin = shutil.which("grpc_cpp_plugin")
+
+    if not protoc:
+        logging.error("protoc not found in PATH.")
+        sys.exit(1)
+    if not grpc_plugin:
+        logging.error("grpc_cpp_plugin not found in PATH.")
+        sys.exit(1)
+
+    cmd = [
+        protoc,
+        f"-Iproto",
+        f"--cpp_out={out_dir}",
+        f"--grpc_out={out_dir}",
+        f"--plugin=protoc-gen-grpc={grpc_plugin}",
+    ] + proto_files
+
+    run_cmd(cmd)
+    logging.info(colored("Protobuf/gRPC code generated successfully.", LogColor.OKGREEN))
 
 def run_cmd(cmd, cwd=None, fail_msg=None):
     try:
@@ -144,8 +179,11 @@ def configure_cmake(build_type):
 def build(parallel=True, verbose=False):
     logging.info("Building project...")
 
-    build_intelrdfp()
+    if needs_proto_regen():
+        generate_protos()
     
+    build_intelrdfp()
+
     build_cmd = ["cmake", "--build", BUILD_DIR]
     if parallel:
         build_cmd += ["--parallel", str(os.cpu_count())]

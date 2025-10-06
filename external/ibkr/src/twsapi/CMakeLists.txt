@@ -2,7 +2,9 @@ file(GLOB SOURCES "*.cpp" "protobufUnix/*.cc")
 file(GLOB HEADERS "*.h")
 
 set(twsapi_VERSION 9.79.02)
-find_package(Protobuf REQUIRED)
+if (NOT TARGET protobuf::libprotobuf)
+    find_package(Protobuf REQUIRED)
+endif()
 find_package(absl REQUIRED COMPONENTS log check hash strings)
 
 add_library(twsapi STATIC ${SOURCES})
