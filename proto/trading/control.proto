@@ -51,7 +51,7 @@ message ControlMessage {
   ControlType type = 1;
   int32 id         = 2;
   oneof payload {
-    ConnectBroker     connect       = 10;
+    ConnectBroker         connect       = 10;
     SubscribeMarketData  sub_mkt_data    = 11;
     UnsubscribeMarketData unsub_mkt_data = 12;
     PlaceOrder place_order               = 13;

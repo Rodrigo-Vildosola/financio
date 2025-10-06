@@ -7,7 +7,7 @@ class FinancioApp : public eng::Application {
 public:
     FinancioApp(eng::CommandLineArgs args) : eng::Application("Financio App", args) 
     {
-        push_layer(new RootLayer());
+        push_layer(new app::RootLayer());
     }
 
     ~FinancioApp() {}

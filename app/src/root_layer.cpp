@@ -13,14 +13,37 @@
 
 #include <eng/enginio.h>
 
-
-
 using namespace eng;
+using namespace financio::trading;
+
+namespace app {
 
 RootLayer::RootLayer() : Layer("RootLayer") {}
 
+RootLayer::~RootLayer() {
+    if (m_trader) m_trader->disconnect();
+}
+
 void RootLayer::on_attach() {
     PROFILE_FUNCTION();
+
+    ENG_INFO("RootLayer attached — connecting to Trader backend...");
+
+    m_trader = std::make_unique<TraderClient>("localhost:50051");
+
+    m_trader->set_state_handler([this](const StateMessage& msg) {
+        // Log messages from backend
+        std::string log = "[STATE] id=" + std::to_string(msg.id()) +
+                          " type=" + std::to_string(msg.type());
+        this->add_log(log);
+    });
+
+    if (m_trader->connect()) {
+        m_connected = true;
+        add_log("Connected to Trader backend (gRPC).");
+    } else {
+        add_log("Failed to connect to Trader backend.");
+    }
 
 #if 0
     setup_pipeline();
@@ -30,6 +53,8 @@ void RootLayer::on_attach() {
 
 void RootLayer::on_detach() {
     ENG_INFO("RootLayer detached");
+    if (m_trader) m_trader->disconnect();
+    m_connected = false;
 }
 
 void RootLayer::on_update(Timestep ts) {
@@ -55,96 +80,79 @@ void RootLayer::on_physics_update(Timestep fixed_ts) {}
 
 
 void RootLayer::on_ui_render() {
-    PROFILE_FUNCTION();
+    ImGui::Begin("Trading Control");
 
-    {
-        const auto& stats = RendererAPI::get_stats();
+    ImGui::Text("Trader Connection: %s", m_connected ? "Connected" : "Disconnected");
 
-        ImGui::Begin("Renderer Stats");
-        ImGui::Text("Draw Calls: %u", stats.draw_calls);
-        ImGui::Text("Mesh Count: %u", stats.mesh_count);
-        ImGui::Text("Vertex Count: %u", stats.vertex_count);
-        ImGui::Text("Index Count: %u", stats.index_count);
-        ImGui::End();
-
+    if (ImGui::Button("Connect Broker")) {
+        ENG_DEBUG("CONNECTING ");
+        ControlMessage msg;
+        msg.set_type(CONTROL_CONNECT);
+        auto* c = msg.mutable_connect();
+        c->set_host("127.0.0.1");
+        c->set_port(4002);
+        c->set_client_id(1);
+        msg.set_id(1);
+        if (m_trader) {
+            m_trader->send_control(msg);
+        }
+        add_log("Sent: ConnectBroker");
     }
 
-    auto show = true;
-
-    ImGui::ShowDemoWindow(&show);
-
-    ImGui::Begin("Trading");
     if (ImGui::Button("Subscribe AAPL")) {
-        // TradingRequest req;
-        // req.type = TradingRequestType::SubscribeMarketData;
-        // req.id   = 1; // tickerId
-        // req.payload = MarketDataRequest{ "AAPL", "SMART", "USD", "STK" };
-        // m_worker.postRequest(req);
+        ControlMessage msg;
+        msg.set_type(CONTROL_SUB_MKT);
+        auto* sub = msg.mutable_sub_mkt_data();
+        sub->set_symbol("AAPL");
+        sub->set_exchange("SMART");
+        sub->set_currency("USD");
+        sub->set_sec_type("STK");
+        msg.set_id(101);
+        m_trader->send_control(msg);
+        add_log("Sent: SubscribeMarketData (AAPL)");
     }
 
     if (ImGui::Button("Request AAPL Historical")) {
-        // TradingRequest req;
-        // req.type = TradingRequestType::RequestHistorical;
-        // req.id   = 2; // reqId
-        // req.payload = HistoricalRequest{
-        //     "AAPL", "SMART", "USD", "STK",
-        //     "2 D", "5 mins", "TRADES", 1
-        // };
-        // m_worker.postRequest(req);
-        // m_hist_bars.clear();
+        ControlMessage msg;
+        msg.set_type(CONTROL_HISTORICAL);
+        auto* req = msg.mutable_req_historical_data();
+        req->set_symbol("AAPL");
+        req->set_exchange("SMART");
+        req->set_currency("USD");
+        req->set_sec_type("STK");
+        req->set_duration_str("1 D");
+        req->set_bar_size("5 mins");
+        req->set_what_to_show("TRADES");
+        req->set_use_rth(1);
+        msg.set_id(102);
+        m_trader->send_control(msg);
+        add_log("Sent: RequestHistoricalData (AAPL)");
     }
 
-    // Plot if we have bars
-    // if (!m_hist_bars.empty()) {
-    //     if (ImPlot::BeginPlot("AAPL Historical Close")) {
-    //         std::vector<f64> xs, closes;
-    //         xs.reserve(m_hist_bars.size());
-    //         closes.reserve(m_hist_bars.size());
-
-    //         for (size_t i = 0; i < m_hist_bars.size(); i++) {
-    //             xs.push_back((f64)i); // index as x
-    //             closes.push_back(m_hist_bars[i].close);
-    //         }
-
-    //         ImPlot::PlotLine("Close", xs.data(), closes.data(), (i32)xs.size());
-    //         ImPlot::EndPlot();
-    //     }
-    // }
-    ImGui::End();
-
-    ImGui::Begin("Trading Log");
-
-    if (ImGui::Button("Clear")) {
-        m_event_log.clear();
+    if (ImGui::Button("Disconnect Broker")) {
+        ControlMessage msg;
+        msg.set_type(CONTROL_DISCONNECT);
+        msg.set_id(999);
+        m_trader->send_control(msg);
+        add_log("Sent: DisconnectBroker");
     }
-    ImGui::SameLine();
-    static bool autoScroll = true;
-    ImGui::Checkbox("Auto-scroll", &autoScroll);
 
     ImGui::Separator();
 
-    ImGui::BeginChild("LogScrollRegion", ImVec2(0, 0), false,
-                      ImGuiWindowFlags_HorizontalScrollbar);
+    if (ImGui::Button("Clear Log")) {
+        m_event_log.clear();
+    }
 
+    ImGui::BeginChild("Trading Log", ImVec2(0, 300), true, ImGuiWindowFlags_HorizontalScrollbar);
     for (const auto& line : m_event_log) {
         ImGui::TextUnformatted(line.c_str());
     }
-
-    if (autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
         ImGui::SetScrollHereY(1.0f);
-
     ImGui::EndChild();
+
     ImGui::End();
-
-
-
-    // ImGui::Begin("Camera Controls");
-
-    // ImGui::End();
-
-
 }
-
 void RootLayer::on_event(Event& event) {
     PROFILE_FUNCTION();
 
@@ -244,7 +252,12 @@ void RootLayer::on_event(Event& event) {
 //     }
 // }
 
-
+void RootLayer::add_log(const std::string& msg) {
+    if (m_event_log.size() >= MAX_LOG_LINES)
+        m_event_log.pop_front();
+    m_event_log.push_back(msg);
+    ENG_INFO("{}", msg);
+}
 
 void RootLayer::setup_pipeline() {
     ref<Shader> shader = RendererAPI::create_shader(
@@ -309,4 +322,6 @@ ref<RenderPass> RootLayer::create_main_pass() {
     main_pas_desc.depth_stencil_attachment = depth_attachment;
 
     return RendererAPI::create_render_pass(main_pas_desc);
+}
+
 }

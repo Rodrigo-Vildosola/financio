@@ -1,7 +1,13 @@
 #pragma once
 
+
+#include "financio/rpc/trader_client.h"      // the gRPC client
+
 #include <eng/enginio.h>
 #include <queue>
+
+namespace app {
+
 
 struct alignas(16) UniformBlock {
     glm::mat4 u_view;
@@ -18,7 +24,7 @@ class RootLayer : public eng::Layer
 {
 public:
 	RootLayer();
-	virtual ~RootLayer() = default;
+	~RootLayer();
 
 	virtual void on_attach() override;
 	virtual void on_detach() override;
@@ -29,23 +35,23 @@ public:
 	void on_event(eng::Event& e) override;
 
 private:
-	glm::vec2 m_last_mouse_position = {};
-	bool m_mouse_dragging = false;
-
-	bool m_keys[512] = {}; // Keyboard state array
-
-	// void handle_event(const TradingEvent& ev);
-
 	void setup_pipeline();
 	eng::ref<eng::RenderPass> create_main_pass();
 
-	static constexpr int MAX_LOG_LINES = 2000;
+    glm::vec2 m_last_mouse_position{};
+    bool m_mouse_dragging = false;
+    bool m_keys[512] = {};
+
+    static constexpr int MAX_LOG_LINES = 2000;
     std::deque<std::string> m_event_log;
+    void add_log(const std::string& msg);
 
-	void add_log(const std::string& msg) {
-        if (m_event_log.size() >= MAX_LOG_LINES)
-            m_event_log.pop_front();
-        m_event_log.push_back(msg);
-    }
+    // Trader client
+    std::unique_ptr<TraderClient> m_trader;
+    std::atomic<bool> m_connected{false};
 
+    // UI helpers
+    void draw_trading_panel();
 };
+
+}
