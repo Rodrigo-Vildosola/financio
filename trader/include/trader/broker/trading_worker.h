@@ -1,9 +1,9 @@
 #pragma once
 
 #include "trader/core/ring_buffer.h"
-#include "trader/types/request_types.h"
-#include "trader/types/event_types.h"
-#include "trader/client/trading_wrapper.h"
+#include "trader/core/request_types.h"
+#include "trader/core/event_types.h"
+#include "trader/broker/trading_wrapper.h"
 
 // IB API headers
 #include <twsapi/EClientSocket.h>

@@ -42,3 +42,23 @@ int main() {
     std::cout << "[Trader] shutdown complete.\n";
     return 0;
 }
+
+// #include <grpcpp/grpcpp.h>
+// #include "trader/server/trader_service.h"
+
+
+// int main() {
+//     TradingWorker worker;
+//     worker.start();
+
+//     TraderServiceImpl service(worker);
+//     grpc::ServerBuilder builder;
+//     builder.AddListeningPort("0.0.0.0:50051", grpc::InsecureServerCredentials());
+//     builder.RegisterService(&service);
+
+//     auto server = builder.BuildAndStart();
+//     std::cout << "[Trader] gRPC listening on 0.0.0.0:50051\n";
+//     server->Wait();
+
+//     worker.stop();
+// }

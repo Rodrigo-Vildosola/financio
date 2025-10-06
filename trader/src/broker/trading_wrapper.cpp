@@ -1,4 +1,4 @@
-#include "trader/client/trading_wrapper.h"
+#include "trader/broker/trading_wrapper.h"
 
 
 TradingWrapper::TradingWrapper(RingBuffer<TradingEvent, 1024>& evQueue) : m_ev_queue(evQueue) {}

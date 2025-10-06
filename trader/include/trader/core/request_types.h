@@ -1,6 +1,6 @@
 #pragma once
 
-#include "trader/types/base.h"
+#include "trader/core/base.h"
 #include <variant>
 
 /// Request types: operations the main thread can ask the TradingWorker to perform.

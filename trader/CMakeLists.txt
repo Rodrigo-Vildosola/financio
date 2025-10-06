@@ -14,4 +14,5 @@ target_include_directories(${TRADER_NAME} PRIVATE
 
 target_link_libraries(${TRADER_NAME} PRIVATE
     twsapi
+    trading_proto
 )

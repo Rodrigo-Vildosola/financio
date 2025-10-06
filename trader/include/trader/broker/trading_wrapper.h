@@ -1,7 +1,7 @@
 
-#include "trader/client/base_wrapper.h"
+#include "trader/broker/base_wrapper.h"
 #include "trader/core/ring_buffer.h"
-#include "trader/types/event_types.h"
+#include "trader/core/event_types.h"
 
 // IB API headers
 #include <twsapi/Contract.h>
