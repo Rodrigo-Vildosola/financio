@@ -54,8 +54,8 @@ def generate_cmake_args(build_type="Debug"):
         "CMAKE_BUILD_TYPE": build_type,
         "WEBGPU_BACKEND": "DAWN",
         "WEBGPU_BUILD_FROM_SOURCE": "OFF",
-        "FNC_ENABLE_ASSERTS": "ON" if config.ENABLE_ASSERTS else "OFF",
-        "FNC_ENABLE_DEBUG_LOGGING": "ON" if config.ENABLE_DEBUG_LOGGING else "OFF",
+        "ENG_ENABLE_ASSERTS": "ON" if config.ENABLE_ASSERTS else "OFF",
+        "ENG_ENABLE_DEBUG_LOGGING": "ON" if config.ENABLE_DEBUG_LOGGING else "OFF",
     }
 
     cmake_args = ["cmake", "-S", ".", "-B", config.BUILD_DIR]

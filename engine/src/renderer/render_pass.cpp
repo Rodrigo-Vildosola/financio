@@ -1,6 +1,6 @@
 #include "eng/renderer/render_pass.h"
 #include "eng/renderer/buffer.h"
-#include "eng/core/context/command_queue.h"
+#include "eng/renderer/context/command_queue.h"
 
 #include "eng/core/assert.h"
 #include "eng/debug/profiler.h"

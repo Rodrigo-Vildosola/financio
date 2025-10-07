@@ -2,6 +2,8 @@
 
 #include "engpch.h"
 
+#include <webgpu/webgpu_cpp.h>
+
 namespace eng {
 
 

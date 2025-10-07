@@ -1,5 +1,5 @@
 #include "engpch.h"
-#include "eng/core/window.h"
+#include "eng/window/window.h"
 
 #ifdef ENG_PLATFORM_WINDOWS
     #include "Platform/Windows/WindowsWindow.h"

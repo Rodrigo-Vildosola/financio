@@ -5,9 +5,9 @@
 #include "eng/renderer/render_pass.h"
 #include "engpch.h"
 
-#include "eng/core/context/command_queue.h"
+#include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/renderer.h"
-#include "eng/helpers/string.h"
+#include "eng/renderer/helpers/string.h"
 
 namespace eng {
 

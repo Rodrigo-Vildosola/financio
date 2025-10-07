@@ -2,12 +2,12 @@
 #include "eng/core/logger.h"
 #include "engpch.h"
 
-#include "eng/core/context/context_utils.h"
-#include "eng/core/context/context.h"
-#include "eng/core/context/command_queue.h"
+#include "eng/renderer/context/context_utils.h"
+#include "eng/renderer/context/context.h"
+#include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/buffer.h"
-#include "eng/helpers/string.h"
-#include "eng/helpers/user_data.h"
+#include "eng/renderer/helpers/string.h"
+#include "eng/renderer/helpers/user_data.h"
 
 
 namespace eng {

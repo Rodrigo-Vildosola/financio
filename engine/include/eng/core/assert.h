@@ -8,7 +8,7 @@
 
 	// Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
 	// provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
-	#define ENG_INTERNAL_ASSERT_IMPL(type, check, msg, ...) { if(!(check)) { TR##type##ERROR(msg, __VA_ARGS__); __builtin_trap(); } }
+	#define ENG_INTERNAL_ASSERT_IMPL(type, check, msg, ...) { if(!(check)) { ENG##type##ERROR(msg, __VA_ARGS__); __builtin_trap(); } }
 	#define ENG_INTERNAL_ASSERT_WITH_MSG(type, check, ...) ENG_INTERNAL_ASSERT_IMPL(type, check, "Assertion failed: {0}", __VA_ARGS__)
 	#define ENG_INTERNAL_ASSERT_NO_MSG(type, check) ENG_INTERNAL_ASSERT_IMPL(type, check, "Assertion '{0}' failed at {1}:{2}", ENG_STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
 

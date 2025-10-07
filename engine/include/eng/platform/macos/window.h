@@ -1,7 +1,7 @@
 #pragma once
 
-#include "eng/core/window.h"
-#include "eng/core/context/context.h"
+#include "eng/window/window.h"
+#include "eng/renderer/context/context.h"
 #include "eng/input/input.h"
 
 #include <GLFW/glfw3.h>

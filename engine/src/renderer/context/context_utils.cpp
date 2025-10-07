@@ -1,7 +1,9 @@
-#include "eng/core/context/context_utils.h"
-#include "eng/core/context/macros.h"
+#include "eng/renderer/context/context_utils.h"
+#include "eng/renderer/context/macros.h"
 #include "eng/debug/profiler.h"
-#include "eng/helpers/user_data.h"
+#include "eng/renderer/helpers/user_data.h"
+#include "eng/renderer/helpers/webgpu_fmt_formatters.h"
+
 
 namespace eng {
 
@@ -127,7 +129,7 @@ void inspect_adapter(wgpu::Adapter adapter) {
         ENG_CORE_INFO("Adapter features (count={}):", feats.featureCount);
         for (u32 i = 0; i < feats.featureCount; ++i) {
             auto f = feats.features[i];
-            ENG_FILE_TRACE("  - {}", f);
+            // ENG_FILE_TRACE("  - {}", f);
         }
     }
 

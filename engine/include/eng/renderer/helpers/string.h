@@ -2,6 +2,8 @@
 
 #include "engpch.h"
 
+#include <webgpu/webgpu_cpp.h>
+
 namespace eng {
 
 inline wgpu::StringView to_wgpu_string_view(std::string_view view) {

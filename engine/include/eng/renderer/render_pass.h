@@ -4,6 +4,8 @@
 #include "eng/core/logger.h"
 #include "engpch.h"
 
+#include <webgpu/webgpu_cpp.h>
+
 namespace eng {
 
 class CommandQueue;

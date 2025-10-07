@@ -1,8 +1,8 @@
 #include "eng/core/logger.h"
 #include "eng/debug/profiler.h"
-#include "eng/helpers/error.h"
-#include "eng/helpers/string.h"
-#include "eng/helpers/user_data.h"
+#include "eng/renderer/helpers/error.h"
+#include "eng/renderer/helpers/string.h"
+#include "eng/renderer/helpers/user_data.h"
 
 #include "eng/renderer/pipeline.h"
 #include "eng/renderer/pipeline_specification.h"

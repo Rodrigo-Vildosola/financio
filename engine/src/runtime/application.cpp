@@ -4,7 +4,7 @@
 #include "eng/core/timestep.h"
 
 #include "eng/renderer/renderer_api.h"
-#include "eng/core/window.h"
+#include "eng/window/window.h"
 #include "eng/debug/profiler.h"
 #include "eng/runtime/application_base.h"
 

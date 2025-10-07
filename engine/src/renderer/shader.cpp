@@ -1,7 +1,7 @@
 #include "eng/renderer/shader.h"
-#include "eng/helpers/error.h"
-#include "eng/helpers/string.h"
-#include "eng/helpers/user_data.h"
+#include "eng/renderer/helpers/error.h"
+#include "eng/renderer/helpers/string.h"
+#include "eng/renderer/helpers/user_data.h"
 
 namespace eng {
 

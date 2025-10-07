@@ -17,6 +17,10 @@
 #include "eng/core/logger.h"
 #include "eng/core/timer.h"
 
-#include <webgpu/webgpu_cpp.h>
-#include <webgpu/webgpu_cpp_print.h>
-#include <eng/helpers/webgpu_fmt_formatters.h>
+#ifdef ENG_FRONTEND
+  #include "eng/runtime/application.h"
+  #include "eng/renderer/renderer_api.h"
+  #include "eng/ui/imgui_layer.h"
+#endif
+
+// #include <eng/renderer/helpers/webgpu_fmt_formatters.h>

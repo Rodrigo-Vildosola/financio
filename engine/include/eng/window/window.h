@@ -5,6 +5,8 @@
 #include "eng/core/base.h"
 #include "eng/events/event.h"
 
+#include <webgpu/webgpu_cpp.h>
+
 namespace eng {
 
 	struct WindowProps

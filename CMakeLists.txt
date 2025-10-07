@@ -2,12 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(FinancioProject)
 
-# # Prevent CMake from finding system-wide Abseil packages
-# set(absl_DIR "${CMAKE_SOURCE_DIR}/external/protobuf/third_party/abseil-cpp/cmake" CACHE PATH "Abseil path override" FORCE)
-# set(ABSL_USE_EXTERNAL_PROJECT OFF CACHE BOOL "" FORCE)
-
-
-# Use passed-in vars from Python
 set(CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -21,13 +15,13 @@ set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/engine/assets")
 set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/assets")
 
 
-# Pass to submodules
+# Names passed in from tooling or cache
 set(ENGINE_NAME ${ENGINE_NAME})
 set(APP_NAME ${APP_NAME})
 set(TRADER_NAME ${TRADER_NAME})
 
 
-# Engine Deps
+# ---------- Dependencies ----------
 add_subdirectory(external/glfw)
 add_subdirectory(external/glfw3webgpu)
 add_subdirectory(external/webgpu)
@@ -37,52 +31,52 @@ add_subdirectory(external/nlohmann)
 add_subdirectory(external/spdlog)
 
 file(GLOB IMGUI_SRC
-    external/imgui/*.cpp
-    external/imgui/*.h
+  external/imgui/*.cpp
+  external/imgui/*.h
 )
 add_library(imgui STATIC ${IMGUI_SRC})
 target_include_directories(imgui PUBLIC external/imgui)
 
 
-# IPC and Trading Deps
+# IBKR and proto
 add_subdirectory(external/ibkr)
-
-# Protobuf compilation
 add_subdirectory(proto)
 
-# Targets
+
+# ---------- Engine + Apps ----------
 add_subdirectory(engine)
 add_subdirectory(app)
 add_subdirectory(trader)
 
-# Add optimization flags for GCC and Clang
+# ---------- Global compile flags ----------
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    add_compile_options(-O2 -Wall -Wextra -Wpedantic)
-endif()
-
-# Add optimization flags for MSVC
-if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_compile_options(/O2 /W4)
+  add_compile_options(-O2 -Wall -Wextra -Wpedantic)
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  add_compile_options(/O2 /W4)
 endif()
 
 
 
-if (FNC_ENABLE_ASSERTS)
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_ASSERTS)
+# ---------- Feature flags ----------
+if (ENG_ENABLE_ASSERTS)
+  target_compile_definitions(eng-core PUBLIC ENG_ENABLE_ASSERTS)
+  target_compile_definitions(eng-frontend PUBLIC ENG_ENABLE_ASSERTS)
 endif()
 
-if (FNC_ENABLE_DEBUG_LOGGING)
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_ENABLE_DEBUG_LOGGING)
+if (ENG_ENABLE_DEBUG_LOGGING)
+  target_compile_definitions(eng-core PUBLIC ENG_ENABLE_DEBUG_LOGGING)
+  target_compile_definitions(eng-frontend PUBLIC ENG_ENABLE_DEBUG_LOGGING)
 endif()
 
 
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" BUILD_TYPE_UPPER)
-
 if (BUILD_TYPE_UPPER STREQUAL "RELEASE" OR BUILD_TYPE_UPPER STREQUAL "RELWITHDEBINFO")
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_RELEASE=1)
+    target_compile_definitions(eng-core PUBLIC ENG_RELEASE=1)
+    target_compile_definitions(eng-frontend PUBLIC ENG_RELEASE=1)
 elseif (BUILD_TYPE_UPPER STREQUAL "TESTING")
-    target_compile_definitions(${ENGINE_NAME} PUBLIC FNC_TESTING=1)
+    target_compile_definitions(eng-core PUBLIC ENG_TESTING=1)
+    target_compile_definitions(eng-frontend PUBLIC ENG_TESTING=1)
 endif()
 
 

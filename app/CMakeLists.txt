@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+
 file(GLOB_RECURSE APP_SRC CONFIGURE_DEPENDS
     src/*.cpp
     main.cpp
@@ -12,12 +14,15 @@ target_include_directories(${APP_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/proto/generated
 )
 
+# Link only the frontend engine; it pulls eng-core internally
 target_link_libraries(${APP_NAME} PRIVATE
-    ${ENGINE_NAME}
-    imgui
-    glm
+    eng-frontend
+    # imgui               # optional; eng-frontend already links it PRIVATELY
+    # glm                 # optional; eng-frontend already links it PRIVATELY
     twsapi
     trading_proto
 )
 
-target_compile_definitions(${APP_NAME} PUBLIC APP_ASSETS_DIR="${APP_ASSETS_DIR}")
+target_compile_definitions(${APP_NAME} PUBLIC
+  APP_ASSETS_DIR="${APP_ASSETS_DIR}"
+)

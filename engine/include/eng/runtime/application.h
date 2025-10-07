@@ -2,8 +2,8 @@
 
 #include "eng/core/base.h"
 #include "eng/core/logger.h"
-#include "eng/core/context/context.h"
-#include "eng/core/window.h"
+#include "eng/renderer/context/context.h"
+#include "eng/window/window.h"
 #include "eng/core/layer.h"
 #include "eng/core/layer_stack.h"
 

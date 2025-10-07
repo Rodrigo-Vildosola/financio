@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+
 file(GLOB_RECURSE TRADER_SRC CONFIGURE_DEPENDS
     src/*.cpp
     main.cpp
@@ -11,10 +13,10 @@ target_include_directories(${TRADER_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/proto/generated
 )
 
-
-
+# Link core only; add eng-net if built
 target_link_libraries(${TRADER_NAME} PRIVATE
-    ${ENGINE_NAME}
+    eng-core
+    # $<$<BOOL:${ENG_BUILD_NET}>:eng-net>
     twsapi
     trading_proto
 )
