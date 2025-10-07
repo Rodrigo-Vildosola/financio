@@ -23,7 +23,7 @@ struct CommandLineArgs {
 class ApplicationBase {
 public:
     explicit ApplicationBase(CommandLineArgs args = {});
-    virtual ~ApplicationBase();
+    virtual ~ApplicationBase() = default;
 
     void run();
     void close();
@@ -32,7 +32,7 @@ public:
     void push_overlay(Layer* l);
 
     CommandLineArgs args() const { 
-        return m_args; 
+        return m_command_line_args; 
     }
 
 protected:
@@ -41,15 +41,16 @@ protected:
 
     virtual void pump_platform() {} // signals, timers, IO progress
 
-private:
-    bool on_tick(Timestep dt);
-    LayerStack m_stack;
-    CommandLineArgs m_args;
+    LayerStack m_layer_stack;
+    CommandLineArgs m_command_line_args;
     bool m_running = true;
     bool m_minimized = false;
-    f32 m_last = 0.0f;
+    f32 m_last_frame_time = 0.0f;
+
+
 };
 
+ApplicationBase* create_application(CommandLineArgs args);  // implemented by the application
 
 
 }

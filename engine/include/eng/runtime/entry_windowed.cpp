@@ -1,12 +1,12 @@
 #pragma once
 
+#include "eng/runtime/application_base.h"
 #include "eng/core/logger.h"
 #include "eng/debug/profiler.h"
-#include "eng/runtime/application.h"
 
 #ifdef ENG_PLATFORM_MACOS
 
-extern eng::Application* eng::create_application(eng::CommandLineArgs args);
+extern eng::ApplicationBase* eng::create_application(eng::CommandLineArgs args);
 
 int main(int argc, char** argv) {
     eng::logger::init();

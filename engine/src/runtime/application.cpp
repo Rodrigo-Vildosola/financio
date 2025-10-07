@@ -6,14 +6,13 @@
 #include "eng/renderer/renderer_api.h"
 #include "eng/core/window.h"
 #include "eng/debug/profiler.h"
+#include "eng/runtime/application_base.h"
 
 namespace eng {
 
 Application* Application::s_instance = nullptr;
 
-Application::Application(const std::string& name, CommandLineArgs args)
-    : m_command_line_args(args)
-{
+Application::Application(const std::string& name, CommandLineArgs args) : ApplicationBase(args) {
     PROFILE_FUNCTION();
 
     ENG_CORE_ASSERT(!s_instance, "Application already exists!");
@@ -37,16 +36,6 @@ Application::~Application() {
     PROFILE_FUNCTION();
     RendererAPI::shutdown();
     m_window.reset();
-}
-
-void Application::push_layer(Layer* layer) {
-    m_layer_stack.push_layer(layer);
-    layer->on_attach();
-}
-
-void Application::push_overlay(Layer* layer) {
-    m_layer_stack.push_overlay(layer);
-    layer->on_attach();
 }
 
 void Application::on_event(Event& e) {
@@ -88,7 +77,7 @@ void Application::run() {
             accumulator -= fixed_dt;
         }
 
-        RendererAPI::begin_frame();
+        begin_frame();
 
         if (!m_minimized) {
             for (Layer* layer : m_layer_stack) {
@@ -96,24 +85,32 @@ void Application::run() {
             }
         }
 
-        m_ui_layer->begin();
         for (Layer* layer : m_layer_stack) {
             layer->on_ui_render();
         }
-        m_ui_layer->end();
 
-        RendererAPI::end_frame();
+        end_frame();
 
 
-        m_window->on_update();
+        pump_platform();
 
         // break;
     }
 
 }
 
-void Application::close() {
-    m_running = false;
+void Application::begin_frame() { 
+    RendererAPI::begin_frame(); 
+    if (m_ui_layer) m_ui_layer->begin(); 
+}
+
+void Application::end_frame() { 
+    if (m_ui_layer) m_ui_layer->end(); 
+    RendererAPI::end_frame(); 
+}
+
+void Application::pump_platform() { 
+    m_window->on_update(); 
 }
 
 

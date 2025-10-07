@@ -23,52 +23,39 @@ namespace eng {
 
 
 
-class Application {
+class Application : public ApplicationBase {
 public:
     Application(const std::string& name = "eng Application", CommandLineArgs args = {});
     virtual ~Application();
 
     void on_event(Event& e);
 
-    void push_layer(Layer* layer);
-	void push_overlay(Layer* layer);
-
     CommandLineArgs args() const { return m_command_line_args; }
-
-    void close();
-    
-    UILayer* get_ui_layer() { return m_ui_layer; }
     
     static Application& get() { return *s_instance; }
+    
+    UILayer* get_ui_layer() { return m_ui_layer; }
     inline Window& get_window() const { return *m_window; }
     scope<Context>& get_context() { return m_context; }
-
     wgpu::Device get_device() { return m_context->get_native_device(); }
+
+protected:
+    void run();
+
+    void begin_frame() override;
+    void end_frame() override;
+    void pump_platform() override;
 
 
 private:
-    void run();
-
     bool on_window_close(WindowCloseEvent& e);
     bool on_window_resize(WindowResizeEvent& e);
 
-    UILayer* m_ui_layer;
-    LayerStack m_layer_stack;
-    CommandLineArgs m_command_line_args;
-
-    scope<Window>           m_window;
+    scope<Window>     m_window;
     scope<Context>    m_context;
-
-    bool m_running = true;
-	bool m_minimized = false;
-
-    f32 m_last_frame_time = 0.0f;
+    UILayer*          m_ui_layer = nullptr;
 
     static Application* s_instance;
-
-    friend int ::main(int argc, char** argv);
 };
-
-Application* create_application(CommandLineArgs args);  // implemented by the application
 
 } // namespace eng
