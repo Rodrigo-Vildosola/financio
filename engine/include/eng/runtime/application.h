@@ -7,6 +7,8 @@
 #include "eng/core/layer.h"
 #include "eng/core/layer_stack.h"
 
+#include "eng/runtime/application_base.h"
+
 #include "eng/events/event.h"
 #include "eng/events/application_event.h"
 
@@ -19,17 +21,7 @@ int main(int argc, char** argv);
 
 namespace eng {
 
-class RenderPass;
 
-struct CommandLineArgs {
-    i32 count = 0;
-    char** args = nullptr;
-
-    const char* operator[](i32 index) const {
-        ENG_CORE_ASSERT(index < count, "Index out of bounds for CommandLineArgs");
-        return args[index];
-    }
-};
 
 class Application {
 public:
@@ -41,7 +33,7 @@ public:
     void push_layer(Layer* layer);
 	void push_overlay(Layer* layer);
 
-    CommandLineArgs get_command_line_args() const { return m_command_line_args; }
+    CommandLineArgs args() const { return m_command_line_args; }
 
     void close();
     

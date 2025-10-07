@@ -1,8 +1,8 @@
 #pragma once
 
 #include "eng/core/logger.h"
-#include "eng/core/application.h"
 #include "eng/debug/profiler.h"
+#include "eng/runtime/application.h"
 
 #ifdef ENG_PLATFORM_MACOS
 

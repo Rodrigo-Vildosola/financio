@@ -1,7 +1,7 @@
 #include "engpch.h"
 #include "eng/input/input.h"
+#include "eng/runtime/application.h"
 
-#include "eng/core/application.h"
 #include <GLFW/glfw3.h>
 
 namespace eng {

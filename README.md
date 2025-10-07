@@ -4,7 +4,7 @@
 
 **Financio** is an experimental, high-performance trading and investment application built using **IMGUI**, **GLFW**, **WebGPU**, and the **IBKR TWS API**.
 The purpose is to automate savings, analyze portfolio performance, backtest investment strategies, and execute them in **live** or **paper trading** mode.
-The system provides a flexible **strategy engine** capable of interpreting and running modular trading strategies.
+The system eventually will provides a flexible **strategy engine** capable of interpreting and running modular trading strategies.
 
 
 ## Architecture

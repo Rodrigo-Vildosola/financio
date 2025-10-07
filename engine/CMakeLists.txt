@@ -25,6 +25,5 @@ target_link_libraries(${ENGINE_NAME}
 target_compile_definitions(${ENGINE_NAME} PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
 target_compile_definitions(${ENGINE_NAME} PUBLIC ENGINE_ASSETS_DIR="${ENGINE_ASSETS_DIR}")
-target_compile_definitions(${ENGINE_NAME} PUBLIC APP_ASSETS_DIR="${APP_ASSETS_DIR}")
 
 # target_compile_definitions(${ENGINE_NAME} PUBLIC ENG_RELEASE)
