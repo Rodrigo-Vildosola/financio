@@ -4,7 +4,7 @@
 #include "eng/runtime/application_base.h"
 #include "financio/root_layer.h"
 
-class FinancioApp : public eng::Application {
+class FinancioApp final : public eng::Application {
 public:
     FinancioApp(eng::CommandLineArgs args) : eng::Application("Financio App", args) 
     {
