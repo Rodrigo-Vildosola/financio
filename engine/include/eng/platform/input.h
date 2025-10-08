@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 
 #include "eng/core/base.h"
-#include "eng/input/key_codes.h"
-#include "eng/input/mouse_codes.h"
+#include "eng/platform/key_codes.h"
+#include "eng/platform/mouse_codes.h"
 
 namespace eng {
 

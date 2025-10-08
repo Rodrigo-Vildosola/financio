@@ -76,7 +76,7 @@ wgpu::Buffer Buffer::create(wgpu::Device device, wgpu::Queue queue, const void *
     return buffer;
 }
 
-UniformBuffer Buffer::create_uniform_buffer(Context& ctx, const void* data, u64 size, u32 binding, const char* label) {
+UniformBuffer Buffer::create_uniform_buffer(GraphicsContext& ctx, const void* data, u64 size, u32 binding, const char* label) {
     wgpu::Device device = ctx.get_native_device();
     wgpu::Queue queue = ctx.get_queue()->get_native_queue();
 
@@ -96,7 +96,7 @@ UniformBuffer Buffer::create_uniform_buffer(Context& ctx, const void* data, u64 
     return ub;
 }
 
-VertexBuffer Buffer::create_vertex_buffer(Context& ctx, const void* data, u64 size, u32 slot, const char* label) {
+VertexBuffer Buffer::create_vertex_buffer(GraphicsContext& ctx, const void* data, u64 size, u32 slot, const char* label) {
     wgpu::Device device = ctx.get_native_device();
     wgpu::Queue queue = ctx.get_queue()->get_native_queue();
 
@@ -116,7 +116,7 @@ VertexBuffer Buffer::create_vertex_buffer(Context& ctx, const void* data, u64 si
     return vb;
 }
 
-IndexBuffer Buffer::create_index_buffer(Context& ctx, const void* data, u64 size, wgpu::IndexFormat format, const char* label) {
+IndexBuffer Buffer::create_index_buffer(GraphicsContext& ctx, const void* data, u64 size, wgpu::IndexFormat format, const char* label) {
     wgpu::Device device = ctx.get_native_device();
     wgpu::Queue queue = ctx.get_queue()->get_native_queue();
 
@@ -136,7 +136,7 @@ IndexBuffer Buffer::create_index_buffer(Context& ctx, const void* data, u64 size
     return ib;
 }
 
-StorageBuffer Buffer::create_storage_buffer(Context& ctx, const void* data, u64 size, u32 binding, const char* label) {
+StorageBuffer Buffer::create_storage_buffer(GraphicsContext& ctx, const void* data, u64 size, u32 binding, const char* label) {
     wgpu::Device device = ctx.get_native_device();
     wgpu::Queue queue = ctx.get_queue()->get_native_queue();
 

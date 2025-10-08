@@ -3,7 +3,7 @@
 #include "eng/core/base.h"
 #include "eng/core/logger.h"
 #include "eng/renderer/context/context.h"
-#include "eng/window/window.h"
+#include "eng/platform/window.h"
 #include "eng/core/layer.h"
 #include "eng/core/layer_stack.h"
 
@@ -36,7 +36,7 @@ public:
     
     UILayer* get_ui_layer() { return m_ui_layer; }
     inline Window& get_window() const { return *m_window; }
-    scope<Context>& get_context() { return m_context; }
+    scope<GraphicsContext>& get_context() { return m_context; }
     wgpu::Device get_device() { return m_context->get_native_device(); }
 
 protected:
@@ -52,7 +52,7 @@ private:
     bool on_window_resize(WindowResizeEvent& e);
 
     scope<Window>     m_window;
-    scope<Context>    m_context;
+    scope<GraphicsContext>    m_context;
     UILayer*          m_ui_layer = nullptr;
 
     static Application* s_instance;

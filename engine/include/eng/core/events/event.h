@@ -2,6 +2,8 @@
 
 #include <functional>
 #include <sstream>
+#include <format>
+
 
 #include "eng/core/base.h"
 
@@ -77,8 +79,7 @@ namespace eng {
 }
 
 
-// Implement custom formatter for eng::Event
-namespace fmt {
+namespace std {
     template <>
     struct formatter<eng::Event> {
         template <typename ParseContext>

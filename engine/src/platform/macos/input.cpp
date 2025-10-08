@@ -1,5 +1,4 @@
-#include "engpch.h"
-#include "eng/input/input.h"
+#include "eng/platform/input.h"
 #include "eng/runtime/application.h"
 
 #include <GLFW/glfw3.h>

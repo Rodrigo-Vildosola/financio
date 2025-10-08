@@ -9,16 +9,16 @@ namespace eng {
 class Window;
 class CommandQueue;
 
-struct ContextProps {
+struct GraphicsContextProps {
     // Placeholder for future context settings like:
     // bool enableValidation = true;
     // std::string preferredAdapterName;
 };
 
-class Context {
+class GraphicsContext {
 public:
-    explicit Context(const ContextProps& props = ContextProps());
-    ~Context();
+    explicit GraphicsContext(const GraphicsContextProps& props = GraphicsContextProps());
+    ~GraphicsContext();
 
     void init(Window* window_handle);
     void swap_buffers();

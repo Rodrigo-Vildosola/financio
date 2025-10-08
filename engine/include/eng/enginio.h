@@ -5,8 +5,8 @@
 #include <eng/core/logger.h>
 #include <eng/core/timestep.h>
 
-#include <eng/input/input.h>
-#include <eng/input/key_codes.h>
-#include <eng/input/mouse_codes.h>
+#include <eng/platform/input.h>
+#include <eng/platform/key_codes.h>
+#include <eng/platform/mouse_codes.h>
 
 #include <eng/renderer/renderer_api.h>

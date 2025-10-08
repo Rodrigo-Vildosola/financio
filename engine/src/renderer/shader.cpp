@@ -25,7 +25,7 @@ std::string read_file_as_string(const std::string& relative_path) {
 
 Shader::~Shader() {}
 
-Shader Shader::create_from_wgsl(Context& ctx, std::string_view source, std::string_view label) {
+Shader Shader::create_from_wgsl(GraphicsContext& ctx, std::string_view source, std::string_view label) {
     const auto& device = ctx.get_native_device();
 
     // 1 Prepare WGSL descriptor
@@ -69,7 +69,7 @@ Shader Shader::create_from_wgsl(Context& ctx, std::string_view source, std::stri
 }
 
 
-Shader Shader::from_file(Context& ctx, const std::string& path, std::string label) {
+Shader Shader::from_file(GraphicsContext& ctx, const std::string& path, std::string label) {
     std::string source = read_file_as_string(path);
 
     Shader shader = create_from_wgsl(ctx, source, label);

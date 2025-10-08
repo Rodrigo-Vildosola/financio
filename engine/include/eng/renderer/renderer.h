@@ -8,7 +8,7 @@
 
 namespace eng {
 
-class Context;
+class GraphicsContext;
 class CommandQueue;
 
 struct RendererStats {
@@ -30,7 +30,7 @@ struct RendererStats {
 
 class Renderer {
 public:
-    explicit Renderer(Context& context);
+    explicit Renderer(GraphicsContext& context);
     ~Renderer();
 
     void init();
@@ -57,14 +57,14 @@ public:
     const RendererStats& get_stats() const { return m_stats; }
     RendererStats& get_stats_mutable() { return m_stats; }
 
-    Context& get_context() { return m_context; }
+    GraphicsContext& get_context() { return m_context; }
 
 
 private:
     // struct SceneData {    };
     // scope<SceneData> m_scene_data;
 
-    Context&   m_context;
+    GraphicsContext&   m_context;
     CommandQueue&    m_queue;
     
     std::vector<ref<RenderPass>> m_owned_passes;

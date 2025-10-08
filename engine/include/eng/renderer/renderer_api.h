@@ -12,7 +12,7 @@ class Application;
 
 class RendererAPI {
 public:
-    static void init(Context* context);
+    static void init(GraphicsContext* context);
     static void shutdown();
 
     static void begin_frame();
@@ -26,7 +26,7 @@ public:
 
     static ref<RenderPass> create_render_pass(const RenderPassDesc& desc);
 
-    static Context& get_context();
+    static GraphicsContext& get_context();
     // static wgpu::RenderPassEncoder get_current_pass_encoder();
 
     static const RendererStats& get_stats();

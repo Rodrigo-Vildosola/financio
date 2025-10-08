@@ -19,7 +19,7 @@ target_compile_definitions(eng-core PUBLIC ENGINE_ASSETS_DIR="${ENGINE_ASSETS_DI
 # ---- eng-frontend ----
 add_library(eng-frontend STATIC
   src/runtime/application.cpp
-  src/window/window.cpp
+  src/platform/window.cpp
   src/platform/macos/input.cpp
   src/platform/macos/window.cpp
   src/renderer/context/command_queue.cpp

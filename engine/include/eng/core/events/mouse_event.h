@@ -1,7 +1,7 @@
 #pragma once
 
 #include "eng/events/event.h"
-#include "eng/input/mouse_codes.h"
+#include "eng/platform/mouse_codes.h"
 
 namespace eng {
 

@@ -10,7 +10,7 @@
 
 namespace eng {
 
-Pipeline::Pipeline(Context& context, const PipelineSpecification& spec)
+Pipeline::Pipeline(GraphicsContext& context, const PipelineSpecification& spec)
     : m_context(context), m_spec(spec) {
     create_pipeline(spec);
 }

@@ -6,11 +6,11 @@
 
 namespace eng {
 
-class Context;
+class GraphicsContext;
 
 class Pipeline {
 public:
-    Pipeline(Context& context, const PipelineSpecification& spec);
+    Pipeline(GraphicsContext& context, const PipelineSpecification& spec);
     ~Pipeline();
 
     void bind(wgpu::RenderPassEncoder encoder) const;
@@ -27,7 +27,7 @@ private:
 
     PipelineSpecification m_spec;
 
-    Context& m_context;
+    GraphicsContext& m_context;
 
     wgpu::RenderPipeline m_pipeline;
     wgpu::PipelineLayout m_layout;

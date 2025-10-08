@@ -11,7 +11,7 @@
 
 namespace eng {
 
-Renderer::Renderer(Context& ctx) : m_context(ctx), m_queue(*ctx.get_queue()) {
+Renderer::Renderer(GraphicsContext& ctx) : m_context(ctx), m_queue(*ctx.get_queue()) {
     // m_scene_data = create_scope<SceneData>();
 }
 
