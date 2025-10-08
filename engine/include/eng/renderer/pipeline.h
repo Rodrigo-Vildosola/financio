@@ -1,8 +1,10 @@
 #pragma once
 
-#include "engpch.h"
+#include "eng/core/base.h"
+#include "eng/core/assert.h"
 #include "eng/renderer/pipeline_specification.h"
 #include "eng/renderer/shader.h"
+#include "spdlog/logger.h"
 
 namespace eng {
 

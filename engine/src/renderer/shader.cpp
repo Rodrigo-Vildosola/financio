@@ -1,7 +1,10 @@
+#include <fstream>
+#include <sstream>
 #include "eng/renderer/shader.h"
 #include "eng/renderer/helpers/error.h"
 #include "eng/renderer/helpers/string.h"
 #include "eng/renderer/helpers/user_data.h"
+#include "spdlog/logger.h"
 
 namespace eng {
 

@@ -2,11 +2,13 @@
 #include "eng/core/assert.h"
 #include "eng/core/logger.h"
 #include "eng/core/timestep.h"
+#include "eng/core/timer.h"
 
 #include "eng/renderer/renderer_api.h"
 #include "eng/platform/window.h"
 #include "eng/core/debug/profiler.h"
 #include "eng/runtime/application_base.h"
+
 
 namespace eng {
 

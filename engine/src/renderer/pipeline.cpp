@@ -1,3 +1,4 @@
+#include <map>
 #include "eng/core/logger.h"
 #include "eng/core/debug/profiler.h"
 #include "eng/renderer/helpers/error.h"

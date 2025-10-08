@@ -1,7 +1,6 @@
 #pragma once
 
-#include "engpch.h"
-
+#include "eng/core/base.h"
 #include <webgpu/webgpu_cpp.h>
 
 namespace eng {
@@ -35,11 +34,11 @@ public:
 
     std::pair<u32, u32> get_framebuffer_size();
 
-    static scope<Context> create(const ContextProps& props = ContextProps());
+    static scope<GraphicsContext> create(const GraphicsContextProps& props = GraphicsContextProps());
 
 private:
     Window* m_window_handle = nullptr;
-    ContextProps m_props;
+    GraphicsContextProps m_props;
     
     wgpu::Instance m_instance = nullptr;
     wgpu::Device  m_device = nullptr;

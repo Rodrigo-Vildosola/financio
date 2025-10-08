@@ -1,7 +1,6 @@
 #pragma once
 
 #include "glm/fwd.hpp"
-#include "engpch.h"
 #include "eng/core/base.h"
 #include "eng/events/event.h"
 

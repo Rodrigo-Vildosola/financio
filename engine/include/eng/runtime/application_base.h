@@ -4,6 +4,7 @@
 #include "eng/core/logger.h"
 #include "eng/core/timestep.h"
 #include "eng/core/layer_stack.h"
+#include "spdlog/logger.h"
 
 namespace eng {
 

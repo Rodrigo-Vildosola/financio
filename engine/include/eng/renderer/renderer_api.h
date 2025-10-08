@@ -34,7 +34,6 @@ public:
 
     friend class Application; 
 
-private:
     static scope<Renderer> g_renderer;
 };
 

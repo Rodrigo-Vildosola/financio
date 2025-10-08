@@ -1,6 +1,8 @@
 #pragma once
 
 #include "eng/core/layer/layer_stack.h"
+#include "eng/hooks/hooks.h"
+
 #include "eng/core/caps.h"
 #include "eng/core/base.h"
 #include "eng/core/timer.h"
@@ -18,10 +20,12 @@ struct CommandLineArgs {
     }
 };
 
-template<class AppCfg, class Ctx = Context<>>
+template<class AppCfg, class Ctx = Context<>, class Hooks = NoopHooks>
 class Application {
 public:
     explicit Application(CommandLineArgs args = {});
+    ~Application();
+
 
     template<class L, class... Args>
     L& push_root_layer(Args&&... a);
@@ -31,11 +35,6 @@ public:
 
     void run();
     void close();
-
-    // Hooks
-    void begin_frame();
-    void end_frame();
-    void pump_platform();
 
     Ctx& context();
     LayerStack<Ctx>& layers();

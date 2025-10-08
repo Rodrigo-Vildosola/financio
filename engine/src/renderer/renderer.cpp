@@ -3,7 +3,6 @@
 #include "eng/core/logger.h"
 #include "eng/core/debug/profiler.h"
 #include "eng/renderer/render_pass.h"
-#include "engpch.h"
 
 #include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/renderer.h"

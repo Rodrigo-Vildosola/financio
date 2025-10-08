@@ -1,3 +1,4 @@
+#include "eng/core/timer.h"
 #include "eng/runtime/application_base.h"
 
 namespace eng {
