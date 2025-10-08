@@ -1,5 +1,5 @@
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/helpers/error.h"
 #include "eng/renderer/helpers/string.h"
 #include "eng/renderer/helpers/user_data.h"

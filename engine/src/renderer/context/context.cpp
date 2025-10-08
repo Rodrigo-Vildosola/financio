@@ -1,6 +1,6 @@
 
 
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 
 #include "eng/renderer/context/context.h"
 #include "eng/renderer/context/context_utils.h"

@@ -1,6 +1,6 @@
 #include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/context/context_utils.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/render_pass.h"
 #include "eng/renderer/helpers/string.h"
 #include "eng/renderer/helpers/webgpu_fmt_formatters.h"

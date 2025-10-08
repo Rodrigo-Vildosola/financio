@@ -5,7 +5,7 @@
 
 #include "eng/renderer/renderer_api.h"
 #include "eng/platform/window.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/runtime/application_base.h"
 
 namespace eng {

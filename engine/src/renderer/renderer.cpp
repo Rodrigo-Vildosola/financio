@@ -1,7 +1,7 @@
 #include "eng/core/assert.h"
 #include "eng/core/base.h"
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/render_pass.h"
 #include "engpch.h"
 

@@ -1,5 +1,5 @@
 #include "engpch.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/platform/macos/window.h"
 
 #include "eng/events/application_event.h"

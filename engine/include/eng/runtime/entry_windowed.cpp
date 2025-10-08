@@ -2,7 +2,7 @@
 
 #include "eng/runtime/application_base.h"
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 
 #ifdef ENG_PLATFORM_MACOS
 
