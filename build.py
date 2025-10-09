@@ -10,8 +10,8 @@ import tools.config as config
 import tools.fmtgen as fmtgen
 
 
-WEBGPU_CPP_PRINT_PATH = Path(".build/_deps/dawn-7187-macos-aarch64-release-src/include/dawn/webgpu_cpp_print.h")
-FORMATTER_OUTPUT_PATH = Path(f"engine/include/eng/helpers/webgpu_fmt_formatters.h")
+# WEBGPU_CPP_PRINT_PATH = Path(".build/_deps/dawn-7187-macos-aarch64-release-src/include/dawn/webgpu_cpp_print.h")
+# FORMATTER_OUTPUT_PATH = Path(f"engine/include/eng/renderer/helpers/webgpu_fmt_formatters.h")
 
 
 REQUIRED_DEPS = [
@@ -192,8 +192,8 @@ def build(parallel=True, verbose=False):
     if verbose:
         build_cmd += ["--verbose"]
 
-    if not fmtgen.generate_fmt_formatters(WEBGPU_CPP_PRINT_PATH, FORMATTER_OUTPUT_PATH):
-        logging.warning("Failed to generate WebGPU formatters.")
+    # if not fmtgen.generate_fmt_formatters(WEBGPU_CPP_PRINT_PATH, FORMATTER_OUTPUT_PATH):
+    #     logging.warning("Failed to generate WebGPU formatters.")
 
 
     run_cmd(build_cmd)

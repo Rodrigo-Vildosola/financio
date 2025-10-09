@@ -1,6 +1,7 @@
 #pragma once
 
 #include "eng/core/base.h"
+#include <webgpu/webgpu.h>
 #include <webgpu/webgpu_cpp.h>
 
 namespace eng {

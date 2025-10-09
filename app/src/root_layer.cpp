@@ -3,7 +3,7 @@
 #include "eng/runtime/application.h"
 
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/renderer_api.h"
 
 #include "eng/core/timestep.h"
@@ -13,6 +13,7 @@
 #include <eng/ui/implot.h>
 
 #include <eng/enginio.h>
+#include <eng/renderer/renderer_api.h>
 
 using namespace eng;
 using namespace financio::trading;

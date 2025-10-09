@@ -4,6 +4,7 @@
 #include "financio/rpc/trader_client.h"      // the gRPC client
 
 #include <eng/enginio.h>
+#include <eng/renderer/renderer_api.h>
 #include <queue>
 
 namespace app {

@@ -12,10 +12,11 @@
 #include "eng/renderer/helpers/string.h"
 
 #include "eng/renderer/helpers/webgpu_fmt_formatters.h"
+#include "spdlog/logger.h"
 
 namespace eng {
 
-GraphicsContext::GraphicsContext(const ContextProps& props)
+GraphicsContext::GraphicsContext(const GraphicsContextProps& props)
     : m_props(props)
 {}
 
@@ -157,7 +158,7 @@ void GraphicsContext::swap_buffers() {
 	m_surface.Present(); // Add this here
 }
 
-scope<Context> GraphicsContext::create(const ContextProps& props) {
+scope<GraphicsContext> GraphicsContext::create(const GraphicsContextProps& props) {
     return create_scope<GraphicsContext>(props);
 }
 

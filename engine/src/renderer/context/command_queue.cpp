@@ -4,6 +4,7 @@
 #include "eng/renderer/render_pass.h"
 #include "eng/renderer/helpers/string.h"
 #include "eng/renderer/helpers/webgpu_fmt_formatters.h"
+#include "spdlog/logger.h"
 
 
 namespace eng {
