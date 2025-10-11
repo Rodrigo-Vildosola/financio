@@ -6,11 +6,15 @@
 #include "eng/core/application.h"
 
 // Your existing engine-side headers
-#include "eng/platform/window.h"          // eng::Window, Window::create
-#include "eng/renderer/renderer_api.h"    // RendererAPI::init/shutdown, g_renderer
-#include "eng/renderer/context/context.h" // eng::GraphicsContext
+// #include "eng/platform/window.h"          // eng::Window, Window::create
+// #include "eng/renderer/renderer_api.h"    // RendererAPI::init/shutdown, g_renderer
+// #include "eng/renderer/context/context.h" // eng::GraphicsContext
 
 namespace eng {
+
+class Window;
+class GraphicsContext;
+class RenderPass;
 
 // App-level state flags that your loop uses
 struct AppState {
@@ -19,8 +23,13 @@ struct AppState {
 };
 
 // Wrap your existing systems in the Context
-struct WindowSys  { scope<Window> win; };
-struct GfxSys     { scope<GraphicsContext> ctx; };
+struct WindowSys  {
+    scope<Window> win; 
+};
+
+struct GfxSys     { 
+    scope<GraphicsContext> ctx; 
+};
 
 // Ui overlay for ImGui lifetime. Trivially copyable.
 struct UiOverlay {
