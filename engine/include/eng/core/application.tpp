@@ -6,7 +6,7 @@ namespace eng {
 
 template<class AppCfg, class Ctx, class Hooks>
 Application<AppCfg, Ctx, Hooks>::Application(CommandLineArgs args) : m_args(args), m_stack(&m_ctx) {
-    Hooks::init(m_ctx);
+    Hooks::init(m_ctx, &m_stack); // pass stack so hooks can forward events
 }
 
 template<class AppCfg, class Ctx, class Hooks>
@@ -51,7 +51,8 @@ void Application<AppCfg, Ctx, Hooks>::run() {
             m_stack.run_ui();
         Hooks::end_frame(m_ctx);
 
-        Hooks::pump_platform();
+        if constexpr (AppCfg::events)
+            Hooks::pump_platform(m_ctx);
     }
 }
 

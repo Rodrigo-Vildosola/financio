@@ -1,14 +1,14 @@
 #pragma once
-
-#include "eng/core/timestep.h"
 #include "eng/events/event.h"
 
 namespace eng {
 
-// Default no-op hooks. Lives in eng-core. No windowing symbols here.
+template<class Ctx> class LayerStack; // fwd
+
+// Headless/default hooks. Core-only.
 struct NoopHooks {
     template<class Ctx>
-    static void init(Ctx&) {}
+    static void init(Ctx&, LayerStack<Ctx>*) {}
 
     template<class Ctx>
     static void shutdown(Ctx&) {}
@@ -20,11 +20,11 @@ struct NoopHooks {
     static void end_frame(Ctx&) {}
 
     template<class Ctx>
-    static void pump_platform(Ctx&) {}           // headless: nothing
+    static void pump_platform(Ctx&) {}
 
     template<class Ctx>
-    static bool poll_event(Ctx&, Event&) {
-        return false;  // optional: event feed
+    static bool poll_event(Ctx&, Event&) { 
+        return false; 
     }
 };
 

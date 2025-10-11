@@ -29,12 +29,12 @@ AnyLayer<Ctx>& LayerStack<Ctx>::insert_at(u64 pos) {
 template<class Ctx>
 void LayerStack<Ctx>::add_indices(u32 idx) {
     auto& L = m_layers[idx];
-    if (L.vt.attach)  m_attach.push_back(idx);
-    if (L.vt.detach)  m_detach.push_back(idx);
-    if (L.vt.update)  m_update.push_back(idx);
-    if (L.vt.physics) m_physics.push_back(idx);
-    if (L.vt.event)   m_event.push_back(idx);
-    if (L.vt.ui)      m_ui.push_back(idx);
+    if (L.m_vt.attach)  m_attach.push_back(idx);
+    if (L.m_vt.detach)  m_detach.push_back(idx);
+    if (L.m_vt.update)  m_update.push_back(idx);
+    if (L.m_vt.physics) m_physics.push_back(idx);
+    if (L.m_vt.event)   m_event.push_back(idx);
+    if (L.m_vt.ui)      m_ui.push_back(idx);
 }
 
 template<class Ctx>
@@ -56,10 +56,10 @@ void LayerStack<Ctx>::remove_indices(u32 idx) {
 template<class Ctx>
 void LayerStack<Ctx>::detach_destroy(u32 idx) {
     auto& L = m_layers[idx];
-    if (L.alive && L.vt.detach) { 
-        L.vt.detach(L.buf, *m_ctx);
+    if (L.m_alive && L.m_vt.detach) { 
+        L.m_vt.detach(L.m_buf, *m_ctx);
     }
-    L.alive = false; // trivial types only
+    L.m_alive = false; // trivial types only
 }
 
 template<class Ctx>
@@ -74,16 +74,16 @@ L& LayerStack<Ctx>::push_layer(Args&&... args) {
 
     auto& slot = insert_at(m_layer_insert);
 
-    slot.vt = make_vtable<L,AppCfg,Ctx>();
+    slot.m_vt = make_vtable<L,AppCfg,Ctx>();
 
-    new (slot.buf) L(std::forward<Args>(args)...);
-    slot.alive = true;
+    new (slot.m_buf) L(std::forward<Args>(args)...);
+    slot.m_alive = true;
 
     add_indices(static_cast<u32>(m_layer_insert));
 
-    if (slot.vt.attach) slot.vt.attach(slot.buf, *m_ctx);
+    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf, *m_ctx);
     ++m_layer_insert;
-    return *reinterpret_cast<L*>(slot.buf);
+    return *reinterpret_cast<L*>(slot.m_buf);
 }
 
 template<class Ctx>
@@ -96,15 +96,15 @@ L& LayerStack<Ctx>::push_overlay(Args&&... args) {
     m_layers.emplace_back();
     auto& slot = m_layers.back();
 
-    slot.vt = make_vtable<L,AppCfg,Ctx>();
+    slot.m_vt = make_vtable<L,AppCfg,Ctx>();
 
-    new (slot.buf) L(std::forward<Args>(args)...);
-    slot.alive = true;
+    new (slot.m_buf) L(std::forward<Args>(args)...);
+    slot.m_alive = true;
 
     add_indices(idx);
 
-    if (slot.vt.attach) slot.vt.attach(slot.buf, *m_ctx);
-    return *reinterpret_cast<L*>(slot.buf);
+    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf, *m_ctx);
+    return *reinterpret_cast<L*>(slot.m_buf);
 }
 
 
@@ -134,25 +134,25 @@ void LayerStack<Ctx>::pop_overlay() {
 template<class Ctx>
 void LayerStack<Ctx>::run_update(Timestep ts) { 
     for (auto i: m_update)  
-        m_layers[i].vt.update(m_layers[i].buf, *m_ctx, ts); 
+        m_layers[i].m_vt.update(m_layers[i].m_buf, *m_ctx, ts); 
 }
 
 template<class Ctx>
 void LayerStack<Ctx>::run_physics(Timestep ts) { 
     for (auto i: m_physics) 
-        m_layers[i].vt.physics(m_layers[i].buf, *m_ctx, ts); 
+        m_layers[i].m_vt.physics(m_layers[i].m_buf, *m_ctx, ts); 
 }
 
 template<class Ctx>
 void LayerStack<Ctx>::run_event(Event& e) { 
     for (auto it = m_event.rbegin(); it != m_event.rend(); ++it) 
-        m_layers[*it].vt.event(m_layers[*it].buf, *m_ctx, e); 
+        m_layers[*it].m_vt.event(m_layers[*it].m_buf, *m_ctx, e); 
 }
 
 template<class Ctx>
 void LayerStack<Ctx>::run_ui() { 
     for (auto i: m_ui) 
-        m_layers[i].vt.ui(m_layers[i].buf, *m_ctx); 
+        m_layers[i].m_vt.ui(m_layers[i].m_buf, *m_ctx); 
 }
 
 template<class Ctx>

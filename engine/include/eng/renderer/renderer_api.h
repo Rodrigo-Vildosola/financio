@@ -8,7 +8,7 @@ namespace eng {
 
 class Shader;
 class Pipeline;
-class Application;
+// class Application;
 
 class RendererAPI {
 public:
@@ -32,7 +32,7 @@ public:
     static const RendererStats& get_stats();
     static RendererStats& get_stats_mutable();
 
-    friend class Application; 
+    // friend class Application; 
 
     static scope<Renderer> g_renderer;
 };

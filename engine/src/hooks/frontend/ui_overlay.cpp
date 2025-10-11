@@ -1,10 +1,11 @@
-#pragma once
 #include "eng/hooks/frontend/ui_overlay.h"
 #include "eng/core/assert.h"
 #include "eng/core/logger.h"
 #include "eng/core/timestep.h"
 #include "eng/events/application_event.h"
 
+#include "eng/hooks/frontend/gui_ctx.h"
+#include "eng/renderer/render_pass.h"
 #include "eng/ui/implot.h"
 
 #include <imgui.h>
@@ -64,7 +65,7 @@ void UILayer::on_event(Event& e) {
     }
 }
 
-inline void UiOverlay::begin(auto& c) {
+void UiOverlay::begin(GuiCtx&) {
     RenderPassDesc ui_pass_desc;
     ui_pass_desc.name = "ImGuiPass";
 
@@ -75,49 +76,46 @@ inline void UiOverlay::begin(auto& c) {
     ui_pass_desc.color_attachments.push_back(color_attachment);
 
     m_ui_pass = RendererAPI::create_render_pass(ui_pass_desc);
-
     m_ui_pass->begin();
+
     ImGui_ImplWGPU_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-inline void UiOverlay::end(auto& c) {
-    auto& win = *c.template get<WindowSys>().win;
-    auto [fbw, fbh] = c.template get<GfxSys>().ctx->get_framebuffer_size();
+void UiOverlay::end(GuiCtx& c) {
+    auto& win = *c.get<WindowSys>().win;
+    auto [fbw, fbh] = c.get<GfxSys>().ctx->get_framebuffer_size();
     const int ww = static_cast<int>(win.get_width());
     const int wh = static_cast<int>(win.get_height());
 
     ImGuiIO& io = ImGui::GetIO();
-    const float sx = ww ? float(fbw)/float(ww) : 1.0f;
-    const float sy = wh ? float(fbh)/float(wh) : 1.0f;
+    const float sx = ww ? float(fbw)/float(ww) : 1.f;
+    const float sy = wh ? float(fbh)/float(wh) : 1.f;
     io.DisplaySize = ImVec2(float(fbw), float(fbh));
     io.DisplayFramebufferScale = ImVec2(sx, sy);
 
     ImGui::Render();
+    const auto& enc = m_ui_pass->get_encoder();
+    if (enc) ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), enc.Get());
 
-    const auto& pass_encoder = m_ui_pass->get_encoder();
-
-    if (pass_encoder) {
-        ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), pass_encoder.Get());
-    }
-
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        GLFWwindow* backup = glfwGetCurrentContext();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
+        glfwMakeContextCurrent(backup);
     }
-
     m_ui_pass->end();
-
-    // Actual drawing is expected inside your renderer’s UI pass encoder.
-    // If you keep a pass encoder here, call ImGui_ImplWGPU_RenderDrawData(...)
-    // after your encoder is begun. Omitted for brevity, same as your UILayer::end().
 }
 
-inline void UiOverlay::set_dark_theme_colors() {
+void UiOverlay::filter_event(Event& e) {
+    if (!m_block_events) return;
+    ImGuiIO& io = ImGui::GetIO();
+    e.handled |= e.is_in_category(EventCategoryMouse)    & io.WantCaptureMouse;
+    e.handled |= e.is_in_category(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+}
+
+void UiOverlay::set_dark_theme_colors() {
     auto& colors = ImGui::GetStyle().Colors;
     colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
 

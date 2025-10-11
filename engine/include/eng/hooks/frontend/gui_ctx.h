@@ -9,11 +9,14 @@
 namespace eng {
 
 struct AppState { 
-    bool running=true; bool minimized=false; 
+    bool running=true; 
+    bool minimized=false; 
 };
+
 struct WindowSys { 
     scope<Window> win; 
 };
+
 struct GfxSys    { 
     scope<GraphicsContext> ctx; 
 };
