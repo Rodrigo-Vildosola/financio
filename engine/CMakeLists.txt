@@ -35,9 +35,6 @@ add_library(eng-frontend STATIC
   src/ui/imgui_layer.cpp
   src/ui/implot.cpp
   src/ui/implot_items.cpp
-  src/hooks/frontend/gui_hooks.cpp
-  src/hooks/frontend/ui_overlay.cpp   # if not already added
-
 )
 
 target_include_directories(eng-frontend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -72,23 +69,23 @@ if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
 endif()
 
 
-# ---- apps ----
-# Headless: links ONLY eng-core
-add_executable(app_headless
-  src/main_headless.cpp
-)
-target_link_libraries(app_headless PRIVATE eng-core)
-target_include_directories(app_headless PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# # ---- apps ----
+# # Headless: links ONLY eng-core
+# add_executable(app_headless
+#   src/main_headless.cpp
+# )
+# target_link_libraries(app_headless PRIVATE eng-core)
+# target_include_directories(app_headless PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# GUI: links eng-frontend (which brings glfw/webgpu/imgui)
-add_executable(app_gui
-  src/main_gui.cpp
-)
-target_link_libraries(app_gui PRIVATE eng-frontend)
-target_include_directories(app_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# # GUI: links eng-frontend (which brings glfw/webgpu/imgui)
+# add_executable(app_gui
+#   src/main_gui.cpp
+# )
+# target_link_libraries(app_gui PRIVATE eng-frontend)
+# target_include_directories(app_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Convenience alias if desired
-if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
-  add_library(${ENGINE_NAME} INTERFACE)
-  target_link_libraries(${ENGINE_NAME} INTERFACE eng-core eng-frontend)
-endif()
+# # Convenience alias if desired
+# if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
+#   add_library(${ENGINE_NAME} INTERFACE)
+#   target_link_libraries(${ENGINE_NAME} INTERFACE eng-core eng-frontend)
+# endif()
