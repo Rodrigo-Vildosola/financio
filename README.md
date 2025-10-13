@@ -11,6 +11,8 @@ The system eventually will provides a flexible **strategy engine** capable of in
 
 The project uses a layered engine architecture designed for real-time financial analysis and visualization.
 
+![IMAGE](dev/financio_arch.png)
+
 ### Core Components
 
 * **eng::Application**
