@@ -4,12 +4,9 @@
 
 namespace eng {
 
-template<class Ctx>
-LayerStack<Ctx>::LayerStack(Ctx* c) : m_ctx(c) {}
-
-template<class Ctx>
-AnyLayer<Ctx>& LayerStack<Ctx>::insert_at(u64 pos) {
-    AnyLayer<Ctx> empty{};
+template<class AppCfg>
+AnyLayer<AppCfg>& LayerStack<AppCfg>::insert_at(u64 pos) {
+    AnyLayer<AppCfg> empty{};
     m_layers.insert(m_layers.begin() + pos, empty);
 
     auto bump = [pos](std::vector<u32>& v) { 
@@ -26,8 +23,8 @@ AnyLayer<Ctx>& LayerStack<Ctx>::insert_at(u64 pos) {
     return m_layers[pos];
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::add_indices(u32 idx) {
+template<class AppCfg>
+void LayerStack<AppCfg>::add_indices(u32 idx) {
     auto& L = m_layers[idx];
     if (L.m_vt.attach)  m_attach.push_back(idx);
     if (L.m_vt.detach)  m_detach.push_back(idx);
@@ -37,8 +34,8 @@ void LayerStack<Ctx>::add_indices(u32 idx) {
     if (L.m_vt.ui)      m_ui.push_back(idx);
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::remove_indices(u32 idx) {
+template<class AppCfg>
+void LayerStack<AppCfg>::remove_indices(u32 idx) {
     auto rem = [idx](auto& v) {
         v.erase(std::remove(v.begin(), v.end(), idx), v.end());
         for (auto& x: v) 
@@ -53,63 +50,63 @@ void LayerStack<Ctx>::remove_indices(u32 idx) {
     rem(m_ui);
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::detach_destroy(u32 idx) {
+template<class AppCfg>
+void LayerStack<AppCfg>::detach_destroy(u32 idx) {
     auto& L = m_layers[idx];
     if (L.m_alive && L.m_vt.detach) { 
-        L.m_vt.detach(L.m_buf, *m_ctx);
+        L.m_vt.detach(L.m_buf);
     }
     L.m_alive = false; // trivial types only
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::tombstone(u32 idx) { 
-    std::memset(&m_layers[idx], 0, sizeof(AnyLayer<Ctx>)); 
+template<class AppCfg>
+void LayerStack<AppCfg>::tombstone(u32 idx) { 
+    std::memset(&m_layers[idx], 0, sizeof(AnyLayer<AppCfg>)); 
 }
 
-template<class Ctx>
-template<class AppCfg, class L, class... Args>
-L& LayerStack<Ctx>::push_layer(Args&&... args) {
-    static_assert(SBOFit<L,Ctx>, "Layer must fit SBO and be trivially copyable/destructible");
+template<class AppCfg>
+template<class L, class... Args>
+L& LayerStack<AppCfg>::push_layer(Args&&... args) {
+    static_assert(SBOFit<L,AppCfg>, "Layer must fit SBO and be trivially copyable/destructible");
 
     auto& slot = insert_at(m_layer_insert);
 
-    slot.m_vt = make_vtable<L,AppCfg,Ctx>();
+    slot.m_vt = make_vtable<L,AppCfg>();
 
     new (slot.m_buf) L(std::forward<Args>(args)...);
     slot.m_alive = true;
 
     add_indices(static_cast<u32>(m_layer_insert));
 
-    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf, *m_ctx);
+    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf);
     ++m_layer_insert;
     return *reinterpret_cast<L*>(slot.m_buf);
 }
 
-template<class Ctx>
-template<class AppCfg, class L, class... Args>
-L& LayerStack<Ctx>::push_overlay(Args&&... args) {
-    static_assert(SBOFit<L,Ctx>, "Layer must fit SBO and be trivially copyable/destructible");
+template<class AppCfg>
+template<class L, class... Args>
+L& LayerStack<AppCfg>::push_overlay(Args&&... args) {
+    static_assert(SBOFit<L,AppCfg>, "Layer must fit SBO and be trivially copyable/destructible");
 
     const u32 idx = static_cast<u32>(m_layers.size());
 
     m_layers.emplace_back();
     auto& slot = m_layers.back();
 
-    slot.m_vt = make_vtable<L,AppCfg,Ctx>();
+    slot.m_vt = make_vtable<L,AppCfg>();
 
     new (slot.m_buf) L(std::forward<Args>(args)...);
     slot.m_alive = true;
 
     add_indices(idx);
 
-    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf, *m_ctx);
+    if (slot.m_vt.attach) slot.m_vt.attach(slot.m_buf);
     return *reinterpret_cast<L*>(slot.m_buf);
 }
 
 
-template<class Ctx>
-void LayerStack<Ctx>::pop_layer() {
+template<class AppCfg>
+void LayerStack<AppCfg>::pop_layer() {
     if (m_layer_insert == 0) return;
     const u32 idx = static_cast<u32>(m_layer_insert - 1);
 
@@ -120,8 +117,8 @@ void LayerStack<Ctx>::pop_layer() {
     --m_layer_insert;
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::pop_overlay() {
+template<class AppCfg>
+void LayerStack<AppCfg>::pop_overlay() {
     if (m_layers.size() == m_layer_insert) return;
     const u32 idx = static_cast<u32>(m_layers.size() - 1);
 
@@ -131,38 +128,28 @@ void LayerStack<Ctx>::pop_overlay() {
     m_layers.pop_back();
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::run_update(Timestep ts) { 
+template<class AppCfg>
+void LayerStack<AppCfg>::run_update(Timestep ts) { 
     for (auto i: m_update)  
-        m_layers[i].m_vt.update(m_layers[i].m_buf, *m_ctx, ts); 
+        m_layers[i].m_vt.update(m_layers[i].m_buf, ts); 
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::run_physics(Timestep ts) { 
+template<class AppCfg>
+void LayerStack<AppCfg>::run_physics(Timestep ts) { 
     for (auto i: m_physics) 
-        m_layers[i].m_vt.physics(m_layers[i].m_buf, *m_ctx, ts); 
+        m_layers[i].m_vt.physics(m_layers[i].m_buf, ts); 
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::run_event(Event& e) { 
+template<class AppCfg>
+void LayerStack<AppCfg>::run_event(Event& e) { 
     for (auto it = m_event.rbegin(); it != m_event.rend(); ++it) 
-        m_layers[*it].m_vt.event(m_layers[*it].m_buf, *m_ctx, e); 
+        m_layers[*it].m_vt.event(m_layers[*it].m_buf, e); 
 }
 
-template<class Ctx>
-void LayerStack<Ctx>::run_ui() { 
+template<class AppCfg>
+void LayerStack<AppCfg>::run_ui() { 
     for (auto i: m_ui) 
-        m_layers[i].m_vt.ui(m_layers[i].m_buf, *m_ctx); 
-}
-
-template<class Ctx>
-Ctx& LayerStack<Ctx>::context() { 
-    return *m_ctx; 
-}
-
-template<class Ctx>
-const Ctx& LayerStack<Ctx>::context() const { 
-    return *m_ctx; 
+        m_layers[i].m_vt.ui(m_layers[i].m_buf); 
 }
 
 

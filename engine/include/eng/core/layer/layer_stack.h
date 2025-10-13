@@ -5,18 +5,18 @@
 
 namespace eng {
 
-template<class L, class Ctx>
-concept SBOFit = (sizeof(L) <= AnyLayer<Ctx>::SBO) && std::is_trivially_copyable_v<L> && std::is_trivially_destructible_v<L>;
+template<class L, class AppCfg>
+concept SBOFit = (sizeof(L) <= AnyLayer<AppCfg>::SBO) && std::is_trivially_copyable_v<L> && std::is_trivially_destructible_v<L>;
 
-template<class Ctx>
+template<class AppCfg>
 class LayerStack {
 public:
-    explicit LayerStack(Ctx* c);
+    LayerStack() = default;
 
-    template<class AppCfg, class L, class... Args>
+    template<class L, class... Args>
     L& push_layer(Args&&... args);
 
-    template<class AppCfg, class L, class... Args>
+    template<class L, class... Args>
     L& push_overlay(Args&&... args);
 
     void pop_layer();
@@ -27,20 +27,16 @@ public:
     void run_event(Event& e);
     void run_ui();
 
-    Ctx& context();
-    const Ctx& context() const;
-
 private:
-    AnyLayer<Ctx>& insert_at(u64 pos);
+    AnyLayer<AppCfg>& insert_at(u64 pos);
     void add_indices(u32 idx);
     void remove_indices(u32 idx);
     void detach_destroy(u32 idx);
     void tombstone(u32 idx);
 
-    std::vector<AnyLayer<Ctx>> m_layers;
+    std::vector<AnyLayer<AppCfg>> m_layers;
     std::vector<u32> m_attach, m_detach, m_update, m_physics, m_event, m_ui;
     u64 m_layer_insert{0};
-    Ctx* m_ctx;
 };
 
 

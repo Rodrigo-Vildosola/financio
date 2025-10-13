@@ -15,11 +15,11 @@ struct GuiConfig {
     static constexpr bool events=true;
 };
 
-template<class T, class C> concept HasAttach   = requires(T& t, C& c){ t.on_attach(c); };
-template<class T, class C> concept HasDetach   = requires(T& t, C& c){ t.on_detach(c); };
-template<class T, class C> concept HasUpdate   = requires(T& t, C& c, Timestep dt){ t.on_update(c, dt); };
-template<class T, class C> concept HasPhysics  = requires(T& t, C& c, Timestep dt){ t.on_physics_update(c, dt); };
-template<class T, class C> concept HasEvent    = requires(T& t, C& c, Event& e){ t.on_event(c, e); };
-template<class T, class C> concept HasUI       = requires(T& t, C& c){ t.on_ui_render(c); };
+template<class T> concept HasAttach   = requires(T& t){ t.on_attach(); };
+template<class T> concept HasDetach   = requires(T& t){ t.on_detach(); };
+template<class T> concept HasUpdate   = requires(T& t, Timestep dt){ t.on_update(dt); };
+template<class T> concept HasPhysics  = requires(T& t, Timestep dt){ t.on_physics_update(dt); };
+template<class T> concept HasEvent    = requires(T& t, Event& e){ t.on_event(e); };
+template<class T> concept HasUI       = requires(T& t){ t.on_ui_render(); };
 
 } // namespace eng
