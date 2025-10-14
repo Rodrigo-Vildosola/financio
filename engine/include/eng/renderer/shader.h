@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engpch.h"
+#include "eng/core/base.h"
 #include "eng/renderer/context/context.h"
 
 
@@ -11,9 +11,9 @@ class Shader {
 public:
     /// Read WGSL from `source` (later you can add loadFromFile)
     /// `label` is used for debug markers.
-    static Shader create_from_wgsl(Context& ctx, std::string_view source, std::string_view label);
+    static Shader create_from_wgsl(GraphicsContext& ctx, std::string_view source, std::string_view label);
 
-    static Shader from_file(Context& ctx, const std::string& path, std::string label);
+    static Shader from_file(GraphicsContext& ctx, const std::string& path, std::string label);
 
     ~Shader();
 

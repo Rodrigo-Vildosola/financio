@@ -181,6 +181,51 @@ struct DecimalPBDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DecimalPBDefaultTypeInternal _DecimalPB_default_instance_;
 
+inline constexpr ContractPB::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        symbol_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        sec_type_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        exchange_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        currency_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        local_symbol_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        trading_class_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        primary_exchange_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR ContractPB::ContractPB(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(ContractPB_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct ContractPBDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ContractPBDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ContractPBDefaultTypeInternal() {}
+  union {
+    ContractPB _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ContractPBDefaultTypeInternal _ContractPB_default_instance_;
+
 inline constexpr BarPB::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -318,6 +363,23 @@ const ::uint32_t
         4,
         5,
         7,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_._has_bits_),
+        10, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.symbol_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.sec_type_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.exchange_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.currency_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.local_symbol_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.trading_class_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ContractPB, _impl_.primary_exchange_),
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
 };
 
 static const ::_pbi::MigrationSchema
@@ -327,6 +389,7 @@ static const ::_pbi::MigrationSchema
         {22, sizeof(::financio::trading::ExecutionPB)},
         {57, sizeof(::financio::trading::BarPB)},
         {76, sizeof(::financio::trading::ExecutionFilterPB)},
+        {95, sizeof(::financio::trading::ContractPB)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_DecimalPB_default_instance_._instance,
@@ -334,6 +397,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_ExecutionPB_default_instance_._instance,
     &::financio::trading::_BarPB_default_instance_._instance,
     &::financio::trading::_ExecutionFilterPB_default_instance_._instance,
+    &::financio::trading::_ContractPB_default_instance_._instance,
 };
 const char descriptor_table_protodef_trading_2fcommon_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
@@ -357,39 +421,44 @@ const char descriptor_table_protodef_trading_2fcommon_2eproto[] ABSL_ATTRIBUTE_S
     "onFilterPB\022\021\n\tclient_id\030\001 \001(\005\022\021\n\tacct_co"
     "de\030\002 \001(\t\022\014\n\004time\030\003 \001(\t\022\016\n\006symbol\030\004 \001(\t\022\020"
     "\n\010sec_type\030\005 \001(\t\022\020\n\010exchange\030\006 \001(\t\022\014\n\004si"
-    "de\030\007 \001(\t\022\023\n\013last_n_days\030\010 \001(\005*\351\001\n\rBacken"
-    "dStatus\022\032\n\026BACKEND_STATUS_UNKNOWN\020\000\022\033\n\027B"
-    "ACKEND_STATUS_STARTING\020\001\022\030\n\024BACKEND_STAT"
-    "US_READY\020\002\022\"\n\036BACKEND_STATUS_IBKR_CONNEC"
-    "TING\020\003\022!\n\035BACKEND_STATUS_IBKR_CONNECTED\020"
-    "\004\022$\n BACKEND_STATUS_IBKR_DISCONNECTED\020\005\022"
-    "\030\n\024BACKEND_STATUS_ERROR\020\006*\366\001\n\013ControlTyp"
-    "e\022\027\n\023CONTROL_UNSPECIFIED\020\000\022\023\n\017CONTROL_CO"
-    "NNECT\020\001\022\026\n\022CONTROL_DISCONNECT\020\002\022\023\n\017CONTR"
-    "OL_SUB_MKT\020\003\022\025\n\021CONTROL_UNSUB_MKT\020\004\022\027\n\023C"
-    "ONTROL_PLACE_ORDER\020\005\022\030\n\024CONTROL_CANCEL_O"
-    "RDER\020\006\022\026\n\022CONTROL_HISTORICAL\020\007\022\030\n\024CONTRO"
-    "L_ACCOUNT_DATA\020\010\022\020\n\014CONTROL_NEWS\020\t*\237\002\n\tS"
-    "tateType\022\025\n\021STATE_UNSPECIFIED\020\000\022\023\n\017STATE"
-    "_CONNECTED\020\001\022\026\n\022STATE_DISCONNECTED\020\002\022\017\n\013"
-    "STATE_ERROR\020\003\022\024\n\020STATE_TICK_PRICE\020\n\022\023\n\017S"
-    "TATE_TICK_SIZE\020\013\022\026\n\022STATE_ORDER_STATUS\020\014"
-    "\022\026\n\022STATE_ORDER_FILLED\020\r\022\022\n\016STATE_HIST_B"
-    "AR\020\024\022\022\n\016STATE_HIST_END\020\025\022\025\n\021STATE_ACCOUN"
-    "T_SUM\020\036\022\023\n\017STATE_PORTFOLIO\020\037\022\016\n\nSTATE_NE"
-    "WS\020 b\006proto3"
+    "de\030\007 \001(\t\022\023\n\013last_n_days\030\010 \001(\005\"\231\001\n\nContra"
+    "ctPB\022\016\n\006symbol\030\001 \001(\t\022\020\n\010sec_type\030\002 \001(\t\022\020"
+    "\n\010exchange\030\003 \001(\t\022\020\n\010currency\030\004 \001(\t\022\024\n\014lo"
+    "cal_symbol\030\005 \001(\t\022\025\n\rtrading_class\030\006 \001(\t\022"
+    "\030\n\020primary_exchange\030\007 \001(\t*\351\001\n\rBackendSta"
+    "tus\022\032\n\026BACKEND_STATUS_UNKNOWN\020\000\022\033\n\027BACKE"
+    "ND_STATUS_STARTING\020\001\022\030\n\024BACKEND_STATUS_R"
+    "EADY\020\002\022\"\n\036BACKEND_STATUS_IBKR_CONNECTING"
+    "\020\003\022!\n\035BACKEND_STATUS_IBKR_CONNECTED\020\004\022$\n"
+    " BACKEND_STATUS_IBKR_DISCONNECTED\020\005\022\030\n\024B"
+    "ACKEND_STATUS_ERROR\020\006*\210\002\n\013ControlType\022\027\n"
+    "\023CONTROL_UNSPECIFIED\020\000\022\023\n\017CONTROL_CONNEC"
+    "T\020\001\022\026\n\022CONTROL_DISCONNECT\020\002\022\023\n\017CONTROL_S"
+    "UB_MKT\020\003\022\025\n\021CONTROL_UNSUB_MKT\020\004\022\027\n\023CONTR"
+    "OL_PLACE_ORDER\020\005\022\030\n\024CONTROL_CANCEL_ORDER"
+    "\020\006\022\026\n\022CONTROL_HISTORICAL\020\007\022\030\n\024CONTROL_AC"
+    "COUNT_DATA\020\010\022\020\n\014CONTROL_NEWS\020\t\022\020\n\014CONTRO"
+    "L_PING\020\n*\257\002\n\tStateType\022\025\n\021STATE_UNSPECIF"
+    "IED\020\000\022\023\n\017STATE_CONNECTED\020\001\022\026\n\022STATE_DISC"
+    "ONNECTED\020\002\022\017\n\013STATE_ERROR\020\003\022\016\n\nSTATE_PON"
+    "G\020\004\022\024\n\020STATE_TICK_PRICE\020\n\022\023\n\017STATE_TICK_"
+    "SIZE\020\013\022\026\n\022STATE_ORDER_STATUS\020\014\022\026\n\022STATE_"
+    "ORDER_FILLED\020\r\022\022\n\016STATE_HIST_BAR\020\024\022\022\n\016ST"
+    "ATE_HIST_END\020\025\022\025\n\021STATE_ACCOUNT_SUM\020\036\022\023\n"
+    "\017STATE_PORTFOLIO\020\037\022\016\n\nSTATE_NEWS\020 b\006prot"
+    "o3"
 };
 static ::absl::once_flag descriptor_table_trading_2fcommon_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_trading_2fcommon_2eproto = {
     false,
     false,
-    1612,
+    1802,
     descriptor_table_protodef_trading_2fcommon_2eproto,
     "trading/common.proto",
     &descriptor_table_trading_2fcommon_2eproto_once,
     nullptr,
     0,
-    5,
+    6,
     schemas,
     file_default_instances,
     TableStruct_trading_2fcommon_2eproto::offsets,
@@ -409,13 +478,13 @@ const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ControlType_descripto
   return file_level_enum_descriptors_trading_2fcommon_2eproto[1];
 }
 PROTOBUF_CONSTINIT const uint32_t ControlType_internal_data_[] = {
-    655360u, 0u, };
+    720896u, 0u, };
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL StateType_descriptor() {
   ::google::protobuf::internal::AssignDescriptors(&descriptor_table_trading_2fcommon_2eproto);
   return file_level_enum_descriptors_trading_2fcommon_2eproto[2];
 }
 PROTOBUF_CONSTINIT const uint32_t StateType_internal_data_[] = {
-    262144u, 32u, 469959616u, };
+    327680u, 32u, 234979808u, };
 // ===================================================================
 
 class DecimalPB::_Internal {
@@ -2874,6 +2943,516 @@ void ExecutionFilterPB::InternalSwap(ExecutionFilterPB* PROTOBUF_RESTRICT PROTOB
 }
 
 ::google::protobuf::Metadata ExecutionFilterPB::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class ContractPB::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<ContractPB>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(ContractPB, _impl_._has_bits_);
+};
+
+ContractPB::ContractPB(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ContractPB_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:financio.trading.ContractPB)
+}
+PROTOBUF_NDEBUG_INLINE ContractPB::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::financio::trading::ContractPB& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        symbol_(arena, from.symbol_),
+        sec_type_(arena, from.sec_type_),
+        exchange_(arena, from.exchange_),
+        currency_(arena, from.currency_),
+        local_symbol_(arena, from.local_symbol_),
+        trading_class_(arena, from.trading_class_),
+        primary_exchange_(arena, from.primary_exchange_) {}
+
+ContractPB::ContractPB(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const ContractPB& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ContractPB_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  ContractPB* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:financio.trading.ContractPB)
+}
+PROTOBUF_NDEBUG_INLINE ContractPB::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        symbol_(arena),
+        sec_type_(arena),
+        exchange_(arena),
+        currency_(arena),
+        local_symbol_(arena),
+        trading_class_(arena),
+        primary_exchange_(arena) {}
+
+inline void ContractPB::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+ContractPB::~ContractPB() {
+  // @@protoc_insertion_point(destructor:financio.trading.ContractPB)
+  SharedDtor(*this);
+}
+inline void ContractPB::SharedDtor(MessageLite& self) {
+  ContractPB& this_ = static_cast<ContractPB&>(self);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.symbol_.Destroy();
+  this_._impl_.sec_type_.Destroy();
+  this_._impl_.exchange_.Destroy();
+  this_._impl_.currency_.Destroy();
+  this_._impl_.local_symbol_.Destroy();
+  this_._impl_.trading_class_.Destroy();
+  this_._impl_.primary_exchange_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ContractPB::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ContractPB(arena);
+}
+constexpr auto ContractPB::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ContractPB),
+                                            alignof(ContractPB));
+}
+constexpr auto ContractPB::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ContractPB_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ContractPB::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ContractPB>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ContractPB::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ContractPB>(), &ContractPB::ByteSizeLong,
+              &ContractPB::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ContractPB, _impl_._cached_size_),
+          false,
+      },
+      &ContractPB::kDescriptorMethods,
+      &descriptor_table_trading_2fcommon_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ContractPB_class_data_ =
+        ContractPB::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ContractPB::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ContractPB_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ContractPB_class_data_.tc_table);
+  return ContractPB_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 7, 0, 107, 2>
+ContractPB::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(ContractPB, _impl_._has_bits_),
+    0, // no _extensions_
+    7, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967168,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    7,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    ContractPB_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::financio::trading::ContractPB>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string symbol = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.symbol_)}},
+    // string sec_type = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 1, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.sec_type_)}},
+    // string exchange = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 2, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.exchange_)}},
+    // string currency = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 3, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.currency_)}},
+    // string local_symbol = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 4, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.local_symbol_)}},
+    // string trading_class = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 5, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.trading_class_)}},
+    // string primary_exchange = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 6, 0, PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.primary_exchange_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string symbol = 1;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.symbol_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string sec_type = 2;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.sec_type_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string exchange = 3;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.exchange_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string currency = 4;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.currency_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string local_symbol = 5;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.local_symbol_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string trading_class = 6;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.trading_class_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string primary_exchange = 7;
+    {PROTOBUF_FIELD_OFFSET(ContractPB, _impl_.primary_exchange_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\33\6\10\10\10\14\15\20"
+    "financio.trading.ContractPB"
+    "symbol"
+    "sec_type"
+    "exchange"
+    "currency"
+    "local_symbol"
+    "trading_class"
+    "primary_exchange"
+  }},
+};
+PROTOBUF_NOINLINE void ContractPB::Clear() {
+// @@protoc_insertion_point(message_clear_start:financio.trading.ContractPB)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000007fU) != 0) {
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      _impl_.symbol_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      _impl_.sec_type_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      _impl_.exchange_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      _impl_.currency_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      _impl_.local_symbol_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      _impl_.trading_class_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000040U) != 0) {
+      _impl_.primary_exchange_.ClearNonDefaultToEmpty();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ContractPB::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ContractPB& this_ = static_cast<const ContractPB&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ContractPB::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ContractPB& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:financio.trading.ContractPB)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string symbol = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+    if (!this_._internal_symbol().empty()) {
+      const ::std::string& _s = this_._internal_symbol();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.symbol");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // string sec_type = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (!this_._internal_sec_type().empty()) {
+      const ::std::string& _s = this_._internal_sec_type();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.sec_type");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string exchange = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (!this_._internal_exchange().empty()) {
+      const ::std::string& _s = this_._internal_exchange();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.exchange");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // string currency = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (!this_._internal_currency().empty()) {
+      const ::std::string& _s = this_._internal_currency();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.currency");
+      target = stream->WriteStringMaybeAliased(4, _s, target);
+    }
+  }
+
+  // string local_symbol = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+    if (!this_._internal_local_symbol().empty()) {
+      const ::std::string& _s = this_._internal_local_symbol();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.local_symbol");
+      target = stream->WriteStringMaybeAliased(5, _s, target);
+    }
+  }
+
+  // string trading_class = 6;
+  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
+    if (!this_._internal_trading_class().empty()) {
+      const ::std::string& _s = this_._internal_trading_class();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.trading_class");
+      target = stream->WriteStringMaybeAliased(6, _s, target);
+    }
+  }
+
+  // string primary_exchange = 7;
+  if ((this_._impl_._has_bits_[0] & 0x00000040U) != 0) {
+    if (!this_._internal_primary_exchange().empty()) {
+      const ::std::string& _s = this_._internal_primary_exchange();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.ContractPB.primary_exchange");
+      target = stream->WriteStringMaybeAliased(7, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:financio.trading.ContractPB)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ContractPB::ByteSizeLong(const MessageLite& base) {
+  const ContractPB& this_ = static_cast<const ContractPB&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ContractPB::ByteSizeLong() const {
+  const ContractPB& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:financio.trading.ContractPB)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000007fU) != 0) {
+    // string symbol = 1;
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!this_._internal_symbol().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_symbol());
+      }
+    }
+    // string sec_type = 2;
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (!this_._internal_sec_type().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_sec_type());
+      }
+    }
+    // string exchange = 3;
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (!this_._internal_exchange().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_exchange());
+      }
+    }
+    // string currency = 4;
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (!this_._internal_currency().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_currency());
+      }
+    }
+    // string local_symbol = 5;
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (!this_._internal_local_symbol().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_local_symbol());
+      }
+    }
+    // string trading_class = 6;
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (!this_._internal_trading_class().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_trading_class());
+      }
+    }
+    // string primary_exchange = 7;
+    if ((cached_has_bits & 0x00000040U) != 0) {
+      if (!this_._internal_primary_exchange().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_primary_exchange());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ContractPB::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<ContractPB*>(&to_msg);
+  auto& from = static_cast<const ContractPB&>(from_msg);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    from.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:financio.trading.ContractPB)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000007fU) != 0) {
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!from._internal_symbol().empty()) {
+        _this->_internal_set_symbol(from._internal_symbol());
+      } else {
+        if (_this->_impl_.symbol_.IsDefault()) {
+          _this->_internal_set_symbol("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (!from._internal_sec_type().empty()) {
+        _this->_internal_set_sec_type(from._internal_sec_type());
+      } else {
+        if (_this->_impl_.sec_type_.IsDefault()) {
+          _this->_internal_set_sec_type("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (!from._internal_exchange().empty()) {
+        _this->_internal_set_exchange(from._internal_exchange());
+      } else {
+        if (_this->_impl_.exchange_.IsDefault()) {
+          _this->_internal_set_exchange("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (!from._internal_currency().empty()) {
+        _this->_internal_set_currency(from._internal_currency());
+      } else {
+        if (_this->_impl_.currency_.IsDefault()) {
+          _this->_internal_set_currency("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (!from._internal_local_symbol().empty()) {
+        _this->_internal_set_local_symbol(from._internal_local_symbol());
+      } else {
+        if (_this->_impl_.local_symbol_.IsDefault()) {
+          _this->_internal_set_local_symbol("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (!from._internal_trading_class().empty()) {
+        _this->_internal_set_trading_class(from._internal_trading_class());
+      } else {
+        if (_this->_impl_.trading_class_.IsDefault()) {
+          _this->_internal_set_trading_class("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000040U) != 0) {
+      if (!from._internal_primary_exchange().empty()) {
+        _this->_internal_set_primary_exchange(from._internal_primary_exchange());
+      } else {
+        if (_this->_impl_.primary_exchange_.IsDefault()) {
+          _this->_internal_set_primary_exchange("");
+        }
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ContractPB::CopyFrom(const ContractPB& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:financio.trading.ContractPB)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ContractPB::InternalSwap(ContractPB* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, &other->_impl_.symbol_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.sec_type_, &other->_impl_.sec_type_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.exchange_, &other->_impl_.exchange_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.currency_, &other->_impl_.currency_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.local_symbol_, &other->_impl_.local_symbol_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.trading_class_, &other->_impl_.trading_class_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.primary_exchange_, &other->_impl_.primary_exchange_, arena);
+}
+
+::google::protobuf::Metadata ContractPB::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

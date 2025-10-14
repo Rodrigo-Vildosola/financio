@@ -1,7 +1,7 @@
 #pragma once
 
-#include "engpch.h"
-
+#include "eng/core/base.h"
+#include <webgpu/webgpu.h>
 #include <webgpu/webgpu_cpp.h>
 
 namespace eng {
@@ -9,16 +9,16 @@ namespace eng {
 class Window;
 class CommandQueue;
 
-struct ContextProps {
+struct GraphicsContextProps {
     // Placeholder for future context settings like:
     // bool enableValidation = true;
     // std::string preferredAdapterName;
 };
 
-class Context {
+class GraphicsContext {
 public:
-    explicit Context(const ContextProps& props = ContextProps());
-    ~Context();
+    explicit GraphicsContext(const GraphicsContextProps& props = GraphicsContextProps());
+    ~GraphicsContext();
 
     void init(Window* window_handle);
     void swap_buffers();
@@ -35,11 +35,11 @@ public:
 
     std::pair<u32, u32> get_framebuffer_size();
 
-    static scope<Context> create(const ContextProps& props = ContextProps());
+    static scope<GraphicsContext> create(const GraphicsContextProps& props = GraphicsContextProps());
 
 private:
     Window* m_window_handle = nullptr;
-    ContextProps m_props;
+    GraphicsContextProps m_props;
     
     wgpu::Instance m_instance = nullptr;
     wgpu::Device  m_device = nullptr;

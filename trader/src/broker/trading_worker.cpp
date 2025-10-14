@@ -139,11 +139,13 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
             }
 
             const auto& od = cmd.place_order();
-            Contract c;
-            c.symbol   = "AAPL";   // TODO: extend payload with contract
-            c.secType  = "STK";
-            c.exchange = "SMART";
-            c.currency = "USD";
+            const auto& c = od.contract();
+
+            Contract contract;
+            contract.symbol   = c.symbol();
+            contract.secType  = c.sec_type();
+            contract.exchange = c.exchange();
+            contract.currency = c.currency();
 
             Order o;
             o.action    = od.action();
@@ -152,7 +154,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
             o.lmtPrice  = od.limit_px();
             o.auxPrice  = od.stop_px();
 
-            m_client.placeOrder(cmd.id(), c, o);
+            m_client.placeOrder(cmd.id(), contract, o);
             break;
         }
 

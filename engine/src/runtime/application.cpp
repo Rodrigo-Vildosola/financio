@@ -2,11 +2,13 @@
 #include "eng/core/assert.h"
 #include "eng/core/logger.h"
 #include "eng/core/timestep.h"
+#include "eng/core/timer.h"
 
 #include "eng/renderer/renderer_api.h"
-#include "eng/window/window.h"
-#include "eng/debug/profiler.h"
+#include "eng/platform/window.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/runtime/application_base.h"
+
 
 namespace eng {
 
@@ -22,7 +24,7 @@ Application::Application(const std::string& name, CommandLineArgs args) : Applic
     m_window = Window::create(WindowProps(name));
 	m_window->set_event_cb(ENG_BIND_EVENT_FN(Application::on_event));
 
-    m_context = Context::create();
+    m_context = GraphicsContext::create();
     m_context->init(m_window.get());
 
     RendererAPI::init(m_context.get());

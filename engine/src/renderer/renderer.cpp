@@ -1,9 +1,8 @@
 #include "eng/core/assert.h"
 #include "eng/core/base.h"
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/render_pass.h"
-#include "engpch.h"
 
 #include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/renderer.h"
@@ -11,7 +10,7 @@
 
 namespace eng {
 
-Renderer::Renderer(Context& ctx) : m_context(ctx), m_queue(*ctx.get_queue()) {
+Renderer::Renderer(GraphicsContext& ctx) : m_context(ctx), m_queue(*ctx.get_queue()) {
     // m_scene_data = create_scope<SceneData>();
 }
 

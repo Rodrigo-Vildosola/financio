@@ -68,6 +68,10 @@ class HistoricalData;
 struct HistoricalDataDefaultTypeInternal;
 extern HistoricalDataDefaultTypeInternal _HistoricalData_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull HistoricalData_class_data_;
+class Ping;
+struct PingDefaultTypeInternal;
+extern PingDefaultTypeInternal _Ping_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull Ping_class_data_;
 class PlaceOrder;
 struct PlaceOrderDefaultTypeInternal;
 extern PlaceOrderDefaultTypeInternal _PlaceOrder_default_instance_;
@@ -589,30 +593,30 @@ class SubscribeMarketData final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull SubscribeMarketData_class_data_;
 // -------------------------------------------------------------------
 
-class PlaceOrder final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:financio.trading.PlaceOrder) */ {
+class Ping final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:financio.trading.Ping) */ {
  public:
-  inline PlaceOrder() : PlaceOrder(nullptr) {}
-  ~PlaceOrder() PROTOBUF_FINAL;
+  inline Ping() : Ping(nullptr) {}
+  ~Ping() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PlaceOrder* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+  void operator delete(Ping* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PlaceOrder));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Ping));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PlaceOrder(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR Ping(::google::protobuf::internal::ConstantInitialized);
 
-  inline PlaceOrder(const PlaceOrder& from) : PlaceOrder(nullptr, from) {}
-  inline PlaceOrder(PlaceOrder&& from) noexcept
-      : PlaceOrder(nullptr, ::std::move(from)) {}
-  inline PlaceOrder& operator=(const PlaceOrder& from) {
+  inline Ping(const Ping& from) : Ping(nullptr, from) {}
+  inline Ping(Ping&& from) noexcept
+      : Ping(nullptr, ::std::move(from)) {}
+  inline Ping& operator=(const Ping& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PlaceOrder& operator=(PlaceOrder&& from) noexcept {
+  inline Ping& operator=(Ping&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -640,13 +644,13 @@ class PlaceOrder final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PlaceOrder& default_instance() {
-    return *reinterpret_cast<const PlaceOrder*>(
-        &_PlaceOrder_default_instance_);
+  static const Ping& default_instance() {
+    return *reinterpret_cast<const Ping*>(
+        &_Ping_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 2;
-  friend void swap(PlaceOrder& a, PlaceOrder& b) { a.Swap(&b); }
-  inline void Swap(PlaceOrder* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 5;
+  friend void swap(Ping& a, Ping& b) { a.Swap(&b); }
+  inline void Swap(Ping* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -654,7 +658,7 @@ class PlaceOrder final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PlaceOrder* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(Ping* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -662,13 +666,13 @@ class PlaceOrder final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PlaceOrder* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PlaceOrder>(arena);
+  Ping* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Ping>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PlaceOrder& from);
+  void CopyFrom(const Ping& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PlaceOrder& from) { PlaceOrder::MergeImpl(*this, from); }
+  void MergeFrom(const Ping& from) { Ping::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -704,18 +708,18 @@ class PlaceOrder final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(PlaceOrder* PROTOBUF_NONNULL other);
+  void InternalSwap(Ping* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "financio.trading.PlaceOrder"; }
+  static ::absl::string_view FullMessageName() { return "financio.trading.Ping"; }
 
  protected:
-  explicit PlaceOrder(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PlaceOrder(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PlaceOrder& from);
-  PlaceOrder(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PlaceOrder&& from) noexcept
-      : PlaceOrder(arena) {
+  explicit Ping(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  Ping(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Ping& from);
+  Ping(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, Ping&& from) noexcept
+      : Ping(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -732,78 +736,29 @@ class PlaceOrder final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kActionFieldNumber = 4,
-    kOrderTypeFieldNumber = 5,
-    kQuantityFieldNumber = 1,
-    kLimitPxFieldNumber = 2,
-    kStopPxFieldNumber = 3,
+    kNoteFieldNumber = 1,
   };
-  // string action = 4;
-  void clear_action() ;
-  const ::std::string& action() const;
+  // string note = 1;
+  void clear_note() ;
+  const ::std::string& note() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_action(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_action();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_action();
-  void set_allocated_action(::std::string* PROTOBUF_NULLABLE value);
+  void set_note(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_note();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_note();
+  void set_allocated_note(::std::string* PROTOBUF_NULLABLE value);
 
   private:
-  const ::std::string& _internal_action() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_action(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_action();
+  const ::std::string& _internal_note() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_note(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_note();
 
   public:
-  // string order_type = 5;
-  void clear_order_type() ;
-  const ::std::string& order_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_order_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_order_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_type();
-  void set_allocated_order_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_order_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_order_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_type();
-
-  public:
-  // double quantity = 1;
-  void clear_quantity() ;
-  double quantity() const;
-  void set_quantity(double value);
-
-  private:
-  double _internal_quantity() const;
-  void _internal_set_quantity(double value);
-
-  public:
-  // double limit_px = 2;
-  void clear_limit_px() ;
-  double limit_px() const;
-  void set_limit_px(double value);
-
-  private:
-  double _internal_limit_px() const;
-  void _internal_set_limit_px(double value);
-
-  public:
-  // double stop_px = 3;
-  void clear_stop_px() ;
-  double stop_px() const;
-  void set_stop_px(double value);
-
-  private:
-  double _internal_stop_px() const;
-  void _internal_set_stop_px(double value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:financio.trading.PlaceOrder)
+  // @@protoc_insertion_point(class_scope:financio.trading.Ping)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5,
-                                   0, 52,
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   0, 34,
                                    2>
       _table_;
 
@@ -821,21 +776,17 @@ class PlaceOrder final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PlaceOrder& from_msg);
+        const Ping& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr action_;
-    ::google::protobuf::internal::ArenaStringPtr order_type_;
-    double quantity_;
-    double limit_px_;
-    double stop_px_;
+    ::google::protobuf::internal::ArenaStringPtr note_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_trading_2fcontrol_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull PlaceOrder_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull Ping_class_data_;
 // -------------------------------------------------------------------
 
 class HistoricalData final : public ::google::protobuf::Message
@@ -1339,6 +1290,272 @@ class CancelOrder final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull CancelOrder_class_data_;
 // -------------------------------------------------------------------
 
+class PlaceOrder final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:financio.trading.PlaceOrder) */ {
+ public:
+  inline PlaceOrder() : PlaceOrder(nullptr) {}
+  ~PlaceOrder() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(PlaceOrder* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PlaceOrder));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR PlaceOrder(::google::protobuf::internal::ConstantInitialized);
+
+  inline PlaceOrder(const PlaceOrder& from) : PlaceOrder(nullptr, from) {}
+  inline PlaceOrder(PlaceOrder&& from) noexcept
+      : PlaceOrder(nullptr, ::std::move(from)) {}
+  inline PlaceOrder& operator=(const PlaceOrder& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PlaceOrder& operator=(PlaceOrder&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PlaceOrder& default_instance() {
+    return *reinterpret_cast<const PlaceOrder*>(
+        &_PlaceOrder_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 2;
+  friend void swap(PlaceOrder& a, PlaceOrder& b) { a.Swap(&b); }
+  inline void Swap(PlaceOrder* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PlaceOrder* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PlaceOrder* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PlaceOrder>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const PlaceOrder& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const PlaceOrder& from) { PlaceOrder::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(PlaceOrder* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "financio.trading.PlaceOrder"; }
+
+ protected:
+  explicit PlaceOrder(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PlaceOrder(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PlaceOrder& from);
+  PlaceOrder(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PlaceOrder&& from) noexcept
+      : PlaceOrder(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kActionFieldNumber = 5,
+    kOrderTypeFieldNumber = 6,
+    kContractFieldNumber = 1,
+    kQuantityFieldNumber = 2,
+    kLimitPxFieldNumber = 3,
+    kStopPxFieldNumber = 4,
+  };
+  // string action = 5;
+  void clear_action() ;
+  const ::std::string& action() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_action(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_action();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_action();
+  void set_allocated_action(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_action() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_action(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_action();
+
+  public:
+  // string order_type = 6;
+  void clear_order_type() ;
+  const ::std::string& order_type() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_order_type(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_order_type();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_type();
+  void set_allocated_order_type(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_order_type() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_order_type(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_type();
+
+  public:
+  // .financio.trading.ContractPB contract = 1;
+  bool has_contract() const;
+  void clear_contract() ;
+  const ::financio::trading::ContractPB& contract() const;
+  [[nodiscard]] ::financio::trading::ContractPB* PROTOBUF_NULLABLE release_contract();
+  ::financio::trading::ContractPB* PROTOBUF_NONNULL mutable_contract();
+  void set_allocated_contract(::financio::trading::ContractPB* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_contract(::financio::trading::ContractPB* PROTOBUF_NULLABLE value);
+  ::financio::trading::ContractPB* PROTOBUF_NULLABLE unsafe_arena_release_contract();
+
+  private:
+  const ::financio::trading::ContractPB& _internal_contract() const;
+  ::financio::trading::ContractPB* PROTOBUF_NONNULL _internal_mutable_contract();
+
+  public:
+  // double quantity = 2;
+  void clear_quantity() ;
+  double quantity() const;
+  void set_quantity(double value);
+
+  private:
+  double _internal_quantity() const;
+  void _internal_set_quantity(double value);
+
+  public:
+  // double limit_px = 3;
+  void clear_limit_px() ;
+  double limit_px() const;
+  void set_limit_px(double value);
+
+  private:
+  double _internal_limit_px() const;
+  void _internal_set_limit_px(double value);
+
+  public:
+  // double stop_px = 4;
+  void clear_stop_px() ;
+  double stop_px() const;
+  void set_stop_px(double value);
+
+  private:
+  double _internal_stop_px() const;
+  void _internal_set_stop_px(double value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:financio.trading.PlaceOrder)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
+                                   1, 52,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const PlaceOrder& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr action_;
+    ::google::protobuf::internal::ArenaStringPtr order_type_;
+    ::financio::trading::ContractPB* PROTOBUF_NULLABLE contract_;
+    double quantity_;
+    double limit_px_;
+    double stop_px_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_trading_2fcontrol_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull PlaceOrder_class_data_;
+// -------------------------------------------------------------------
+
 class ControlMessage final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:financio.trading.ControlMessage) */ {
  public:
@@ -1401,9 +1618,10 @@ class ControlMessage final : public ::google::protobuf::Message
     kPlaceOrder = 13,
     kCancelOrder = 14,
     kReqHistoricalData = 15,
+    kPing = 16,
     PAYLOAD_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 5;
+  static constexpr int kIndexInFileMessages = 6;
   friend void swap(ControlMessage& a, ControlMessage& b) { a.Swap(&b); }
   inline void Swap(ControlMessage* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1499,6 +1717,7 @@ class ControlMessage final : public ::google::protobuf::Message
     kPlaceOrderFieldNumber = 13,
     kCancelOrderFieldNumber = 14,
     kReqHistoricalDataFieldNumber = 15,
+    kPingFieldNumber = 16,
   };
   // .financio.trading.ControlType type = 1;
   void clear_type() ;
@@ -1634,6 +1853,25 @@ class ControlMessage final : public ::google::protobuf::Message
   ::financio::trading::HistoricalData* PROTOBUF_NONNULL _internal_mutable_req_historical_data();
 
   public:
+  // .financio.trading.Ping ping = 16;
+  bool has_ping() const;
+  private:
+  bool _internal_has_ping() const;
+
+  public:
+  void clear_ping() ;
+  const ::financio::trading::Ping& ping() const;
+  [[nodiscard]] ::financio::trading::Ping* PROTOBUF_NULLABLE release_ping();
+  ::financio::trading::Ping* PROTOBUF_NONNULL mutable_ping();
+  void set_allocated_ping(::financio::trading::Ping* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_ping(::financio::trading::Ping* PROTOBUF_NULLABLE value);
+  ::financio::trading::Ping* PROTOBUF_NULLABLE unsafe_arena_release_ping();
+
+  private:
+  const ::financio::trading::Ping& _internal_ping() const;
+  ::financio::trading::Ping* PROTOBUF_NONNULL _internal_mutable_ping();
+
+  public:
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:financio.trading.ControlMessage)
@@ -1645,11 +1883,12 @@ class ControlMessage final : public ::google::protobuf::Message
   void set_has_place_order();
   void set_has_cancel_order();
   void set_has_req_historical_data();
+  void set_has_ping();
   inline bool has_payload() const;
   inline void clear_has_payload();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 8,
-                                   6, 0,
+  static const ::google::protobuf::internal::TcParseTable<1, 9,
+                                   7, 0,
                                    2>
       _table_;
 
@@ -1681,6 +1920,7 @@ class ControlMessage final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE place_order_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE cancel_order_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE req_historical_data_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE ping_;
     } payload_;
     ::uint32_t _oneof_case_[1];
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -2235,11 +2475,104 @@ inline void UnsubscribeMarketData::set_allocated_sec_type(::std::string* PROTOBU
 
 // PlaceOrder
 
-// double quantity = 1;
+// .financio.trading.ContractPB contract = 1;
+inline bool PlaceOrder::has_contract() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000004U) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.contract_ != nullptr);
+  return value;
+}
+inline const ::financio::trading::ContractPB& PlaceOrder::_internal_contract() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::financio::trading::ContractPB* p = _impl_.contract_;
+  return p != nullptr ? *p : reinterpret_cast<const ::financio::trading::ContractPB&>(::financio::trading::_ContractPB_default_instance_);
+}
+inline const ::financio::trading::ContractPB& PlaceOrder::contract() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.PlaceOrder.contract)
+  return _internal_contract();
+}
+inline void PlaceOrder::unsafe_arena_set_allocated_contract(
+    ::financio::trading::ContractPB* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.contract_);
+  }
+  _impl_.contract_ = reinterpret_cast<::financio::trading::ContractPB*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004U;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:financio.trading.PlaceOrder.contract)
+}
+inline ::financio::trading::ContractPB* PROTOBUF_NULLABLE PlaceOrder::release_contract() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000004U;
+  ::financio::trading::ContractPB* released = _impl_.contract_;
+  _impl_.contract_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::financio::trading::ContractPB* PROTOBUF_NULLABLE PlaceOrder::unsafe_arena_release_contract() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.PlaceOrder.contract)
+
+  _impl_._has_bits_[0] &= ~0x00000004U;
+  ::financio::trading::ContractPB* temp = _impl_.contract_;
+  _impl_.contract_ = nullptr;
+  return temp;
+}
+inline ::financio::trading::ContractPB* PROTOBUF_NONNULL PlaceOrder::_internal_mutable_contract() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.contract_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::financio::trading::ContractPB>(GetArena());
+    _impl_.contract_ = reinterpret_cast<::financio::trading::ContractPB*>(p);
+  }
+  return _impl_.contract_;
+}
+inline ::financio::trading::ContractPB* PROTOBUF_NONNULL PlaceOrder::mutable_contract()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000004U;
+  ::financio::trading::ContractPB* _msg = _internal_mutable_contract();
+  // @@protoc_insertion_point(field_mutable:financio.trading.PlaceOrder.contract)
+  return _msg;
+}
+inline void PlaceOrder::set_allocated_contract(::financio::trading::ContractPB* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.contract_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000004U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004U;
+  }
+
+  _impl_.contract_ = reinterpret_cast<::financio::trading::ContractPB*>(value);
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.PlaceOrder.contract)
+}
+
+// double quantity = 2;
 inline void PlaceOrder::clear_quantity() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quantity_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000004U;
+  _impl_._has_bits_[0] &= ~0x00000008U;
 }
 inline double PlaceOrder::quantity() const {
   // @@protoc_insertion_point(field_get:financio.trading.PlaceOrder.quantity)
@@ -2247,7 +2580,7 @@ inline double PlaceOrder::quantity() const {
 }
 inline void PlaceOrder::set_quantity(double value) {
   _internal_set_quantity(value);
-  _impl_._has_bits_[0] |= 0x00000004U;
+  _impl_._has_bits_[0] |= 0x00000008U;
   // @@protoc_insertion_point(field_set:financio.trading.PlaceOrder.quantity)
 }
 inline double PlaceOrder::_internal_quantity() const {
@@ -2259,11 +2592,11 @@ inline void PlaceOrder::_internal_set_quantity(double value) {
   _impl_.quantity_ = value;
 }
 
-// double limit_px = 2;
+// double limit_px = 3;
 inline void PlaceOrder::clear_limit_px() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.limit_px_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000008U;
+  _impl_._has_bits_[0] &= ~0x00000010U;
 }
 inline double PlaceOrder::limit_px() const {
   // @@protoc_insertion_point(field_get:financio.trading.PlaceOrder.limit_px)
@@ -2271,7 +2604,7 @@ inline double PlaceOrder::limit_px() const {
 }
 inline void PlaceOrder::set_limit_px(double value) {
   _internal_set_limit_px(value);
-  _impl_._has_bits_[0] |= 0x00000008U;
+  _impl_._has_bits_[0] |= 0x00000010U;
   // @@protoc_insertion_point(field_set:financio.trading.PlaceOrder.limit_px)
 }
 inline double PlaceOrder::_internal_limit_px() const {
@@ -2283,11 +2616,11 @@ inline void PlaceOrder::_internal_set_limit_px(double value) {
   _impl_.limit_px_ = value;
 }
 
-// double stop_px = 3;
+// double stop_px = 4;
 inline void PlaceOrder::clear_stop_px() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.stop_px_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000010U;
+  _impl_._has_bits_[0] &= ~0x00000020U;
 }
 inline double PlaceOrder::stop_px() const {
   // @@protoc_insertion_point(field_get:financio.trading.PlaceOrder.stop_px)
@@ -2295,7 +2628,7 @@ inline double PlaceOrder::stop_px() const {
 }
 inline void PlaceOrder::set_stop_px(double value) {
   _internal_set_stop_px(value);
-  _impl_._has_bits_[0] |= 0x00000010U;
+  _impl_._has_bits_[0] |= 0x00000020U;
   // @@protoc_insertion_point(field_set:financio.trading.PlaceOrder.stop_px)
 }
 inline double PlaceOrder::_internal_stop_px() const {
@@ -2307,7 +2640,7 @@ inline void PlaceOrder::_internal_set_stop_px(double value) {
   _impl_.stop_px_ = value;
 }
 
-// string action = 4;
+// string action = 5;
 inline void PlaceOrder::clear_action() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.action_.ClearToEmpty();
@@ -2372,7 +2705,7 @@ inline void PlaceOrder::set_allocated_action(::std::string* PROTOBUF_NULLABLE va
   // @@protoc_insertion_point(field_set_allocated:financio.trading.PlaceOrder.action)
 }
 
-// string order_type = 5;
+// string order_type = 6;
 inline void PlaceOrder::clear_order_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.order_type_.ClearToEmpty();
@@ -2950,6 +3283,75 @@ inline void HistoricalData::_internal_set_use_rth(::int32_t value) {
 
 // -------------------------------------------------------------------
 
+// Ping
+
+// string note = 1;
+inline void Ping::clear_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.note_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001U;
+}
+inline const ::std::string& Ping::note() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.Ping.note)
+  return _internal_note();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void Ping::set_note(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.note_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.Ping.note)
+}
+inline ::std::string* PROTOBUF_NONNULL Ping::mutable_note()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_note();
+  // @@protoc_insertion_point(field_mutable:financio.trading.Ping.note)
+  return _s;
+}
+inline const ::std::string& Ping::_internal_note() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.note_.Get();
+}
+inline void Ping::_internal_set_note(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.note_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL Ping::_internal_mutable_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  return _impl_.note_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE Ping::release_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.Ping.note)
+  if ((_impl_._has_bits_[0] & 0x00000001U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001U;
+  auto* released = _impl_.note_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.note_.Set("", GetArena());
+  }
+  return released;
+}
+inline void Ping::set_allocated_note(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001U;
+  }
+  _impl_.note_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.note_.IsDefault()) {
+    _impl_.note_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.Ping.note)
+}
+
+// -------------------------------------------------------------------
+
 // ControlMessage
 
 // .financio.trading.ControlType type = 1;
@@ -3472,6 +3874,87 @@ inline ::financio::trading::HistoricalData* PROTOBUF_NONNULL ControlMessage::mut
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::financio::trading::HistoricalData* _msg = _internal_mutable_req_historical_data();
   // @@protoc_insertion_point(field_mutable:financio.trading.ControlMessage.req_historical_data)
+  return _msg;
+}
+
+// .financio.trading.Ping ping = 16;
+inline bool ControlMessage::has_ping() const {
+  return payload_case() == kPing;
+}
+inline bool ControlMessage::_internal_has_ping() const {
+  return payload_case() == kPing;
+}
+inline void ControlMessage::set_has_ping() {
+  _impl_._oneof_case_[0] = kPing;
+}
+inline void ControlMessage::clear_ping() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (payload_case() == kPing) {
+    if (GetArena() == nullptr) {
+      delete _impl_.payload_.ping_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.ping_);
+    }
+    clear_has_payload();
+  }
+}
+inline ::financio::trading::Ping* PROTOBUF_NULLABLE ControlMessage::release_ping() {
+  // @@protoc_insertion_point(field_release:financio.trading.ControlMessage.ping)
+  if (payload_case() == kPing) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::financio::trading::Ping*>(_impl_.payload_.ping_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.ping_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::financio::trading::Ping& ControlMessage::_internal_ping() const {
+  return payload_case() == kPing ? *reinterpret_cast<::financio::trading::Ping*>(_impl_.payload_.ping_) : reinterpret_cast<::financio::trading::Ping&>(::financio::trading::_Ping_default_instance_);
+}
+inline const ::financio::trading::Ping& ControlMessage::ping() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ControlMessage.ping)
+  return _internal_ping();
+}
+inline ::financio::trading::Ping* PROTOBUF_NULLABLE ControlMessage::unsafe_arena_release_ping() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:financio.trading.ControlMessage.ping)
+  if (payload_case() == kPing) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::financio::trading::Ping*>(_impl_.payload_.ping_);
+    _impl_.payload_.ping_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ControlMessage::unsafe_arena_set_allocated_ping(
+    ::financio::trading::Ping* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_payload();
+  if (value) {
+    set_has_ping();
+    _impl_.payload_.ping_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:financio.trading.ControlMessage.ping)
+}
+inline ::financio::trading::Ping* PROTOBUF_NONNULL ControlMessage::_internal_mutable_ping() {
+  if (payload_case() != kPing) {
+    clear_payload();
+    set_has_ping();
+    _impl_.payload_.ping_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::financio::trading::Ping>(GetArena()));
+  }
+  return reinterpret_cast<::financio::trading::Ping*>(_impl_.payload_.ping_);
+}
+inline ::financio::trading::Ping* PROTOBUF_NONNULL ControlMessage::mutable_ping()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::financio::trading::Ping* _msg = _internal_mutable_ping();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ControlMessage.ping)
   return _msg;
 }
 

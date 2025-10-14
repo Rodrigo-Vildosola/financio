@@ -1,7 +1,7 @@
 #include <eng/enginio.h>
 #include <eng/runtime/entry_windowed.cpp>
 
-#include "eng/runtime/application_base.h"
+#include "eng/runtime/application.h"
 #include "financio/root_layer.h"
 
 class FinancioApp final : public eng::Application {

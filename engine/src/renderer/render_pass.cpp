@@ -3,7 +3,7 @@
 #include "eng/renderer/context/command_queue.h"
 
 #include "eng/core/assert.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/renderer_api.h"
 
 namespace eng {

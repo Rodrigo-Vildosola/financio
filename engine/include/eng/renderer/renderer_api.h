@@ -8,11 +8,11 @@ namespace eng {
 
 class Shader;
 class Pipeline;
-class Application;
+// class Application;
 
 class RendererAPI {
 public:
-    static void init(Context* context);
+    static void init(GraphicsContext* context);
     static void shutdown();
 
     static void begin_frame();
@@ -26,15 +26,14 @@ public:
 
     static ref<RenderPass> create_render_pass(const RenderPassDesc& desc);
 
-    static Context& get_context();
+    static GraphicsContext& get_context();
     // static wgpu::RenderPassEncoder get_current_pass_encoder();
 
     static const RendererStats& get_stats();
     static RendererStats& get_stats_mutable();
 
-    friend class Application; 
+    // friend class Application; 
 
-private:
     static scope<Renderer> g_renderer;
 };
 

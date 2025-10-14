@@ -1,5 +1,6 @@
+#include <map>
 #include "eng/core/logger.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/helpers/error.h"
 #include "eng/renderer/helpers/string.h"
 #include "eng/renderer/helpers/user_data.h"
@@ -10,7 +11,7 @@
 
 namespace eng {
 
-Pipeline::Pipeline(Context& context, const PipelineSpecification& spec)
+Pipeline::Pipeline(GraphicsContext& context, const PipelineSpecification& spec)
     : m_context(context), m_spec(spec) {
     create_pipeline(spec);
 }

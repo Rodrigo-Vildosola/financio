@@ -1,26 +1,26 @@
 
 
-#include "eng/debug/profiler.h"
-#include "engpch.h"
+#include "eng/core/debug/profiler.h"
 
 #include "eng/renderer/context/context.h"
 #include "eng/renderer/context/context_utils.h"
 #include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/context/macros.h"
-#include "eng/window/window.h"
+#include "eng/platform/window.h"
 
 #include "eng/renderer/helpers/user_data.h"
 #include "eng/renderer/helpers/string.h"
 
 #include "eng/renderer/helpers/webgpu_fmt_formatters.h"
+#include "spdlog/logger.h"
 
 namespace eng {
 
-Context::Context(const ContextProps& props)
+GraphicsContext::GraphicsContext(const GraphicsContextProps& props)
     : m_props(props)
 {}
 
-Context::~Context() {}
+GraphicsContext::~GraphicsContext() {}
 
 
 void on_device_lost(const wgpu::Device& device, wgpu::DeviceLostReason reason, wgpu::StringView message) {
@@ -35,7 +35,7 @@ void on_uncaptured_error(const wgpu::Device& device, wgpu::ErrorType type, wgpu:
 
 
 
-void Context::init(Window* window_handle) {
+void GraphicsContext::init(Window* window_handle) {
 	ENG_CORE_ASSERT(window_handle, "Window handle is null!");
 
 	m_window_handle = window_handle;
@@ -81,7 +81,7 @@ void Context::init(Window* window_handle) {
 	configure_surface(m_surface_format);
 }
 
-void Context::configure_surface(wgpu::TextureFormat preferred_format) {
+void GraphicsContext::configure_surface(wgpu::TextureFormat preferred_format) {
 	ENG_CORE_INFO("Configuring swap chain...");
 
     auto [fb_width, fb_height] = m_window_handle->get_framebuffer_size();
@@ -102,7 +102,7 @@ void Context::configure_surface(wgpu::TextureFormat preferred_format) {
     ENG_CORE_INFO("Surface configured: {}x{} @ format {}", fb_width, fb_height, (i32)preferred_format);
 }
 
-wgpu::TextureView Context::get_next_surface_view() {
+wgpu::TextureView GraphicsContext::get_next_surface_view() {
     PROFILE_FUNCTION();
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -145,12 +145,12 @@ wgpu::TextureView Context::get_next_surface_view() {
 
 }
 
-std::pair<u32, u32> Context::get_framebuffer_size() { 
+std::pair<u32, u32> GraphicsContext::get_framebuffer_size() { 
     return m_window_handle->get_framebuffer_size(); 
 }
 
 
-void Context::swap_buffers() {
+void GraphicsContext::swap_buffers() {
     PROFILE_FUNCTION();
 
 	// Present logic would go here
@@ -158,8 +158,8 @@ void Context::swap_buffers() {
 	m_surface.Present(); // Add this here
 }
 
-scope<Context> Context::create(const ContextProps& props) {
-    return create_scope<Context>(props);
+scope<GraphicsContext> GraphicsContext::create(const GraphicsContextProps& props) {
+    return create_scope<GraphicsContext>(props);
 }
 
 }

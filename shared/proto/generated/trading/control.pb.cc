@@ -99,38 +99,32 @@ struct SubscribeMarketDataDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SubscribeMarketDataDefaultTypeInternal _SubscribeMarketData_default_instance_;
 
-inline constexpr PlaceOrder::Impl_::Impl_(
+inline constexpr Ping::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        action_(
+        note_(
             &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        order_type_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        quantity_{0},
-        limit_px_{0},
-        stop_px_{0} {}
+            ::_pbi::ConstantInitialized()) {}
 
 template <typename>
-PROTOBUF_CONSTEXPR PlaceOrder::PlaceOrder(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR Ping::Ping(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PlaceOrder_class_data_.base()),
+    : ::google::protobuf::Message(Ping_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct PlaceOrderDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PlaceOrderDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PlaceOrderDefaultTypeInternal() {}
+struct PingDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PingDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PingDefaultTypeInternal() {}
   union {
-    PlaceOrder _instance;
+    Ping _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlaceOrderDefaultTypeInternal _PlaceOrder_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PingDefaultTypeInternal _Ping_default_instance_;
 
 inline constexpr HistoricalData::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -203,6 +197,40 @@ struct CancelOrderDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CancelOrderDefaultTypeInternal _CancelOrder_default_instance_;
 
+inline constexpr PlaceOrder::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        action_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        order_type_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        contract_{nullptr},
+        quantity_{0},
+        limit_px_{0},
+        stop_px_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR PlaceOrder::PlaceOrder(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(PlaceOrder_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct PlaceOrderDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PlaceOrderDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PlaceOrderDefaultTypeInternal() {}
+  union {
+    PlaceOrder _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlaceOrderDefaultTypeInternal _PlaceOrder_default_instance_;
+
 inline constexpr ControlMessage::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -263,7 +291,8 @@ const ::uint32_t
         3,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::financio::trading::PlaceOrder, _impl_._has_bits_),
-        8, // hasbit index offset
+        9, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::financio::trading::PlaceOrder, _impl_.contract_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::PlaceOrder, _impl_.quantity_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::PlaceOrder, _impl_.limit_px_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::PlaceOrder, _impl_.stop_px_),
@@ -272,6 +301,7 @@ const ::uint32_t
         2,
         3,
         4,
+        5,
         0,
         1,
         0x081, // bitmap
@@ -298,12 +328,18 @@ const ::uint32_t
         5,
         6,
         7,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::financio::trading::Ping, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::financio::trading::Ping, _impl_.note_),
+        0,
         0x085, // bitmap
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_._oneof_case_[0]),
-        13, // hasbit index offset
+        14, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.type_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.id_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::ControlMessage, _impl_.payload_),
@@ -319,6 +355,7 @@ const ::uint32_t
         ~0u,
         ~0u,
         ~0u,
+        ~0u,
 };
 
 static const ::_pbi::MigrationSchema
@@ -326,9 +363,10 @@ static const ::_pbi::MigrationSchema
         {0, sizeof(::financio::trading::SubscribeMarketData)},
         {11, sizeof(::financio::trading::UnsubscribeMarketData)},
         {22, sizeof(::financio::trading::PlaceOrder)},
-        {35, sizeof(::financio::trading::CancelOrder)},
-        {40, sizeof(::financio::trading::HistoricalData)},
-        {59, sizeof(::financio::trading::ControlMessage)},
+        {37, sizeof(::financio::trading::CancelOrder)},
+        {42, sizeof(::financio::trading::HistoricalData)},
+        {61, sizeof(::financio::trading::Ping)},
+        {66, sizeof(::financio::trading::ControlMessage)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_SubscribeMarketData_default_instance_._instance,
@@ -336,6 +374,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_PlaceOrder_default_instance_._instance,
     &::financio::trading::_CancelOrder_default_instance_._instance,
     &::financio::trading::_HistoricalData_default_instance_._instance,
+    &::financio::trading::_Ping_default_instance_._instance,
     &::financio::trading::_ControlMessage_default_instance_._instance,
 };
 const char descriptor_table_protodef_trading_2fcontrol_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
@@ -346,26 +385,29 @@ const char descriptor_table_protodef_trading_2fcontrol_2eproto[] ABSL_ATTRIBUTE_
     "l\030\001 \001(\t\022\020\n\010exchange\030\002 \001(\t\022\020\n\010currency\030\003 "
     "\001(\t\022\020\n\010sec_type\030\004 \001(\t\"]\n\025UnsubscribeMark"
     "etData\022\016\n\006symbol\030\001 \001(\t\022\020\n\010exchange\030\002 \001(\t"
-    "\022\020\n\010currency\030\003 \001(\t\022\020\n\010sec_type\030\004 \001(\t\"e\n\n"
-    "PlaceOrder\022\020\n\010quantity\030\001 \001(\001\022\020\n\010limit_px"
-    "\030\002 \001(\001\022\017\n\007stop_px\030\003 \001(\001\022\016\n\006action\030\004 \001(\t\022"
-    "\022\n\norder_type\030\005 \001(\t\"\037\n\013CancelOrder\022\020\n\010or"
-    "der_id\030\001 \001(\005\"\245\001\n\016HistoricalData\022\016\n\006symbo"
-    "l\030\001 \001(\t\022\020\n\010exchange\030\002 \001(\t\022\020\n\010currency\030\003 "
-    "\001(\t\022\020\n\010sec_type\030\004 \001(\t\022\024\n\014duration_str\030\005 "
-    "\001(\t\022\020\n\010bar_size\030\006 \001(\t\022\024\n\014what_to_show\030\007 "
-    "\001(\t\022\017\n\007use_rth\030\010 \001(\005\"\267\003\n\016ControlMessage\022"
-    "+\n\004type\030\001 \001(\0162\035.financio.trading.Control"
-    "Type\022\n\n\002id\030\002 \001(\005\0222\n\007connect\030\n \001(\0132\037.fina"
-    "ncio.trading.ConnectBrokerH\000\022=\n\014sub_mkt_"
-    "data\030\013 \001(\0132%.financio.trading.SubscribeM"
-    "arketDataH\000\022A\n\016unsub_mkt_data\030\014 \001(\0132\'.fi"
-    "nancio.trading.UnsubscribeMarketDataH\000\0223"
-    "\n\013place_order\030\r \001(\0132\034.financio.trading.P"
-    "laceOrderH\000\0225\n\014cancel_order\030\016 \001(\0132\035.fina"
-    "ncio.trading.CancelOrderH\000\022\?\n\023req_histor"
-    "ical_data\030\017 \001(\0132 .financio.trading.Histo"
-    "ricalDataH\000B\t\n\007payloadb\006proto3"
+    "\022\020\n\010currency\030\003 \001(\t\022\020\n\010sec_type\030\004 \001(\t\"\225\001\n"
+    "\nPlaceOrder\022.\n\010contract\030\001 \001(\0132\034.financio"
+    ".trading.ContractPB\022\020\n\010quantity\030\002 \001(\001\022\020\n"
+    "\010limit_px\030\003 \001(\001\022\017\n\007stop_px\030\004 \001(\001\022\016\n\006acti"
+    "on\030\005 \001(\t\022\022\n\norder_type\030\006 \001(\t\"\037\n\013CancelOr"
+    "der\022\020\n\010order_id\030\001 \001(\005\"\245\001\n\016HistoricalData"
+    "\022\016\n\006symbol\030\001 \001(\t\022\020\n\010exchange\030\002 \001(\t\022\020\n\010cu"
+    "rrency\030\003 \001(\t\022\020\n\010sec_type\030\004 \001(\t\022\024\n\014durati"
+    "on_str\030\005 \001(\t\022\020\n\010bar_size\030\006 \001(\t\022\024\n\014what_t"
+    "o_show\030\007 \001(\t\022\017\n\007use_rth\030\010 \001(\005\"\024\n\004Ping\022\014\n"
+    "\004note\030\001 \001(\t\"\337\003\n\016ControlMessage\022+\n\004type\030\001"
+    " \001(\0162\035.financio.trading.ControlType\022\n\n\002i"
+    "d\030\002 \001(\005\0222\n\007connect\030\n \001(\0132\037.financio.trad"
+    "ing.ConnectBrokerH\000\022=\n\014sub_mkt_data\030\013 \001("
+    "\0132%.financio.trading.SubscribeMarketData"
+    "H\000\022A\n\016unsub_mkt_data\030\014 \001(\0132\'.financio.tr"
+    "ading.UnsubscribeMarketDataH\000\0223\n\013place_o"
+    "rder\030\r \001(\0132\034.financio.trading.PlaceOrder"
+    "H\000\0225\n\014cancel_order\030\016 \001(\0132\035.financio.trad"
+    "ing.CancelOrderH\000\022\?\n\023req_historical_data"
+    "\030\017 \001(\0132 .financio.trading.HistoricalData"
+    "H\000\022&\n\004ping\030\020 \001(\0132\026.financio.trading.Ping"
+    "H\000B\t\n\007payloadb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_trading_2fcontrol_2eproto_deps[2] = {
@@ -376,13 +418,13 @@ static ::absl::once_flag descriptor_table_trading_2fcontrol_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_trading_2fcontrol_2eproto = {
     false,
     false,
-    1030,
+    1141,
     descriptor_table_protodef_trading_2fcontrol_2eproto,
     "trading/control.proto",
     &descriptor_table_trading_2fcontrol_2eproto_once,
     descriptor_table_trading_2fcontrol_2eproto_deps,
     2,
-    6,
+    7,
     schemas,
     file_default_instances,
     TableStruct_trading_2fcontrol_2eproto::offsets,
@@ -1185,6 +1227,11 @@ class PlaceOrder::_Internal {
       8 * PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_._has_bits_);
 };
 
+void PlaceOrder::clear_contract() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.contract_ != nullptr) _impl_.contract_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000004U;
+}
 PlaceOrder::PlaceOrder(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, PlaceOrder_class_data_.base()) {
@@ -1216,6 +1263,10 @@ PlaceOrder::PlaceOrder(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.contract_ = ((cached_has_bits & 0x00000004U) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.contract_)
+                : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, quantity_),
            reinterpret_cast<const char *>(&from._impl_) +
@@ -1236,10 +1287,10 @@ PROTOBUF_NDEBUG_INLINE PlaceOrder::Impl_::Impl_(
 inline void PlaceOrder::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, quantity_),
+               offsetof(Impl_, contract_),
            0,
            offsetof(Impl_, stop_px_) -
-               offsetof(Impl_, quantity_) +
+               offsetof(Impl_, contract_) +
                sizeof(Impl_::stop_px_));
 }
 PlaceOrder::~PlaceOrder() {
@@ -1255,6 +1306,7 @@ inline void PlaceOrder::SharedDtor(MessageLite& self) {
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.action_.Destroy();
   this_._impl_.order_type_.Destroy();
+  delete this_._impl_.contract_;
   this_._impl_.~Impl_();
 }
 
@@ -1301,18 +1353,18 @@ PlaceOrder::GetClassData() const {
   return PlaceOrder_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 52, 2>
+const ::_pbi::TcParseTable<3, 6, 1, 52, 2>
 PlaceOrder::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_._has_bits_),
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    6, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967232,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    6,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     PlaceOrder_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -1321,40 +1373,46 @@ PlaceOrder::_table_ = {
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // double quantity = 1;
+    // .financio.trading.ContractPB contract = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 2, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.contract_)}},
+    // double quantity = 2;
     {::_pbi::TcParser::FastF64S1,
-     {9, 2, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.quantity_)}},
-    // double limit_px = 2;
+     {17, 3, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.quantity_)}},
+    // double limit_px = 3;
     {::_pbi::TcParser::FastF64S1,
-     {17, 3, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.limit_px_)}},
-    // double stop_px = 3;
+     {25, 4, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.limit_px_)}},
+    // double stop_px = 4;
     {::_pbi::TcParser::FastF64S1,
-     {25, 4, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.stop_px_)}},
-    // string action = 4;
+     {33, 5, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.stop_px_)}},
+    // string action = 5;
     {::_pbi::TcParser::FastUS1,
-     {34, 0, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.action_)}},
-    // string order_type = 5;
+     {42, 0, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.action_)}},
+    // string order_type = 6;
     {::_pbi::TcParser::FastUS1,
-     {42, 1, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.order_type_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {50, 1, 0, PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.order_type_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
-    // double quantity = 1;
-    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.quantity_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // double limit_px = 2;
-    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.limit_px_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // double stop_px = 3;
-    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.stop_px_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // string action = 4;
+    // .financio.trading.ContractPB contract = 1;
+    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.contract_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // double quantity = 2;
+    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.quantity_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // double limit_px = 3;
+    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.limit_px_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // double stop_px = 4;
+    {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.stop_px_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // string action = 5;
     {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.action_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string order_type = 5;
+    // string order_type = 6;
     {PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.order_type_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
-  // no aux_entries
   {{
-    "\33\0\0\0\6\12\0\0"
+      {::_pbi::TcParser::GetTable<::financio::trading::ContractPB>()},
+  }},
+  {{
+    "\33\0\0\0\0\6\12\0"
     "financio.trading.PlaceOrder"
     "action"
     "order_type"
@@ -1368,15 +1426,19 @@ PROTOBUF_NOINLINE void PlaceOrder::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003U) != 0) {
+  if ((cached_has_bits & 0x00000007U) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       _impl_.action_.ClearNonDefaultToEmpty();
     }
     if ((cached_has_bits & 0x00000002U) != 0) {
       _impl_.order_type_.ClearNonDefaultToEmpty();
     }
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      ABSL_DCHECK(_impl_.contract_ != nullptr);
+      _impl_.contract_->Clear();
+    }
   }
-  if ((cached_has_bits & 0x0000001cU) != 0) {
+  if ((cached_has_bits & 0x00000038U) != 0) {
     ::memset(&_impl_.quantity_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.stop_px_) -
         reinterpret_cast<char*>(&_impl_.quantity_)) + sizeof(_impl_.stop_px_));
@@ -1403,50 +1465,58 @@ PROTOBUF_NOINLINE void PlaceOrder::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // double quantity = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // .financio.trading.ContractPB contract = 1;
+  if ((cached_has_bits & 0x00000004U) != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        1, *this_._impl_.contract_, this_._impl_.contract_->GetCachedSize(), target,
+        stream);
+  }
+
+  // double quantity = 2;
+  if ((cached_has_bits & 0x00000008U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_quantity()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          1, this_._internal_quantity(), target);
+          2, this_._internal_quantity(), target);
     }
   }
 
-  // double limit_px = 2;
-  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+  // double limit_px = 3;
+  if ((cached_has_bits & 0x00000010U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_limit_px()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          2, this_._internal_limit_px(), target);
+          3, this_._internal_limit_px(), target);
     }
   }
 
-  // double stop_px = 3;
-  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+  // double stop_px = 4;
+  if ((cached_has_bits & 0x00000020U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_stop_px()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          3, this_._internal_stop_px(), target);
+          4, this_._internal_stop_px(), target);
     }
   }
 
-  // string action = 4;
-  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+  // string action = 5;
+  if ((cached_has_bits & 0x00000001U) != 0) {
     if (!this_._internal_action().empty()) {
       const ::std::string& _s = this_._internal_action();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.PlaceOrder.action");
-      target = stream->WriteStringMaybeAliased(4, _s, target);
+      target = stream->WriteStringMaybeAliased(5, _s, target);
     }
   }
 
-  // string order_type = 5;
-  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+  // string order_type = 6;
+  if ((cached_has_bits & 0x00000002U) != 0) {
     if (!this_._internal_order_type().empty()) {
       const ::std::string& _s = this_._internal_order_type();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.PlaceOrder.order_type");
-      target = stream->WriteStringMaybeAliased(5, _s, target);
+      target = stream->WriteStringMaybeAliased(6, _s, target);
     }
   }
 
@@ -1475,35 +1545,40 @@ PROTOBUF_NOINLINE void PlaceOrder::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fU) != 0) {
-    // string action = 4;
+  if ((cached_has_bits & 0x0000003fU) != 0) {
+    // string action = 5;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_action().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_action());
       }
     }
-    // string order_type = 5;
+    // string order_type = 6;
     if ((cached_has_bits & 0x00000002U) != 0) {
       if (!this_._internal_order_type().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_order_type());
       }
     }
-    // double quantity = 1;
+    // .financio.trading.ContractPB contract = 1;
     if ((cached_has_bits & 0x00000004U) != 0) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.contract_);
+    }
+    // double quantity = 2;
+    if ((cached_has_bits & 0x00000008U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_quantity()) != 0) {
         total_size += 9;
       }
     }
-    // double limit_px = 2;
-    if ((cached_has_bits & 0x00000008U) != 0) {
+    // double limit_px = 3;
+    if ((cached_has_bits & 0x00000010U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_limit_px()) != 0) {
         total_size += 9;
       }
     }
-    // double stop_px = 3;
-    if ((cached_has_bits & 0x00000010U) != 0) {
+    // double stop_px = 4;
+    if ((cached_has_bits & 0x00000020U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_stop_px()) != 0) {
         total_size += 9;
       }
@@ -1519,13 +1594,14 @@ void PlaceOrder::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goog
   if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
     from.VerifyHasBitConsistency();
   }
+  ::google::protobuf::Arena* arena = _this->GetArena();
   // @@protoc_insertion_point(class_specific_merge_from_start:financio.trading.PlaceOrder)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fU) != 0) {
+  if ((cached_has_bits & 0x0000003fU) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!from._internal_action().empty()) {
         _this->_internal_set_action(from._internal_action());
@@ -1545,16 +1621,24 @@ void PlaceOrder::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goog
       }
     }
     if ((cached_has_bits & 0x00000004U) != 0) {
+      ABSL_DCHECK(from._impl_.contract_ != nullptr);
+      if (_this->_impl_.contract_ == nullptr) {
+        _this->_impl_.contract_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.contract_);
+      } else {
+        _this->_impl_.contract_->MergeFrom(*from._impl_.contract_);
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
       if (::absl::bit_cast<::uint64_t>(from._internal_quantity()) != 0) {
         _this->_impl_.quantity_ = from._impl_.quantity_;
       }
     }
-    if ((cached_has_bits & 0x00000008U) != 0) {
+    if ((cached_has_bits & 0x00000010U) != 0) {
       if (::absl::bit_cast<::uint64_t>(from._internal_limit_px()) != 0) {
         _this->_impl_.limit_px_ = from._impl_.limit_px_;
       }
     }
-    if ((cached_has_bits & 0x00000010U) != 0) {
+    if ((cached_has_bits & 0x00000020U) != 0) {
       if (::absl::bit_cast<::uint64_t>(from._internal_stop_px()) != 0) {
         _this->_impl_.stop_px_ = from._impl_.stop_px_;
       }
@@ -1583,9 +1667,9 @@ void PlaceOrder::InternalSwap(PlaceOrder* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.stop_px_)
       + sizeof(PlaceOrder::_impl_.stop_px_)
-      - PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.quantity_)>(
-          reinterpret_cast<char*>(&_impl_.quantity_),
-          reinterpret_cast<char*>(&other->_impl_.quantity_));
+      - PROTOBUF_FIELD_OFFSET(PlaceOrder, _impl_.contract_)>(
+          reinterpret_cast<char*>(&_impl_.contract_),
+          reinterpret_cast<char*>(&other->_impl_.contract_));
 }
 
 ::google::protobuf::Metadata PlaceOrder::GetMetadata() const {
@@ -2375,6 +2459,276 @@ void HistoricalData::InternalSwap(HistoricalData* PROTOBUF_RESTRICT PROTOBUF_NON
 }
 // ===================================================================
 
+class Ping::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<Ping>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(Ping, _impl_._has_bits_);
+};
+
+Ping::Ping(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Ping_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:financio.trading.Ping)
+}
+PROTOBUF_NDEBUG_INLINE Ping::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::financio::trading::Ping& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        note_(arena, from.note_) {}
+
+Ping::Ping(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const Ping& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Ping_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  Ping* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:financio.trading.Ping)
+}
+PROTOBUF_NDEBUG_INLINE Ping::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        note_(arena) {}
+
+inline void Ping::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+Ping::~Ping() {
+  // @@protoc_insertion_point(destructor:financio.trading.Ping)
+  SharedDtor(*this);
+}
+inline void Ping::SharedDtor(MessageLite& self) {
+  Ping& this_ = static_cast<Ping&>(self);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.note_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL Ping::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) Ping(arena);
+}
+constexpr auto Ping::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(Ping),
+                                            alignof(Ping));
+}
+constexpr auto Ping::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_Ping_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &Ping::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<Ping>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &Ping::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<Ping>(), &Ping::ByteSizeLong,
+              &Ping::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(Ping, _impl_._cached_size_),
+          false,
+      },
+      &Ping::kDescriptorMethods,
+      &descriptor_table_trading_2fcontrol_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull Ping_class_data_ =
+        Ping::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+Ping::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&Ping_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(Ping_class_data_.tc_table);
+  return Ping_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 34, 2>
+Ping::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(Ping, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    Ping_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::financio::trading::Ping>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string note = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(Ping, _impl_.note_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string note = 1;
+    {PROTOBUF_FIELD_OFFSET(Ping, _impl_.note_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\25\4\0\0\0\0\0\0"
+    "financio.trading.Ping"
+    "note"
+  }},
+};
+PROTOBUF_NOINLINE void Ping::Clear() {
+// @@protoc_insertion_point(message_clear_start:financio.trading.Ping)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    _impl_.note_.ClearNonDefaultToEmpty();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL Ping::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const Ping& this_ = static_cast<const Ping&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL Ping::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const Ping& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:financio.trading.Ping)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string note = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+    if (!this_._internal_note().empty()) {
+      const ::std::string& _s = this_._internal_note();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.Ping.note");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:financio.trading.Ping)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t Ping::ByteSizeLong(const MessageLite& base) {
+  const Ping& this_ = static_cast<const Ping&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t Ping::ByteSizeLong() const {
+  const Ping& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:financio.trading.Ping)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+   {
+    // string note = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!this_._internal_note().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_note());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void Ping::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<Ping*>(&to_msg);
+  auto& from = static_cast<const Ping&>(from_msg);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    from.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:financio.trading.Ping)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    if (!from._internal_note().empty()) {
+      _this->_internal_set_note(from._internal_note());
+    } else {
+      if (_this->_impl_.note_.IsDefault()) {
+        _this->_internal_set_note("");
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Ping::CopyFrom(const Ping& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:financio.trading.Ping)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void Ping::InternalSwap(Ping* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.note_, &other->_impl_.note_, arena);
+}
+
+::google::protobuf::Metadata Ping::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class ControlMessage::_Internal {
  public:
   using HasBits =
@@ -2474,6 +2828,19 @@ void ControlMessage::set_allocated_req_historical_data(::financio::trading::Hist
   }
   // @@protoc_insertion_point(field_set_allocated:financio.trading.ControlMessage.req_historical_data)
 }
+void ControlMessage::set_allocated_ping(::financio::trading::Ping* PROTOBUF_NULLABLE ping) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_payload();
+  if (ping) {
+    ::google::protobuf::Arena* submessage_arena = ping->GetArena();
+    if (message_arena != submessage_arena) {
+      ping = ::google::protobuf::internal::GetOwnedMessage(message_arena, ping, submessage_arena);
+    }
+    set_has_ping();
+    _impl_.payload_.ping_ = ping;
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ControlMessage.ping)
+}
 ControlMessage::ControlMessage(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, ControlMessage_class_data_.base()) {
@@ -2532,6 +2899,9 @@ ControlMessage::ControlMessage(
         break;
       case kReqHistoricalData:
         _impl_.payload_.req_historical_data_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.req_historical_data_);
+        break;
+      case kPing:
+        _impl_.payload_.ping_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.ping_);
         break;
   }
 
@@ -2622,6 +2992,14 @@ void ControlMessage::clear_payload() {
       }
       break;
     }
+    case kPing: {
+      if (GetArena() == nullptr) {
+        delete _impl_.payload_.ping_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.ping_);
+      }
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -2673,17 +3051,17 @@ ControlMessage::GetClassData() const {
   return ControlMessage_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 8, 6, 0, 2>
+const ::_pbi::TcParseTable<1, 9, 7, 0, 2>
 ControlMessage::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ControlMessage, _impl_._has_bits_),
     0, // no _extensions_
-    15, 8,  // max_field_number, fast_idx_mask
+    16, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294935036,  // skipmap
+    4294902268,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    8,  // num_field_entries
-    6,  // num_aux_entries
+    9,  // num_field_entries
+    7,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     ControlMessage_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -2717,6 +3095,8 @@ ControlMessage::_table_ = {
     {PROTOBUF_FIELD_OFFSET(ControlMessage, _impl_.payload_.cancel_order_), _Internal::kOneofCaseOffset + 0, 4, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .financio.trading.HistoricalData req_historical_data = 15;
     {PROTOBUF_FIELD_OFFSET(ControlMessage, _impl_.payload_.req_historical_data_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .financio.trading.Ping ping = 16;
+    {PROTOBUF_FIELD_OFFSET(ControlMessage, _impl_.payload_.ping_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::financio::trading::ConnectBroker>()},
@@ -2725,6 +3105,7 @@ ControlMessage::_table_ = {
       {::_pbi::TcParser::GetTable<::financio::trading::PlaceOrder>()},
       {::_pbi::TcParser::GetTable<::financio::trading::CancelOrder>()},
       {::_pbi::TcParser::GetTable<::financio::trading::HistoricalData>()},
+      {::_pbi::TcParser::GetTable<::financio::trading::Ping>()},
   }},
   {{
   }},
@@ -2820,6 +3201,12 @@ PROTOBUF_NOINLINE void ControlMessage::Clear() {
           stream);
       break;
     }
+    case kPing: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          16, *this_._impl_.payload_.ping_, this_._impl_.payload_.ping_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     default:
       break;
   }
@@ -2899,6 +3286,12 @@ PROTOBUF_NOINLINE void ControlMessage::Clear() {
     case kReqHistoricalData: {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.req_historical_data_);
+      break;
+    }
+    // .financio.trading.Ping ping = 16;
+    case kPing: {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.ping_);
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -2991,6 +3384,14 @@ void ControlMessage::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::
           _this->_impl_.payload_.req_historical_data_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.req_historical_data_);
         } else {
           _this->_impl_.payload_.req_historical_data_->MergeFrom(*from._impl_.payload_.req_historical_data_);
+        }
+        break;
+      }
+      case kPing: {
+        if (oneof_needs_init) {
+          _this->_impl_.payload_.ping_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.ping_);
+        } else {
+          _this->_impl_.payload_.ping_->MergeFrom(*from._impl_.payload_.ping_);
         }
         break;
       }

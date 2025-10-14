@@ -65,6 +65,10 @@ class BarPB;
 struct BarPBDefaultTypeInternal;
 extern BarPBDefaultTypeInternal _BarPB_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull BarPB_class_data_;
+class ContractPB;
+struct ContractPBDefaultTypeInternal;
+extern ContractPBDefaultTypeInternal _ContractPB_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ContractPB_class_data_;
 class DecimalPB;
 struct DecimalPBDefaultTypeInternal;
 extern DecimalPBDefaultTypeInternal _DecimalPB_default_instance_;
@@ -151,6 +155,7 @@ enum ControlType : int {
   CONTROL_HISTORICAL = 7,
   CONTROL_ACCOUNT_DATA = 8,
   CONTROL_NEWS = 9,
+  CONTROL_PING = 10,
   ControlType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       ::std::numeric_limits<::int32_t>::min(),
   ControlType_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -161,11 +166,11 @@ extern const uint32_t ControlType_internal_data_[];
 inline constexpr ControlType ControlType_MIN =
     static_cast<ControlType>(0);
 inline constexpr ControlType ControlType_MAX =
-    static_cast<ControlType>(9);
+    static_cast<ControlType>(10);
 inline bool ControlType_IsValid(int value) {
-  return 0 <= value && value <= 9;
+  return 0 <= value && value <= 10;
 }
-inline constexpr int ControlType_ARRAYSIZE = 9 + 1;
+inline constexpr int ControlType_ARRAYSIZE = 10 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ControlType_descriptor();
 template <typename T>
 const ::std::string& ControlType_Name(T value) {
@@ -176,7 +181,7 @@ const ::std::string& ControlType_Name(T value) {
 }
 template <>
 inline const ::std::string& ControlType_Name(ControlType value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<ControlType_descriptor, 0, 9>(
+  return ::google::protobuf::internal::NameOfDenseEnum<ControlType_descriptor, 0, 10>(
       static_cast<int>(value));
 }
 inline bool ControlType_Parse(
@@ -189,6 +194,7 @@ enum StateType : int {
   STATE_CONNECTED = 1,
   STATE_DISCONNECTED = 2,
   STATE_ERROR = 3,
+  STATE_PONG = 4,
   STATE_TICK_PRICE = 10,
   STATE_TICK_SIZE = 11,
   STATE_ORDER_STATUS = 12,
@@ -210,7 +216,7 @@ inline constexpr StateType StateType_MIN =
 inline constexpr StateType StateType_MAX =
     static_cast<StateType>(32);
 inline bool StateType_IsValid(int value) {
-  return 0 <= value && value <= 32 && ((7519353871u >> value) & 1) != 0;
+  return 0 <= value && value <= 32 && ((7519353887u >> value) & 1) != 0;
 }
 inline constexpr int StateType_ARRAYSIZE = 32 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL StateType_descriptor();
@@ -1395,6 +1401,304 @@ class DecimalPB final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull DecimalPB_class_data_;
+// -------------------------------------------------------------------
+
+class ContractPB final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:financio.trading.ContractPB) */ {
+ public:
+  inline ContractPB() : ContractPB(nullptr) {}
+  ~ContractPB() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ContractPB* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ContractPB));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ContractPB(::google::protobuf::internal::ConstantInitialized);
+
+  inline ContractPB(const ContractPB& from) : ContractPB(nullptr, from) {}
+  inline ContractPB(ContractPB&& from) noexcept
+      : ContractPB(nullptr, ::std::move(from)) {}
+  inline ContractPB& operator=(const ContractPB& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ContractPB& operator=(ContractPB&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ContractPB& default_instance() {
+    return *reinterpret_cast<const ContractPB*>(
+        &_ContractPB_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 5;
+  friend void swap(ContractPB& a, ContractPB& b) { a.Swap(&b); }
+  inline void Swap(ContractPB* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ContractPB* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ContractPB* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ContractPB>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ContractPB& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ContractPB& from) { ContractPB::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ContractPB* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "financio.trading.ContractPB"; }
+
+ protected:
+  explicit ContractPB(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ContractPB(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ContractPB& from);
+  ContractPB(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ContractPB&& from) noexcept
+      : ContractPB(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kSymbolFieldNumber = 1,
+    kSecTypeFieldNumber = 2,
+    kExchangeFieldNumber = 3,
+    kCurrencyFieldNumber = 4,
+    kLocalSymbolFieldNumber = 5,
+    kTradingClassFieldNumber = 6,
+    kPrimaryExchangeFieldNumber = 7,
+  };
+  // string symbol = 1;
+  void clear_symbol() ;
+  const ::std::string& symbol() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_symbol(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_symbol();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_symbol();
+  void set_allocated_symbol(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_symbol() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_symbol(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_symbol();
+
+  public:
+  // string sec_type = 2;
+  void clear_sec_type() ;
+  const ::std::string& sec_type() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_sec_type(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_sec_type();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_sec_type();
+  void set_allocated_sec_type(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_sec_type() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_sec_type(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_sec_type();
+
+  public:
+  // string exchange = 3;
+  void clear_exchange() ;
+  const ::std::string& exchange() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_exchange(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_exchange();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_exchange();
+  void set_allocated_exchange(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_exchange() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_exchange(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_exchange();
+
+  public:
+  // string currency = 4;
+  void clear_currency() ;
+  const ::std::string& currency() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_currency(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_currency();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_currency();
+  void set_allocated_currency(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_currency() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_currency(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_currency();
+
+  public:
+  // string local_symbol = 5;
+  void clear_local_symbol() ;
+  const ::std::string& local_symbol() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_local_symbol(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_local_symbol();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_local_symbol();
+  void set_allocated_local_symbol(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_local_symbol() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_local_symbol(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_local_symbol();
+
+  public:
+  // string trading_class = 6;
+  void clear_trading_class() ;
+  const ::std::string& trading_class() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_trading_class(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_trading_class();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_trading_class();
+  void set_allocated_trading_class(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_trading_class() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_trading_class(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_trading_class();
+
+  public:
+  // string primary_exchange = 7;
+  void clear_primary_exchange() ;
+  const ::std::string& primary_exchange() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_primary_exchange(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_primary_exchange();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_primary_exchange();
+  void set_allocated_primary_exchange(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_primary_exchange() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_primary_exchange(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_primary_exchange();
+
+  public:
+  // @@protoc_insertion_point(class_scope:financio.trading.ContractPB)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   0, 107,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ContractPB& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr symbol_;
+    ::google::protobuf::internal::ArenaStringPtr sec_type_;
+    ::google::protobuf::internal::ArenaStringPtr exchange_;
+    ::google::protobuf::internal::ArenaStringPtr currency_;
+    ::google::protobuf::internal::ArenaStringPtr local_symbol_;
+    ::google::protobuf::internal::ArenaStringPtr trading_class_;
+    ::google::protobuf::internal::ArenaStringPtr primary_exchange_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_trading_2fcommon_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ContractPB_class_data_;
 // -------------------------------------------------------------------
 
 class BarPB final : public ::google::protobuf::Message
@@ -3240,6 +3544,465 @@ inline ::int32_t ExecutionFilterPB::_internal_last_n_days() const {
 inline void ExecutionFilterPB::_internal_set_last_n_days(::int32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.last_n_days_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ContractPB
+
+// string symbol = 1;
+inline void ContractPB::clear_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.symbol_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001U;
+}
+inline const ::std::string& ContractPB::symbol() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.symbol)
+  return _internal_symbol();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_symbol(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.symbol_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.symbol)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_symbol()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_symbol();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.symbol)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_symbol() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.symbol_.Get();
+}
+inline void ContractPB::_internal_set_symbol(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.symbol_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  return _impl_.symbol_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.symbol)
+  if ((_impl_._has_bits_[0] & 0x00000001U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001U;
+  auto* released = _impl_.symbol_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.symbol_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_symbol(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001U;
+  }
+  _impl_.symbol_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.symbol_.IsDefault()) {
+    _impl_.symbol_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.symbol)
+}
+
+// string sec_type = 2;
+inline void ContractPB::clear_sec_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sec_type_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000002U;
+}
+inline const ::std::string& ContractPB::sec_type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.sec_type)
+  return _internal_sec_type();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_sec_type(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  _impl_.sec_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.sec_type)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_sec_type()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_sec_type();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.sec_type)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_sec_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.sec_type_.Get();
+}
+inline void ContractPB::_internal_set_sec_type(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  _impl_.sec_type_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_sec_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  return _impl_.sec_type_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_sec_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.sec_type)
+  if ((_impl_._has_bits_[0] & 0x00000002U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000002U;
+  auto* released = _impl_.sec_type_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.sec_type_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_sec_type(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002U;
+  }
+  _impl_.sec_type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.sec_type_.IsDefault()) {
+    _impl_.sec_type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.sec_type)
+}
+
+// string exchange = 3;
+inline void ContractPB::clear_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.exchange_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000004U;
+}
+inline const ::std::string& ContractPB::exchange() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.exchange)
+  return _internal_exchange();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_exchange(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004U;
+  _impl_.exchange_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.exchange)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_exchange()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_exchange();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.exchange)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_exchange() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.exchange_.Get();
+}
+inline void ContractPB::_internal_set_exchange(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004U;
+  _impl_.exchange_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004U;
+  return _impl_.exchange_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.exchange)
+  if ((_impl_._has_bits_[0] & 0x00000004U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000004U;
+  auto* released = _impl_.exchange_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.exchange_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_exchange(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004U;
+  }
+  _impl_.exchange_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.exchange_.IsDefault()) {
+    _impl_.exchange_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.exchange)
+}
+
+// string currency = 4;
+inline void ContractPB::clear_currency() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.currency_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000008U;
+}
+inline const ::std::string& ContractPB::currency() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.currency)
+  return _internal_currency();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_currency(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000008U;
+  _impl_.currency_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.currency)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_currency()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_currency();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.currency)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_currency() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.currency_.Get();
+}
+inline void ContractPB::_internal_set_currency(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000008U;
+  _impl_.currency_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_currency() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000008U;
+  return _impl_.currency_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_currency() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.currency)
+  if ((_impl_._has_bits_[0] & 0x00000008U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000008U;
+  auto* released = _impl_.currency_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.currency_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_currency(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000008U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000008U;
+  }
+  _impl_.currency_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.currency_.IsDefault()) {
+    _impl_.currency_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.currency)
+}
+
+// string local_symbol = 5;
+inline void ContractPB::clear_local_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.local_symbol_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000010U;
+}
+inline const ::std::string& ContractPB::local_symbol() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.local_symbol)
+  return _internal_local_symbol();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_local_symbol(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000010U;
+  _impl_.local_symbol_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.local_symbol)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_local_symbol()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_local_symbol();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.local_symbol)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_local_symbol() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.local_symbol_.Get();
+}
+inline void ContractPB::_internal_set_local_symbol(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000010U;
+  _impl_.local_symbol_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_local_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000010U;
+  return _impl_.local_symbol_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_local_symbol() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.local_symbol)
+  if ((_impl_._has_bits_[0] & 0x00000010U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000010U;
+  auto* released = _impl_.local_symbol_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.local_symbol_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_local_symbol(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000010U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000010U;
+  }
+  _impl_.local_symbol_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.local_symbol_.IsDefault()) {
+    _impl_.local_symbol_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.local_symbol)
+}
+
+// string trading_class = 6;
+inline void ContractPB::clear_trading_class() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.trading_class_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000020U;
+}
+inline const ::std::string& ContractPB::trading_class() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.trading_class)
+  return _internal_trading_class();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_trading_class(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000020U;
+  _impl_.trading_class_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.trading_class)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_trading_class()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_trading_class();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.trading_class)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_trading_class() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.trading_class_.Get();
+}
+inline void ContractPB::_internal_set_trading_class(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000020U;
+  _impl_.trading_class_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_trading_class() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000020U;
+  return _impl_.trading_class_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_trading_class() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.trading_class)
+  if ((_impl_._has_bits_[0] & 0x00000020U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000020U;
+  auto* released = _impl_.trading_class_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.trading_class_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_trading_class(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000020U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000020U;
+  }
+  _impl_.trading_class_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.trading_class_.IsDefault()) {
+    _impl_.trading_class_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.trading_class)
+}
+
+// string primary_exchange = 7;
+inline void ContractPB::clear_primary_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.primary_exchange_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000040U;
+}
+inline const ::std::string& ContractPB::primary_exchange() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.ContractPB.primary_exchange)
+  return _internal_primary_exchange();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ContractPB::set_primary_exchange(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000040U;
+  _impl_.primary_exchange_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.ContractPB.primary_exchange)
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::mutable_primary_exchange()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_primary_exchange();
+  // @@protoc_insertion_point(field_mutable:financio.trading.ContractPB.primary_exchange)
+  return _s;
+}
+inline const ::std::string& ContractPB::_internal_primary_exchange() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.primary_exchange_.Get();
+}
+inline void ContractPB::_internal_set_primary_exchange(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000040U;
+  _impl_.primary_exchange_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ContractPB::_internal_mutable_primary_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000040U;
+  return _impl_.primary_exchange_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ContractPB::release_primary_exchange() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.ContractPB.primary_exchange)
+  if ((_impl_._has_bits_[0] & 0x00000040U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000040U;
+  auto* released = _impl_.primary_exchange_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.primary_exchange_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ContractPB::set_allocated_primary_exchange(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000040U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000040U;
+  }
+  _impl_.primary_exchange_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.primary_exchange_.IsDefault()) {
+    _impl_.primary_exchange_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.ContractPB.primary_exchange)
 }
 
 #ifdef __GNUC__

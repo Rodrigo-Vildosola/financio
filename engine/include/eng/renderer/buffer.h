@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engpch.h"
+#include "eng/core/base.h"
 #include "eng/renderer/context/context.h"
 
 
@@ -50,7 +50,7 @@ public:
     );
 
     static UniformBuffer create_uniform_buffer(
-        Context& ctx,
+        GraphicsContext& ctx,
         const void* data,
         u64 size,
         u32 binding,
@@ -58,7 +58,7 @@ public:
     );
 
     static VertexBuffer create_vertex_buffer(
-        Context& ctx,
+        GraphicsContext& ctx,
         const void* data,
         u64 size,
         u32 slot = 0,
@@ -66,7 +66,7 @@ public:
     );
 
     static IndexBuffer create_index_buffer(
-        Context& ctx,
+        GraphicsContext& ctx,
         const void* data,
         u64 size,
         wgpu::IndexFormat format = wgpu::IndexFormat::Uint32,
@@ -74,7 +74,7 @@ public:
     );
 
     static StorageBuffer create_storage_buffer(
-        Context& ctx,
+        GraphicsContext& ctx,
         const void* data,
         u64 size,
         u32 binding,

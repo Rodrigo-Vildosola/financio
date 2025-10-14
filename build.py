@@ -10,8 +10,8 @@ import tools.config as config
 import tools.fmtgen as fmtgen
 
 
-WEBGPU_CPP_PRINT_PATH = Path(".build/_deps/dawn-7187-macos-aarch64-release-src/include/dawn/webgpu_cpp_print.h")
-FORMATTER_OUTPUT_PATH = Path(f"engine/include/eng/helpers/webgpu_fmt_formatters.h")
+# WEBGPU_CPP_PRINT_PATH = Path(".build/_deps/dawn-7187-macos-aarch64-release-src/include/dawn/webgpu_cpp_print.h")
+# FORMATTER_OUTPUT_PATH = Path(f"engine/include/eng/renderer/helpers/webgpu_fmt_formatters.h")
 
 
 REQUIRED_DEPS = [
@@ -106,9 +106,9 @@ def build_intelrdfp():
     logging.info(f"Staged {built_lib.name} to {out_lib_dir}")
 
 def needs_proto_regen():
-    newest_proto = max(p.stat().st_mtime for p in Path("proto/trading").glob("*.proto"))
+    newest_proto = max(p.stat().st_mtime for p in Path("shared/proto/trading").glob("*.proto"))
     try:
-        oldest_gen = min(p.stat().st_mtime for p in Path("proto/generated/trading").glob("*.pb.h"))
+        oldest_gen = min(p.stat().st_mtime for p in Path("shared/proto/generated/trading").glob("*.pb.h"))
         return newest_proto > oldest_gen
     except ValueError:
         return True
@@ -116,11 +116,11 @@ def needs_proto_regen():
 def generate_protos():
     logging.info("Generating protobuf and gRPC files...")
 
-    proto_dir = Path("proto/trading")
-    out_dir = Path("proto/generated")
+    proto_dir = Path("shared/proto")
+    out_dir = Path("shared/proto/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    proto_files = [str(p) for p in proto_dir.glob("*.proto")]
+    proto_files = [str(p) for p in proto_dir.glob("trading/*.proto")]
     protoc = shutil.which("protoc")
     grpc_plugin = shutil.which("grpc_cpp_plugin")
 
@@ -133,9 +133,9 @@ def generate_protos():
 
     cmd = [
         protoc,
-        "-Iproto",                      # base import path
-        f"--cpp_out={out_dir}",         # C++ output
-        f"--grpc_out={out_dir}",        # gRPC output
+        f"-I{proto_dir}",               # include directory for imports
+        f"--cpp_out={out_dir}",         # C++ output directory
+        f"--grpc_out={out_dir}",        # gRPC output directory
         f"--plugin=protoc-gen-grpc={grpc_plugin}",
     ] + proto_files
 
@@ -192,8 +192,8 @@ def build(parallel=True, verbose=False):
     if verbose:
         build_cmd += ["--verbose"]
 
-    if not fmtgen.generate_fmt_formatters(WEBGPU_CPP_PRINT_PATH, FORMATTER_OUTPUT_PATH):
-        logging.warning("Failed to generate WebGPU formatters.")
+    # if not fmtgen.generate_fmt_formatters(WEBGPU_CPP_PRINT_PATH, FORMATTER_OUTPUT_PATH):
+    #     logging.warning("Failed to generate WebGPU formatters.")
 
 
     run_cmd(build_cmd)

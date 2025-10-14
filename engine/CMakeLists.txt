@@ -10,7 +10,7 @@ add_library(eng-core STATIC
   src/core/timer.cpp
   src/runtime/application_base.cpp
 )
-target_include_directories(eng-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(eng-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 target_link_libraries(eng-core PUBLIC spdlog::spdlog)
 target_compile_definitions(eng-core PUBLIC ENGINE_ASSETS_DIR="${ENGINE_ASSETS_DIR}")
 
@@ -19,7 +19,7 @@ target_compile_definitions(eng-core PUBLIC ENGINE_ASSETS_DIR="${ENGINE_ASSETS_DI
 # ---- eng-frontend ----
 add_library(eng-frontend STATIC
   src/runtime/application.cpp
-  src/window/window.cpp
+  src/platform/window.cpp
   src/platform/macos/input.cpp
   src/platform/macos/window.cpp
   src/renderer/context/command_queue.cpp
@@ -67,3 +67,25 @@ if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
   add_library(${ENGINE_NAME} INTERFACE)
   target_link_libraries(${ENGINE_NAME} INTERFACE eng-core eng-frontend)
 endif()
+
+
+# # ---- apps ----
+# # Headless: links ONLY eng-core
+# add_executable(app_headless
+#   src/main_headless.cpp
+# )
+# target_link_libraries(app_headless PRIVATE eng-core)
+# target_include_directories(app_headless PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# GUI: links eng-frontend (which brings glfw/webgpu/imgui)
+# add_executable(app_gui
+#   src/main_gui.cpp
+# )
+# target_link_libraries(app_gui PRIVATE eng-frontend)
+# target_include_directories(app_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Convenience alias if desired
+# if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
+#   add_library(${ENGINE_NAME} INTERFACE)
+#   target_link_libraries(${ENGINE_NAME} INTERFACE eng-core eng-frontend)
+# endif()

@@ -1,8 +1,9 @@
 #include "eng/renderer/context/context_utils.h"
 #include "eng/renderer/context/macros.h"
-#include "eng/debug/profiler.h"
+#include "eng/core/debug/profiler.h"
 #include "eng/renderer/helpers/user_data.h"
 #include "eng/renderer/helpers/webgpu_fmt_formatters.h"
+#include "spdlog/logger.h"
 
 
 namespace eng {

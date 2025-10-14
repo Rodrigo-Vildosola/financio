@@ -1,8 +1,8 @@
 #pragma once
 
-#include "eng/window/window.h"
+#include "eng/platform/window.h"
 #include "eng/renderer/context/context.h"
-#include "eng/input/input.h"
+#include "eng/platform/input.h"
 
 #include <GLFW/glfw3.h>
 

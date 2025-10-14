@@ -10,13 +10,12 @@ add_executable(${TRADER_NAME} ${TRADER_SRC})
 target_include_directories(${TRADER_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/trader/include
     ${CMAKE_SOURCE_DIR}/external/ibkr/src
-    ${CMAKE_SOURCE_DIR}/proto/generated
+    ${CMAKE_SOURCE_DIR}/shared/proto/generated
 )
 
 # Link core only; add eng-net if built
 target_link_libraries(${TRADER_NAME} PRIVATE
     eng-core
-    # $<$<BOOL:${ENG_BUILD_NET}>:eng-net>
     twsapi
     trading_proto
 )

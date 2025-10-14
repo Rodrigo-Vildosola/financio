@@ -1,4 +1,4 @@
-#include "engpch.h"
+#include "eng/core/base.h"
 #include "eng/renderer/render_pass.h"
 #include "eng/renderer/renderer_api.h"
 #include "eng/renderer/renderer.h"
@@ -8,7 +8,7 @@ namespace eng {
 
 scope<Renderer> RendererAPI::g_renderer = nullptr;
 
-void RendererAPI::init(Context* context) {
+void RendererAPI::init(GraphicsContext* context) {
     g_renderer = create_scope<Renderer>(*context);
     g_renderer->init();
 }
@@ -33,7 +33,7 @@ ref<Shader> RendererAPI::create_shader(const std::string& path, const std::strin
     return create_ref<Shader>(Shader::from_file(g_renderer->get_context(), path, label));
 }
 
-Context& RendererAPI::get_context() {
+GraphicsContext& RendererAPI::get_context() {
     return g_renderer->get_context();
 }
 
