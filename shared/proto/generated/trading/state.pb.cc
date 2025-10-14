@@ -85,6 +85,33 @@ struct PortfolioPositionDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PortfolioPositionDefaultTypeInternal _PortfolioPosition_default_instance_;
 
+inline constexpr Pong::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        note_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR Pong::Pong(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(Pong_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct PongDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PongDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PongDefaultTypeInternal() {}
+  union {
+    Pong _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PongDefaultTypeInternal _Pong_default_instance_;
+
 inline constexpr OrderStatus::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -433,13 +460,19 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::financio::trading::NewsHeadline, _impl_.headline_),
         0,
         1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::financio::trading::Pong, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::financio::trading::Pong, _impl_.note_),
+        0,
         0x085, // bitmap
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_._oneof_case_[0]),
-        18, // hasbit index offset
+        19, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.type_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.id_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.ts_),
+        PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::financio::trading::StateMessage, _impl_.payload_),
@@ -464,6 +497,7 @@ const ::uint32_t
         ~0u,
         ~0u,
         ~0u,
+        ~0u,
 };
 
 static const ::_pbi::MigrationSchema
@@ -478,7 +512,8 @@ static const ::_pbi::MigrationSchema
         {51, sizeof(::financio::trading::AccountSummary)},
         {62, sizeof(::financio::trading::PortfolioPosition)},
         {73, sizeof(::financio::trading::NewsHeadline)},
-        {80, sizeof(::financio::trading::StateMessage)},
+        {80, sizeof(::financio::trading::Pong)},
+        {85, sizeof(::financio::trading::StateMessage)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_Error_default_instance_._instance,
@@ -491,6 +526,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::financio::trading::_AccountSummary_default_instance_._instance,
     &::financio::trading::_PortfolioPosition_default_instance_._instance,
     &::financio::trading::_NewsHeadline_default_instance_._instance,
+    &::financio::trading::_Pong_default_instance_._instance,
     &::financio::trading::_StateMessage_default_instance_._instance,
 };
 const char descriptor_table_protodef_trading_2fstate_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
@@ -513,24 +549,25 @@ const char descriptor_table_protodef_trading_2fstate_2eproto[] ABSL_ATTRIBUTE_SE
     "folioPosition\022\017\n\007account\030\001 \001(\t\022\016\n\006symbol"
     "\030\002 \001(\t\022\020\n\010position\030\003 \001(\001\022\020\n\010avg_cost\030\004 \001"
     "(\001\"2\n\014NewsHeadline\022\020\n\010provider\030\001 \001(\t\022\020\n\010"
-    "headline\030\002 \001(\t\"\223\005\n\014StateMessage\022)\n\004type\030"
-    "\001 \001(\0162\033.financio.trading.StateType\022\n\n\002id"
-    "\030\002 \001(\003\022&\n\002ts\030\003 \001(\0132\032.google.protobuf.Tim"
-    "estamp\022(\n\005error\030\n \001(\0132\027.financio.trading"
-    ".ErrorH\000\0221\n\ntick_price\030\013 \001(\0132\033.financio."
-    "trading.TickPriceH\000\022/\n\ttick_size\030\014 \001(\0132\032"
-    ".financio.trading.TickSizeH\000\0225\n\014order_st"
-    "atus\030\r \001(\0132\035.financio.trading.OrderStatu"
-    "sH\000\0223\n\014order_filled\030\016 \001(\0132\033.financio.tra"
-    "ding.OrderFillH\000\0223\n\010hist_bar\030\024 \001(\0132\037.fin"
-    "ancio.trading.HistoricalBarH\000\0223\n\010hist_en"
-    "d\030\025 \001(\0132\037.financio.trading.HistoricalEnd"
-    "H\000\022;\n\017account_summary\030\036 \001(\0132 .financio.t"
-    "rading.AccountSummaryH\000\022\?\n\020portfolio_upd"
-    "ate\030\037 \001(\0132#.financio.trading.PortfolioPo"
-    "sitionH\000\0227\n\rnews_headline\030  \001(\0132\036.financ"
-    "io.trading.NewsHeadlineH\000B\t\n\007payloadb\006pr"
-    "oto3"
+    "headline\030\002 \001(\t\"\024\n\004Pong\022\014\n\004note\030\001 \001(\t\"\273\005\n"
+    "\014StateMessage\022)\n\004type\030\001 \001(\0162\033.financio.t"
+    "rading.StateType\022\n\n\002id\030\002 \001(\003\022&\n\002ts\030\003 \001(\013"
+    "2\032.google.protobuf.Timestamp\022(\n\005error\030\n "
+    "\001(\0132\027.financio.trading.ErrorH\000\0221\n\ntick_p"
+    "rice\030\013 \001(\0132\033.financio.trading.TickPriceH"
+    "\000\022/\n\ttick_size\030\014 \001(\0132\032.financio.trading."
+    "TickSizeH\000\0225\n\014order_status\030\r \001(\0132\035.finan"
+    "cio.trading.OrderStatusH\000\0223\n\014order_fille"
+    "d\030\016 \001(\0132\033.financio.trading.OrderFillH\000\0223"
+    "\n\010hist_bar\030\024 \001(\0132\037.financio.trading.Hist"
+    "oricalBarH\000\0223\n\010hist_end\030\025 \001(\0132\037.financio"
+    ".trading.HistoricalEndH\000\022;\n\017account_summ"
+    "ary\030\036 \001(\0132 .financio.trading.AccountSumm"
+    "aryH\000\022\?\n\020portfolio_update\030\037 \001(\0132#.financ"
+    "io.trading.PortfolioPositionH\000\0227\n\rnews_h"
+    "eadline\030  \001(\0132\036.financio.trading.NewsHea"
+    "dlineH\000\022&\n\004pong\030( \001(\0132\026.financio.trading"
+    ".PongH\000B\t\n\007payloadb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_trading_2fstate_2eproto_deps[2] = {
@@ -541,13 +578,13 @@ static ::absl::once_flag descriptor_table_trading_2fstate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_trading_2fstate_2eproto = {
     false,
     false,
-    1404,
+    1466,
     descriptor_table_protodef_trading_2fstate_2eproto,
     "trading/state.proto",
     &descriptor_table_trading_2fstate_2eproto_once,
     descriptor_table_trading_2fstate_2eproto_deps,
     2,
-    11,
+    12,
     schemas,
     file_default_instances,
     TableStruct_trading_2fstate_2eproto::offsets,
@@ -3820,6 +3857,276 @@ void NewsHeadline::InternalSwap(NewsHeadline* PROTOBUF_RESTRICT PROTOBUF_NONNULL
 }
 // ===================================================================
 
+class Pong::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<Pong>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(Pong, _impl_._has_bits_);
+};
+
+Pong::Pong(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Pong_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:financio.trading.Pong)
+}
+PROTOBUF_NDEBUG_INLINE Pong::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::financio::trading::Pong& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        note_(arena, from.note_) {}
+
+Pong::Pong(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const Pong& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Pong_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  Pong* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:financio.trading.Pong)
+}
+PROTOBUF_NDEBUG_INLINE Pong::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        note_(arena) {}
+
+inline void Pong::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+Pong::~Pong() {
+  // @@protoc_insertion_point(destructor:financio.trading.Pong)
+  SharedDtor(*this);
+}
+inline void Pong::SharedDtor(MessageLite& self) {
+  Pong& this_ = static_cast<Pong&>(self);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.note_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL Pong::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) Pong(arena);
+}
+constexpr auto Pong::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(Pong),
+                                            alignof(Pong));
+}
+constexpr auto Pong::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_Pong_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &Pong::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<Pong>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &Pong::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<Pong>(), &Pong::ByteSizeLong,
+              &Pong::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(Pong, _impl_._cached_size_),
+          false,
+      },
+      &Pong::kDescriptorMethods,
+      &descriptor_table_trading_2fstate_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull Pong_class_data_ =
+        Pong::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+Pong::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&Pong_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(Pong_class_data_.tc_table);
+  return Pong_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 34, 2>
+Pong::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(Pong, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    Pong_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::financio::trading::Pong>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string note = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(Pong, _impl_.note_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string note = 1;
+    {PROTOBUF_FIELD_OFFSET(Pong, _impl_.note_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\25\4\0\0\0\0\0\0"
+    "financio.trading.Pong"
+    "note"
+  }},
+};
+PROTOBUF_NOINLINE void Pong::Clear() {
+// @@protoc_insertion_point(message_clear_start:financio.trading.Pong)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    _impl_.note_.ClearNonDefaultToEmpty();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL Pong::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const Pong& this_ = static_cast<const Pong&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL Pong::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const Pong& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:financio.trading.Pong)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string note = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+    if (!this_._internal_note().empty()) {
+      const ::std::string& _s = this_._internal_note();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "financio.trading.Pong.note");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:financio.trading.Pong)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t Pong::ByteSizeLong(const MessageLite& base) {
+  const Pong& this_ = static_cast<const Pong&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t Pong::ByteSizeLong() const {
+  const Pong& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:financio.trading.Pong)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+   {
+    // string note = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!this_._internal_note().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_note());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void Pong::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<Pong*>(&to_msg);
+  auto& from = static_cast<const Pong&>(from_msg);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    from.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:financio.trading.Pong)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    if (!from._internal_note().empty()) {
+      _this->_internal_set_note(from._internal_note());
+    } else {
+      if (_this->_impl_.note_.IsDefault()) {
+        _this->_internal_set_note("");
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Pong::CopyFrom(const Pong& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:financio.trading.Pong)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void Pong::InternalSwap(Pong* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.note_, &other->_impl_.note_, arena);
+}
+
+::google::protobuf::Metadata Pong::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class StateMessage::_Internal {
  public:
   using HasBits =
@@ -3965,6 +4272,19 @@ void StateMessage::set_allocated_news_headline(::financio::trading::NewsHeadline
   }
   // @@protoc_insertion_point(field_set_allocated:financio.trading.StateMessage.news_headline)
 }
+void StateMessage::set_allocated_pong(::financio::trading::Pong* PROTOBUF_NULLABLE pong) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_payload();
+  if (pong) {
+    ::google::protobuf::Arena* submessage_arena = pong->GetArena();
+    if (message_arena != submessage_arena) {
+      pong = ::google::protobuf::internal::GetOwnedMessage(message_arena, pong, submessage_arena);
+    }
+    set_has_pong();
+    _impl_.payload_.pong_ = pong;
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.StateMessage.pong)
+}
 StateMessage::StateMessage(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, StateMessage_class_data_.base()) {
@@ -4039,6 +4359,9 @@ StateMessage::StateMessage(
         break;
       case kNewsHeadline:
         _impl_.payload_.news_headline_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.news_headline_);
+        break;
+      case kPong:
+        _impl_.payload_.pong_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.pong_);
         break;
   }
 
@@ -4162,6 +4485,14 @@ void StateMessage::clear_payload() {
       }
       break;
     }
+    case kPong: {
+      if (GetArena() == nullptr) {
+        delete _impl_.payload_.pong_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.pong_);
+      }
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -4213,17 +4544,17 @@ StateMessage::GetClassData() const {
   return StateMessage_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 13, 11, 0, 2>
+const ::_pbi::TcParseTable<2, 14, 12, 0, 7>
 StateMessage::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(StateMessage, _impl_._has_bits_),
     0, // no _extensions_
-    32, 24,  // max_field_number, fast_idx_mask
+    40, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
     535282168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    13,  // num_field_entries
-    11,  // num_aux_entries
+    14,  // num_field_entries
+    12,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     StateMessage_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -4243,6 +4574,8 @@ StateMessage::_table_ = {
     {::_pbi::TcParser::FastMtS1,
      {26, 0, 0, PROTOBUF_FIELD_OFFSET(StateMessage, _impl_.ts_)}},
   }}, {{
+    40, 0, 1,
+    65534, 13,
     65535, 65535
   }}, {{
     // .financio.trading.StateType type = 1;
@@ -4271,6 +4604,8 @@ StateMessage::_table_ = {
     {PROTOBUF_FIELD_OFFSET(StateMessage, _impl_.payload_.portfolio_update_), _Internal::kOneofCaseOffset + 0, 9, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .financio.trading.NewsHeadline news_headline = 32;
     {PROTOBUF_FIELD_OFFSET(StateMessage, _impl_.payload_.news_headline_), _Internal::kOneofCaseOffset + 0, 10, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .financio.trading.Pong pong = 40;
+    {PROTOBUF_FIELD_OFFSET(StateMessage, _impl_.payload_.pong_), _Internal::kOneofCaseOffset + 0, 11, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
@@ -4284,6 +4619,7 @@ StateMessage::_table_ = {
       {::_pbi::TcParser::GetTable<::financio::trading::AccountSummary>()},
       {::_pbi::TcParser::GetTable<::financio::trading::PortfolioPosition>()},
       {::_pbi::TcParser::GetTable<::financio::trading::NewsHeadline>()},
+      {::_pbi::TcParser::GetTable<::financio::trading::Pong>()},
   }},
   {{
   }},
@@ -4415,6 +4751,12 @@ PROTOBUF_NOINLINE void StateMessage::Clear() {
           stream);
       break;
     }
+    case kPong: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          40, *this_._impl_.payload_.pong_, this_._impl_.payload_.pong_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     default:
       break;
   }
@@ -4523,6 +4865,12 @@ PROTOBUF_NOINLINE void StateMessage::Clear() {
     case kNewsHeadline: {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.news_headline_);
+      break;
+    }
+    // .financio.trading.Pong pong = 40;
+    case kPong: {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.pong_);
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -4655,6 +5003,14 @@ void StateMessage::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::go
           _this->_impl_.payload_.news_headline_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.news_headline_);
         } else {
           _this->_impl_.payload_.news_headline_->MergeFrom(*from._impl_.payload_.news_headline_);
+        }
+        break;
+      }
+      case kPong: {
+        if (oneof_needs_init) {
+          _this->_impl_.payload_.pong_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.pong_);
+        } else {
+          _this->_impl_.payload_.pong_->MergeFrom(*from._impl_.payload_.pong_);
         }
         break;
       }

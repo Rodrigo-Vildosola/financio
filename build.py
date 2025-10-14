@@ -116,11 +116,11 @@ def needs_proto_regen():
 def generate_protos():
     logging.info("Generating protobuf and gRPC files...")
 
-    proto_dir = Path("shared/proto/trading")
+    proto_dir = Path("shared/proto")
     out_dir = Path("shared/proto/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    proto_files = [str(p) for p in proto_dir.glob("*.proto")]
+    proto_files = [str(p) for p in proto_dir.glob("trading/*.proto")]
     protoc = shutil.which("protoc")
     grpc_plugin = shutil.which("grpc_cpp_plugin")
 
@@ -133,9 +133,9 @@ def generate_protos():
 
     cmd = [
         protoc,
-        "-Iproto",                      # base import path
-        f"--cpp_out={out_dir}",         # C++ output
-        f"--grpc_out={out_dir}",        # gRPC output
+        f"-I{proto_dir}",               # include directory for imports
+        f"--cpp_out={out_dir}",         # C++ output directory
+        f"--grpc_out={out_dir}",        # gRPC output directory
         f"--plugin=protoc-gen-grpc={grpc_plugin}",
     ] + proto_files
 

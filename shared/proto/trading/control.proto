@@ -24,11 +24,12 @@ message UnsubscribeMarketData {
 }
 
 message PlaceOrder {
-  double quantity   = 1;
-  double limit_px   = 2;
-  double stop_px    = 3;
-  string action     = 4; // "BUY"/"SELL"
-  string order_type = 5; // "MKT","LMT","STP"
+  ContractPB contract   = 1;
+  double quantity   = 2;
+  double limit_px   = 3;
+  double stop_px    = 4;
+  string action     = 5; // "BUY"/"SELL"
+  string order_type = 6; // "MKT","LMT","STP"
 }
 
 message CancelOrder {
@@ -47,6 +48,10 @@ message HistoricalData {
   int32  use_rth      = 8;
 }
 
+message Ping {
+  string note = 1;
+}
+
 message ControlMessage {
   ControlType type = 1;
   int32 id         = 2;
@@ -57,5 +62,6 @@ message ControlMessage {
     PlaceOrder place_order               = 13;
     CancelOrder cancel_order             = 14;
     HistoricalData  req_historical_data  = 15;
+    Ping                 ping            = 16;
   }
 }

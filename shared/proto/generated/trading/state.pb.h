@@ -84,6 +84,10 @@ class OrderStatus;
 struct OrderStatusDefaultTypeInternal;
 extern OrderStatusDefaultTypeInternal _OrderStatus_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull OrderStatus_class_data_;
+class Pong;
+struct PongDefaultTypeInternal;
+extern PongDefaultTypeInternal _Pong_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull Pong_class_data_;
 class PortfolioPosition;
 struct PortfolioPositionDefaultTypeInternal;
 extern PortfolioPositionDefaultTypeInternal _PortfolioPosition_default_instance_;
@@ -553,6 +557,202 @@ class PortfolioPosition final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull PortfolioPosition_class_data_;
+// -------------------------------------------------------------------
+
+class Pong final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:financio.trading.Pong) */ {
+ public:
+  inline Pong() : Pong(nullptr) {}
+  ~Pong() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(Pong* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Pong));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR Pong(::google::protobuf::internal::ConstantInitialized);
+
+  inline Pong(const Pong& from) : Pong(nullptr, from) {}
+  inline Pong(Pong&& from) noexcept
+      : Pong(nullptr, ::std::move(from)) {}
+  inline Pong& operator=(const Pong& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Pong& operator=(Pong&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Pong& default_instance() {
+    return *reinterpret_cast<const Pong*>(
+        &_Pong_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 10;
+  friend void swap(Pong& a, Pong& b) { a.Swap(&b); }
+  inline void Swap(Pong* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Pong* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Pong* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Pong>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Pong& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const Pong& from) { Pong::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(Pong* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "financio.trading.Pong"; }
+
+ protected:
+  explicit Pong(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  Pong(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Pong& from);
+  Pong(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, Pong&& from) noexcept
+      : Pong(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kNoteFieldNumber = 1,
+  };
+  // string note = 1;
+  void clear_note() ;
+  const ::std::string& note() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_note(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_note();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_note();
+  void set_allocated_note(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_note() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_note(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_note();
+
+  public:
+  // @@protoc_insertion_point(class_scope:financio.trading.Pong)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   0, 34,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const Pong& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr note_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_trading_2fstate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull Pong_class_data_;
 // -------------------------------------------------------------------
 
 class OrderStatus final : public ::google::protobuf::Message
@@ -2346,9 +2546,10 @@ class StateMessage final : public ::google::protobuf::Message
     kAccountSummary = 30,
     kPortfolioUpdate = 31,
     kNewsHeadline = 32,
+    kPong = 40,
     PAYLOAD_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 11;
   friend void swap(StateMessage& a, StateMessage& b) { a.Swap(&b); }
   inline void Swap(StateMessage* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2449,6 +2650,7 @@ class StateMessage final : public ::google::protobuf::Message
     kAccountSummaryFieldNumber = 30,
     kPortfolioUpdateFieldNumber = 31,
     kNewsHeadlineFieldNumber = 32,
+    kPongFieldNumber = 40,
   };
   // .google.protobuf.Timestamp ts = 3;
   bool has_ts() const;
@@ -2675,6 +2877,25 @@ class StateMessage final : public ::google::protobuf::Message
   ::financio::trading::NewsHeadline* PROTOBUF_NONNULL _internal_mutable_news_headline();
 
   public:
+  // .financio.trading.Pong pong = 40;
+  bool has_pong() const;
+  private:
+  bool _internal_has_pong() const;
+
+  public:
+  void clear_pong() ;
+  const ::financio::trading::Pong& pong() const;
+  [[nodiscard]] ::financio::trading::Pong* PROTOBUF_NULLABLE release_pong();
+  ::financio::trading::Pong* PROTOBUF_NONNULL mutable_pong();
+  void set_allocated_pong(::financio::trading::Pong* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_pong(::financio::trading::Pong* PROTOBUF_NULLABLE value);
+  ::financio::trading::Pong* PROTOBUF_NULLABLE unsafe_arena_release_pong();
+
+  private:
+  const ::financio::trading::Pong& _internal_pong() const;
+  ::financio::trading::Pong* PROTOBUF_NONNULL _internal_mutable_pong();
+
+  public:
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:financio.trading.StateMessage)
@@ -2690,12 +2911,13 @@ class StateMessage final : public ::google::protobuf::Message
   void set_has_account_summary();
   void set_has_portfolio_update();
   void set_has_news_headline();
+  void set_has_pong();
   inline bool has_payload() const;
   inline void clear_has_payload();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 13,
-                                   11, 0,
-                                   2>
+  static const ::google::protobuf::internal::TcParseTable<2, 14,
+                                   12, 0,
+                                   7>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -2731,6 +2953,7 @@ class StateMessage final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE account_summary_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE portfolio_update_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE news_headline_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE pong_;
     } payload_;
     ::uint32_t _oneof_case_[1];
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -4094,6 +4317,75 @@ inline void NewsHeadline::set_allocated_headline(::std::string* PROTOBUF_NULLABL
 
 // -------------------------------------------------------------------
 
+// Pong
+
+// string note = 1;
+inline void Pong::clear_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.note_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001U;
+}
+inline const ::std::string& Pong::note() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.Pong.note)
+  return _internal_note();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void Pong::set_note(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.note_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:financio.trading.Pong.note)
+}
+inline ::std::string* PROTOBUF_NONNULL Pong::mutable_note()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_note();
+  // @@protoc_insertion_point(field_mutable:financio.trading.Pong.note)
+  return _s;
+}
+inline const ::std::string& Pong::_internal_note() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.note_.Get();
+}
+inline void Pong::_internal_set_note(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  _impl_.note_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL Pong::_internal_mutable_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001U;
+  return _impl_.note_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE Pong::release_note() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:financio.trading.Pong.note)
+  if ((_impl_._has_bits_[0] & 0x00000001U) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001U;
+  auto* released = _impl_.note_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.note_.Set("", GetArena());
+  }
+  return released;
+}
+inline void Pong::set_allocated_note(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001U;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001U;
+  }
+  _impl_.note_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.note_.IsDefault()) {
+    _impl_.note_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:financio.trading.Pong.note)
+}
+
+// -------------------------------------------------------------------
+
 // StateMessage
 
 // .financio.trading.StateType type = 1;
@@ -5044,6 +5336,87 @@ inline ::financio::trading::NewsHeadline* PROTOBUF_NONNULL StateMessage::mutable
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::financio::trading::NewsHeadline* _msg = _internal_mutable_news_headline();
   // @@protoc_insertion_point(field_mutable:financio.trading.StateMessage.news_headline)
+  return _msg;
+}
+
+// .financio.trading.Pong pong = 40;
+inline bool StateMessage::has_pong() const {
+  return payload_case() == kPong;
+}
+inline bool StateMessage::_internal_has_pong() const {
+  return payload_case() == kPong;
+}
+inline void StateMessage::set_has_pong() {
+  _impl_._oneof_case_[0] = kPong;
+}
+inline void StateMessage::clear_pong() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (payload_case() == kPong) {
+    if (GetArena() == nullptr) {
+      delete _impl_.payload_.pong_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.pong_);
+    }
+    clear_has_payload();
+  }
+}
+inline ::financio::trading::Pong* PROTOBUF_NULLABLE StateMessage::release_pong() {
+  // @@protoc_insertion_point(field_release:financio.trading.StateMessage.pong)
+  if (payload_case() == kPong) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::financio::trading::Pong*>(_impl_.payload_.pong_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.pong_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::financio::trading::Pong& StateMessage::_internal_pong() const {
+  return payload_case() == kPong ? *reinterpret_cast<::financio::trading::Pong*>(_impl_.payload_.pong_) : reinterpret_cast<::financio::trading::Pong&>(::financio::trading::_Pong_default_instance_);
+}
+inline const ::financio::trading::Pong& StateMessage::pong() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:financio.trading.StateMessage.pong)
+  return _internal_pong();
+}
+inline ::financio::trading::Pong* PROTOBUF_NULLABLE StateMessage::unsafe_arena_release_pong() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:financio.trading.StateMessage.pong)
+  if (payload_case() == kPong) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::financio::trading::Pong*>(_impl_.payload_.pong_);
+    _impl_.payload_.pong_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StateMessage::unsafe_arena_set_allocated_pong(
+    ::financio::trading::Pong* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_payload();
+  if (value) {
+    set_has_pong();
+    _impl_.payload_.pong_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:financio.trading.StateMessage.pong)
+}
+inline ::financio::trading::Pong* PROTOBUF_NONNULL StateMessage::_internal_mutable_pong() {
+  if (payload_case() != kPong) {
+    clear_payload();
+    set_has_pong();
+    _impl_.payload_.pong_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::financio::trading::Pong>(GetArena()));
+  }
+  return reinterpret_cast<::financio::trading::Pong*>(_impl_.payload_.pong_);
+}
+inline ::financio::trading::Pong* PROTOBUF_NONNULL StateMessage::mutable_pong()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::financio::trading::Pong* _msg = _internal_mutable_pong();
+  // @@protoc_insertion_point(field_mutable:financio.trading.StateMessage.pong)
   return _msg;
 }
 

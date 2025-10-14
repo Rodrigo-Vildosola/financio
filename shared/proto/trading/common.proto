@@ -29,6 +29,7 @@ enum ControlType {
   CONTROL_HISTORICAL   = 7;
   CONTROL_ACCOUNT_DATA = 8;
   CONTROL_NEWS         = 9;
+  CONTROL_PING         = 10;
 }
 
 enum StateType {
@@ -36,6 +37,7 @@ enum StateType {
   STATE_CONNECTED     = 1;
   STATE_DISCONNECTED  = 2;
   STATE_ERROR         = 3;
+  STATE_PONG          = 4;
   STATE_TICK_PRICE    = 10;
   STATE_TICK_SIZE     = 11;
   STATE_ORDER_STATUS  = 12;
@@ -100,4 +102,14 @@ message ExecutionFilterPB {
   string exchange   = 6;
   string side       = 7;
   int32  last_n_days = 8;
+}
+
+message ContractPB {
+  string symbol    = 1;
+  string sec_type  = 2;
+  string exchange  = 3;
+  string currency  = 4;
+  string local_symbol = 5;
+  string trading_class = 6;
+  string primary_exchange = 7;
 }
