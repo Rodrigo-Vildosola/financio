@@ -78,9 +78,6 @@ void RootLayer::on_update(Timestep ts) {
 #endif
 }
 
-void RootLayer::on_physics_update(Timestep fixed_ts) {}
-
-
 void RootLayer::on_ui_render() {
     ImGui::Begin("Trading Control");
 
@@ -155,6 +152,7 @@ void RootLayer::on_ui_render() {
 
     ImGui::End();
 }
+
 void RootLayer::on_event(Event& event) {
     PROFILE_FUNCTION();
 
@@ -260,6 +258,9 @@ void RootLayer::add_log(const std::string& msg) {
     m_event_log.push_back(msg);
     ENG_INFO("{}", msg);
 }
+
+
+
 
 void RootLayer::setup_pipeline() {
     ref<Shader> shader = RendererAPI::create_shader(

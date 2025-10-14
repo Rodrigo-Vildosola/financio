@@ -11,7 +11,7 @@ target_include_directories(${APP_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/app/include
     ${CMAKE_SOURCE_DIR}/external/glm
     ${CMAKE_SOURCE_DIR}/external/ibkr/src/cppclient
-    ${CMAKE_SOURCE_DIR}/shared/generated
+    ${CMAKE_SOURCE_DIR}/shared/proto/generated
 )
 
 # Link only the frontend engine; it pulls eng-core internally

@@ -106,9 +106,9 @@ def build_intelrdfp():
     logging.info(f"Staged {built_lib.name} to {out_lib_dir}")
 
 def needs_proto_regen():
-    newest_proto = max(p.stat().st_mtime for p in Path("shared/trading").glob("*.proto"))
+    newest_proto = max(p.stat().st_mtime for p in Path("shared/proto/trading").glob("*.proto"))
     try:
-        oldest_gen = min(p.stat().st_mtime for p in Path("shared/generated/trading").glob("*.pb.h"))
+        oldest_gen = min(p.stat().st_mtime for p in Path("shared/proto/generated/trading").glob("*.pb.h"))
         return newest_proto > oldest_gen
     except ValueError:
         return True
@@ -116,8 +116,8 @@ def needs_proto_regen():
 def generate_protos():
     logging.info("Generating protobuf and gRPC files...")
 
-    proto_dir = Path("shared/trading")
-    out_dir = Path("shared/generated")
+    proto_dir = Path("shared/proto/trading")
+    out_dir = Path("shared/proto/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     proto_files = [str(p) for p in proto_dir.glob("*.proto")]

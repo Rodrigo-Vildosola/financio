@@ -31,7 +31,7 @@ public:
 	virtual void on_detach() override;
 
 	void on_update(eng::Timestep ts) override;
-	void on_physics_update(eng::Timestep fixed_ts) override;
+	void on_physics_update(eng::Timestep fixed_ts) override {}
 	virtual void on_ui_render() override;
 	void on_event(eng::Event& e) override;
 

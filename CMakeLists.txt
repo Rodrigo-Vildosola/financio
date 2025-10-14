@@ -40,7 +40,7 @@ target_include_directories(imgui PUBLIC external/imgui)
 
 # IBKR and proto
 add_subdirectory(external/ibkr)
-add_subdirectory(proto)
+add_subdirectory(shared/proto)
 
 
 # ---------- Engine + Apps ----------
