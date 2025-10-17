@@ -62,12 +62,6 @@ if(ENG_BUILD_NET)
   )
 endif()
 
-# Convenience alias if you still want ${ENGINE_NAME} to exist
-if(DEFINED ENGINE_NAME AND NOT TARGET ${ENGINE_NAME})
-  add_library(${ENGINE_NAME} INTERFACE)
-  target_link_libraries(${ENGINE_NAME} INTERFACE eng-core eng-frontend)
-endif()
-
 
 # # ---- apps ----
 # # Headless: links ONLY eng-core

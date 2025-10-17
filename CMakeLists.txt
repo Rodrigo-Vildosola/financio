@@ -15,8 +15,6 @@ set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/financio/engine/assets")
 set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/financio/assets")
 
 
-# Names passed in from tooling or cache
-set(ENGINE_NAME ${ENGINE_NAME})
 set(APP_NAME ${APP_NAME})
 set(TRADER_NAME ${TRADER_NAME})
 
@@ -43,7 +41,8 @@ add_subdirectory(external/ibkr)
 add_subdirectory(shared/proto)
 
 
-# ---------- Engine + Apps ----------
+# ---------- Strategy + Apps ----------
+add_subdirectory(strategy)
 add_subdirectory(financio)
 add_subdirectory(trader)
 
