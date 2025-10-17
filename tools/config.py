@@ -1,7 +1,6 @@
 import os
 import sys
 import platform
-import pybind11
 import sysconfig
 
 # Project names
@@ -25,6 +24,8 @@ ENG_PLATFORM_LINUX = PLATFORM == "Linux"
 
 
 def get_python_info():
+    import pybind11
+
     py_exec = sys.executable
     py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
     include_dir = sysconfig.get_path("include")

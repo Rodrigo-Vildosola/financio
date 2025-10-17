@@ -1,30 +1,22 @@
 cmake_minimum_required(VERSION 3.20)
-project(strategy LANGUAGES CXX)
+project(feature_extractor LANGUAGES CXX)
 
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
-find_package(pybind11 CONFIG REQUIRED)
 find_package(nlohmann_json REQUIRED)
 
-add_library(strategy STATIC
-    src/strategy_runtime.cpp
-    src/strategy_runtime_python.cpp
-    src/strategy_context.cpp
-    src/bindings/binding_context.cpp
-    src/bindings/binding_decorators.cpp
-    src/bindings/binding_registry.cpp
+file(GLOB_RECURSE FEATURE_EXTRACTOR_SRC
+    CONFIGURE_DEPENDS
+    "src/*.cpp"
 )
 
-target_include_directories(strategy PUBLIC include)
-target_link_libraries(strategy
-    PUBLIC
-        pybind11::embed
-        Python3::Python
-        nlohmann_json::nlohmann_json
+add_library(feature_extractor STATIC ${FEATURE_EXTRACTOR_SRC})
+
+target_include_directories(feature_extractor PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-add_custom_command(
-    TARGET strategy POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/python
-            $<TARGET_FILE_DIR:strategy>/python
+target_link_libraries(feature_extractor PUBLIC
+    nlohmann_json::nlohmann_json
 )
+
+add_executable(test_feature_extractor examples/test_feature_extractor.cpp)
+target_link_libraries(test_feature_extractor PRIVATE feature_extractor)
