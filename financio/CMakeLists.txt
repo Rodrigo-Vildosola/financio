@@ -10,7 +10,7 @@ file(GLOB_RECURSE APP_SRC CONFIGURE_DEPENDS
 add_executable(${APP_NAME} ${APP_SRC})
 
 target_include_directories(${APP_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/app/include
+    ${CMAKE_SOURCE_DIR}/financio/include
     ${CMAKE_SOURCE_DIR}/external/glm
     ${CMAKE_SOURCE_DIR}/external/ibkr/src/cppclient
     ${CMAKE_SOURCE_DIR}/shared/proto/generated

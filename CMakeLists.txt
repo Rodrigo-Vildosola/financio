@@ -11,8 +11,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/engine/assets")
-set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/assets")
+set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/financio/engine/assets")
+set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/financio/assets")
 
 
 # Names passed in from tooling or cache
@@ -44,7 +44,7 @@ add_subdirectory(shared/proto)
 
 
 # ---------- Engine + Apps ----------
-add_subdirectory(app)
+add_subdirectory(financio)
 add_subdirectory(trader)
 
 # ---------- Global compile flags ----------

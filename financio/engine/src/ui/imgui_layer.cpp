@@ -33,8 +33,8 @@ void UILayer::on_attach() {
     
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-    io.Fonts->AddFontFromFileTTF("app/assets/fonts/opensans/OpenSans-Bold.ttf", 18.0f);
-    io.FontDefault = io.Fonts->AddFontFromFileTTF("app/assets/fonts/opensans/OpenSans-Regular.ttf", 18.0f);
+    io.Fonts->AddFontFromFileTTF("financio/assets/fonts/opensans/OpenSans-Bold.ttf", 18.0f);
+    io.FontDefault = io.Fonts->AddFontFromFileTTF("financio/assets/fonts/opensans/OpenSans-Regular.ttf", 18.0f);
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
