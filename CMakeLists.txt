@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/engine/assets")
+set(ENGINE_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/engine/assets")
 set(APP_ASSETS_DIR "${CMAKE_SOURCE_DIR}/app/assets")
 
 
@@ -44,7 +44,6 @@ add_subdirectory(shared/proto)
 
 
 # ---------- Engine + Apps ----------
-add_subdirectory(engine)
 add_subdirectory(app)
 add_subdirectory(trader)
 

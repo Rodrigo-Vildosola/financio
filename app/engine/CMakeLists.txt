@@ -10,7 +10,7 @@ add_library(eng-core STATIC
   src/core/timer.cpp
   src/runtime/application_base.cpp
 )
-target_include_directories(eng-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+target_include_directories(eng-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(eng-core PUBLIC spdlog::spdlog)
 target_compile_definitions(eng-core PUBLIC ENGINE_ASSETS_DIR="${ENGINE_ASSETS_DIR}")
 

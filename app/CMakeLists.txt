@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
+add_subdirectory(engine)
+
 file(GLOB_RECURSE APP_SRC CONFIGURE_DEPENDS
     src/*.cpp
     main.cpp
