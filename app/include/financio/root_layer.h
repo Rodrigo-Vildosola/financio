@@ -53,6 +53,15 @@ private:
 
     // UI helpers
     void draw_trading_panel();
+
+    struct Subscription {
+        std::string symbol;
+        std::string exchange;
+        std::string currency;
+        std::string sec_type;
+    };
+
+    std::vector<Subscription> m_active_subs;
 };
 
 }

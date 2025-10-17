@@ -1,4 +1,5 @@
 #include "financio/root_layer.h"
+#include "financio/core/id.h"
 
 #include "eng/runtime/application.h"
 
@@ -63,16 +64,18 @@ void RootLayer::on_attach() {
 
     // Resubscribe hook
     m_trader->set_resubscribe([this] {
-        ControlMessage sub;
-        sub.set_type(CONTROL_SUB_MKT);
-        auto* req = sub.mutable_sub_mkt_data();
-        req->set_symbol("AAPL");
-        req->set_exchange("SMART");
-        req->set_currency("USD");
-        req->set_sec_type("STK");
-        sub.set_id(101);
-        m_trader->enqueue(sub);
-        add_log("Resubscribed AAPL after reconnect.");
+        for (const auto& sub : m_active_subs) {
+            ControlMessage msg;
+            msg.set_type(CONTROL_SUB_MKT);
+            auto* req = msg.mutable_sub_mkt_data();
+            req->set_symbol(sub.symbol);
+            req->set_exchange(sub.exchange);
+            req->set_currency(sub.currency);
+            req->set_sec_type(sub.sec_type);
+            msg.set_id(generate_id());
+            m_trader->enqueue(msg);
+            add_log("Resubscribed " + sub.symbol);
+        }
     });
 
     m_trader->start();

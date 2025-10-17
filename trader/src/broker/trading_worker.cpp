@@ -3,14 +3,13 @@
 
 #include <twsapi/Order.h>
 
+#include "spdlog/logger.h"
+#include "trader/core/logger.h"
 #include "trader/broker/trading_worker.h"
 
 #include "trading/control.pb.h"
 #include "trading/lifecycle.pb.h"
 #include "trading/state.pb.h"
-
-#include <eng/enginio.h>
-
 
 using namespace financio::trading;
 
@@ -78,7 +77,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
                 // This assumes ConnectBroker is in lifecycle.proto.
                 // You can call this separately if lifecycle messages are routed differently.
                 // Example left for completeness.
-                ENG_WARN("CONTROL_CONNECT received via TradingCommand; should come from lifecycle instead.");
+                TR_WARN("CONTROL_CONNECT received via TradingCommand; should come from lifecycle instead.");
 
                 const auto& conn = cmd.connect();
                 bool connected = m_client.eConnect(conn.host().c_str(), conn.port(), conn.client_id());
@@ -104,7 +103,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // --------------------------------------------------
         case CONTROL_SUB_MKT: {
             if (!cmd.has_sub_mkt_data()) {
-                ENG_WARN("CONTROL_SUB_MKT missing payload.");
+                TR_WARN("CONTROL_SUB_MKT missing payload.");
                 break;
             }
             const auto& md = cmd.sub_mkt_data();
@@ -122,7 +121,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // --------------------------------------------------
         case CONTROL_UNSUB_MKT: {
             if (!cmd.has_unsub_mkt_data()) {
-                ENG_WARN("CONTROL_UNSUBSCRIBE_MARKET_DATA missing payload.");
+                TR_WARN("CONTROL_UNSUBSCRIBE_MARKET_DATA missing payload.");
                 break;
             }
             m_client.cancelMktData(cmd.id());
@@ -134,7 +133,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // --------------------------------------------------
         case CONTROL_PLACE_ORDER: {
             if (!cmd.has_place_order()) {
-                ENG_WARN("CONTROL_PLACE_ORDER missing payload.");
+                TR_WARN("CONTROL_PLACE_ORDER missing payload.");
                 break;
             }
 
@@ -163,7 +162,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // --------------------------------------------------
         case CONTROL_CANCEL_ORDER: {
             if (!cmd.has_cancel_order()) {
-                ENG_WARN("CONTROL_CANCEL_ORDER missing payload.");
+                TR_WARN("CONTROL_CANCEL_ORDER missing payload.");
                 break;
             }
 
@@ -182,7 +181,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // --------------------------------------------------
         case CONTROL_HISTORICAL: {
             if (!cmd.has_req_historical_data()) {
-                ENG_WARN("CONTROL_REQUEST_HISTORICAL missing payload.");
+                TR_WARN("CONTROL_REQUEST_HISTORICAL missing payload.");
                 break;
             }
 
@@ -228,7 +227,7 @@ void TradingWorker::handleRequest(const ControlMessage& cmd) {
         // Default
         // --------------------------------------------------
         default:
-            ENG_WARN("Unhandled ControlType: {}", static_cast<int>(cmd.type()));
+            TR_WARN("Unhandled ControlType: {}", static_cast<int>(cmd.type()));
             break;
     }
 }

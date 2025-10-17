@@ -15,7 +15,7 @@ target_include_directories(${TRADER_NAME} PRIVATE
 
 # Link core only; add eng-net if built
 target_link_libraries(${TRADER_NAME} PRIVATE
-    eng-core
+    spdlog::spdlog
     twsapi
     trading_proto
 )
