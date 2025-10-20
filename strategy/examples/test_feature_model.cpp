@@ -26,20 +26,8 @@ int main() {
 
     // 1. Build a simple linear Python model
     json spec = {
+        {"import", "models.return_models"},   // module path under python/
         {"class", "LinearReturnModel"},
-        {"source", R"(
-from model_base import ReturnModelBase
-
-class LinearReturnModel(ReturnModelBase):
-    def __init__(self, w=None, b=0.0):
-        self.w = w or []
-        self.b = b
-    def predict(self, features):
-        x = features.get('x', [])
-        s = sum(w*v for w,v in zip(self.w,x))
-        return s + self.b
-)"},
-        // Weight order corresponds to requested features
         {"init", {{"w", {0.4, 0.3, 0.2, -0.1}}, {"b", 0.0}}}
     };
 

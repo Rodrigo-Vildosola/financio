@@ -36,3 +36,20 @@ target_link_libraries(test_model_python PRIVATE strategy)
 
 add_executable(test_feature_model examples/test_feature_model.cpp)
 target_link_libraries(test_feature_model PRIVATE strategy)
+
+
+# Path to your Python source tree inside the project
+set(STRATEGY_PYTHON_DIR "${CMAKE_SOURCE_DIR}/strategy/python")
+
+# Destination folder inside your build/bin directory
+set(STRATEGY_PYTHON_OUT "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/python")
+
+# Copy Python scripts into the build/bin folder after build
+add_custom_command(
+    TARGET strategy
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${STRATEGY_PYTHON_DIR}"
+            "${STRATEGY_PYTHON_OUT}"
+    COMMENT "Copying strategy/python -> ${STRATEGY_PYTHON_OUT}"
+)

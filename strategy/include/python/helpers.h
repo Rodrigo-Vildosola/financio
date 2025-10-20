@@ -1,25 +1,25 @@
+#pragma once
 #include "feature_vector.h"
-
 #include <nlohmann/json.hpp>
 #include <pybind11/embed.h>
+#include <string>
 
 namespace py = pybind11;
+using json = nlohmann::json;
 
-static py::dict to_pydict(const FeatureVector& f) {
-    py::dict d;
-    py::list xs;
-    for (auto v : f.x) xs.append(v);
-    d["x"] = xs;
+namespace pyhelpers {
 
-    py::dict named;
-    for (auto& kv : f.named) named[py::str(kv.first)] = kv.second;
-    d["named"] = named;
+py::dict to_pydict(const FeatureVector& f);
 
-    py::dict tags;
-    for (auto& kv : f.tags) tags[py::str(kv.first)] = py::str(kv.second);
-    d["tags"] = tags;
+py::object import_class_from_spec(const json& spec, const std::string& cls);
 
-    d["symbol"] = py::str(f.symbol);
-    d["timestamp"] = f.timestamp;
-    return d;
-}
+py::object instantiate_class_with_kwargs(const py::object& py_cls, const json& spec);
+
+void validate_model_instance(
+    const py::object& instance,
+    const std::string& base_module_name,
+    const std::string& base_class_name,
+    const std::string& required_method_name
+);
+
+} // namespace pyhelpers
