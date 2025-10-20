@@ -1,5 +1,3 @@
-// eng/renderer/webgpu_texture_manager.h
-#pragma once
 #include "eng/ui/webgpu_texture_manager.h"
 #include <unordered_map>
 

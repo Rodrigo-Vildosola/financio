@@ -35,6 +35,7 @@ add_library(eng-frontend STATIC
   src/ui/imgui_layer.cpp
   src/ui/implot.cpp
   src/ui/implot_items.cpp
+  src/ui/webgpu_texture_manager.cpp
 )
 
 target_include_directories(eng-frontend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

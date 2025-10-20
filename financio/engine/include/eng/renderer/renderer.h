@@ -5,7 +5,7 @@
 #include "eng/renderer/buffer.h"
 #include "eng/renderer/pipeline.h"
 #include "eng/renderer/render_pass.h"
-#include "eng/ui/texture_manager.h"
+#include "eng/ui/webgpu_texture_manager.h"
 
 namespace eng {
 

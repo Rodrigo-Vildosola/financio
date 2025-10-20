@@ -4,7 +4,10 @@
 
 namespace py = pybind11;
 
-python_runtime::python_runtime() : m_guard{} {}
+python_runtime::python_runtime() : m_guard{} {
+    add_sys_path("strategy/python");
+    add_sys_path("strategy/python/models");
+}
 python_runtime::~python_runtime() = default;
 
 void python_runtime::add_sys_path(const std::string& p) {

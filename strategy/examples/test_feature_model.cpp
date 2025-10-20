@@ -8,7 +8,18 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
+#include <sstream>
 #include <cmath>
+
+static std::string read_file(const std::string& path) {
+    std::ifstream f(path);
+    if (!f.is_open())
+        throw std::runtime_error("Could not open file: " + path);
+    std::stringstream buffer;
+    buffer << f.rdbuf();
+    return buffer.str();
+}
 
 int main() {
     using json = nlohmann::json;
@@ -17,7 +28,9 @@ int main() {
     json spec = {
         {"class", "LinearReturnModel"},
         {"source", R"(
-class LinearReturnModel:
+from model_base import ReturnModelBase
+
+class LinearReturnModel(ReturnModelBase):
     def __init__(self, w=None, b=0.0):
         self.w = w or []
         self.b = b
