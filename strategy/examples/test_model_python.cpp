@@ -1,5 +1,5 @@
 #include "feature_vector.h"
-#include "python/model_python.h"
+#include "python/return_model_python.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
 
@@ -9,10 +9,13 @@ int main() {
     json spec = {
         {"class", "LinearReturnModel"},
         {"source", R"(
-class LinearReturnModel:
+from model_base import ReturnModelBase
+
+class LinearReturnModel(ReturnModelBase):
     def __init__(self, w=None, b=0.0):
         self.w = w or []
         self.b = b
+
     def predict(self, features):
         x = features.get('x', [])
         s = sum(w*v for w,v in zip(self.w,x))

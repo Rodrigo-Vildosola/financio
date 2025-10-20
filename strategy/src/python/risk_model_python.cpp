@@ -1,6 +1,9 @@
-#include "python/model_python.h"
 #include "feature_vector.h"
+
+#include "python/risk_model_python.h"
 #include "python/python_runtime.h"
+#include "python/helpers.h"
+
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <pybind11/embed.h>
@@ -9,41 +12,21 @@
 namespace py = pybind11;
 using json = nlohmann::json;
 
-static py::dict to_pydict(const FeatureVector& f) {
-    py::dict d;
-    py::list xs;
-    for (auto v : f.x) xs.append(v);
-    d["x"] = xs;
-
-    py::dict named;
-    for (auto& kv : f.named) named[py::str(kv.first)] = kv.second;
-    d["named"] = named;
-
-    py::dict tags;
-    for (auto& kv : f.tags) tags[py::str(kv.first)] = py::str(kv.second);
-    d["tags"] = tags;
-
-    d["symbol"] = py::str(f.symbol);
-    d["timestamp"] = f.timestamp;
-    return d;
-}
-
-struct Py_ReturnModel::Impl {
+struct Py_RiskModel::Impl {
     py::object instance;
 };
 
-Py_ReturnModel::Py_ReturnModel() : m_impl(std::make_unique<Impl>()) {}
-Py_ReturnModel::~Py_ReturnModel() = default;
+Py_RiskModel::Py_RiskModel() : m_impl(std::make_unique<Impl>()) {}
+Py_RiskModel::~Py_RiskModel() = default;
 
-
-void Py_ReturnModel::load(const json& spec) {
+void Py_RiskModel::load(const json& spec) {
     using namespace std;
-    cerr << "[ModelPython] Initializing Python interpreter\n";
+    cerr << "[Py_RiskModel] Initializing Python interpreter\n";
     auto& rt = python_runtime::instance();
 
     string src = spec.at("source").get<string>();
     string cls = spec.at("class").get<string>();
-    cerr << "[ModelPython] Loading class: " << cls << "\n";
+    cerr << "[Py_RiskModel] Loading class: " << cls << "\n";
 
     py::dict globals;
     globals["__builtins__"] = py::module_::import("builtins");
@@ -51,12 +34,12 @@ void Py_ReturnModel::load(const json& spec) {
     try {
         py::exec(src, globals);
     } catch (const py::error_already_set& e) {
-        cerr << "[ModelPython] Python exec error:\n" << e.what() << "\n";
+        cerr << "[Py_RiskModel] Python exec error:\n" << e.what() << "\n";
         throw;
     }
 
     if (!globals.contains(cls.c_str())) {
-        cerr << "[ModelPython] Class not found in globals\n";
+        cerr << "[Py_RiskModel] Class not found in globals\n";
         throw runtime_error("Class " + cls + " not found in source");
     }
 
@@ -64,7 +47,7 @@ void Py_ReturnModel::load(const json& spec) {
     py::object instance;
 
     if (spec.contains("init")) {
-        cerr << "[ModelPython] Creating instance with kwargs\n";
+        cerr << "[Py_RiskModel] Creating instance with kwargs\n";
         py::dict kwargs;
         for (auto it = spec["init"].begin(); it != spec["init"].end(); ++it) {
             const auto& key = it.key();
@@ -82,36 +65,34 @@ void Py_ReturnModel::load(const json& spec) {
         try {
             instance = py_cls(**py::kwargs(kwargs));
         } catch (const py::error_already_set& e) {
-            cerr << "[ModelPython] Instance creation failed:\n" << e.what() << "\n";
+            cerr << "[Py_RiskModel] Instance creation failed:\n" << e.what() << "\n";
             throw;
         }
     } else {
-        cerr << "[ModelPython] Creating instance without kwargs\n";
+        cerr << "[Py_RiskModel] Creating instance without kwargs\n";
         instance = py_cls();
     }
 
     m_impl->instance = std::move(instance);
 
-    if (!py::hasattr(m_impl->instance, "predict")) {
-        cerr << "[ModelPython] Error: predict() missing\n";
-        throw runtime_error("Python model missing predict()");
+    if (!py::hasattr(m_impl->instance, "estimate")) {
+        cerr << "[Py_RiskModel] Error: estimate() missing\n";
+        throw runtime_error("Python risk model missing estimate()");
     }
 
-    cerr << "[ModelPython] Model loaded successfully\n";
+    cerr << "[Py_RiskModel] Risk model loaded successfully\n";
 }
 
-
-
-double Py_ReturnModel::predict(const FeatureVector& f) {
+double Py_RiskModel::estimate(const FeatureVector& f) {
     py::gil_scoped_acquire gil;
     auto d = to_pydict(f);
-    py::object out = m_impl->instance.attr("predict")(d);
+    py::object out = m_impl->instance.attr("estimate")(d);
     return out.cast<double>();
 }
 
-void Py_ReturnModel::update(const FeatureVector& f, double target) {
+void Py_RiskModel::update(const FeatureVector& f, double realized_return) {
     if (!py::hasattr(m_impl->instance, "update")) return;
     py::gil_scoped_acquire gil;
     auto d = to_pydict(f);
-    m_impl->instance.attr("update")(d, target);
+    m_impl->instance.attr("update")(d, realized_return);
 }
