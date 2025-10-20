@@ -7,12 +7,6 @@ import os
 import logging
 
 import tools.config as config
-import tools.fmtgen as fmtgen
-
-
-# WEBGPU_CPP_PRINT_PATH = Path(".build/_deps/dawn-7187-macos-aarch64-release-src/include/dawn/webgpu_cpp_print.h")
-# FORMATTER_OUTPUT_PATH = Path(f"engine/include/eng/renderer/helpers/webgpu_fmt_formatters.h")
-
 
 REQUIRED_DEPS = [
     "external/stb",
@@ -45,22 +39,29 @@ logging.basicConfig(
 def colored(msg, color):
     return f"{color}{msg}{LogColor.ENDC}"
 
-def generate_cmake_args(build_type="Debug"):
-    defines = {
-        "ENGINE_NAME": config.ENGINE_NAME,
-        "APP_NAME": config.APP_NAME,
-        "TRADER_NAME": config.TRADER_NAME,
-        "CMAKE_CXX_STANDARD": config.CXX_STANDARD,
-        "CMAKE_BUILD_TYPE": build_type,
-        "WEBGPU_BACKEND": "DAWN",
-        "WEBGPU_BUILD_FROM_SOURCE": "OFF",
-        "ENG_ENABLE_ASSERTS": "ON" if config.ENABLE_ASSERTS else "OFF",
-        "ENG_ENABLE_DEBUG_LOGGING": "ON" if config.ENABLE_DEBUG_LOGGING else "OFF",
-    }
+def generate_cmake_args(build_type="Debug", include_python=False):
+    args = config.CMakeArgs(source=".", build_dir=config.BUILD_DIR)
 
-    cmake_args = ["cmake", "-S", ".", "-B", config.BUILD_DIR]
-    cmake_args += [f"-D{k}={v}" for k, v in defines.items()]
-    return cmake_args
+    # Base configuration
+    args["APP_NAME"] = config.APP_NAME
+    args["TRADER_NAME"] = config.TRADER_NAME
+    args["CMAKE_CXX_STANDARD"] = config.CXX_STANDARD
+    args["CMAKE_BUILD_TYPE"] = build_type
+    args["WEBGPU_BACKEND"] = "DAWN"
+    args["WEBGPU_BUILD_FROM_SOURCE"] = "OFF"
+    args["ENG_ENABLE_ASSERTS"] = "ON" if config.ENABLE_ASSERTS else "OFF"
+    args["ENG_ENABLE_DEBUG_LOGGING"] = "ON" if config.ENABLE_DEBUG_LOGGING else "OFF"
+
+    # Optional Python integration
+    if include_python:
+        pyinfo = config.get_python_info()
+        args["Python3_EXECUTABLE"] = pyinfo["exec"]
+        args["Python3_INCLUDE_DIRS"] = pyinfo["include"]
+        args["Python3_LIBRARIES"] = pyinfo["lib"]
+        args["Python3_VERSION"] = pyinfo["version"]
+        args["pybind11_DIR"] = pyinfo["pybind"]
+
+    return args.as_list()
 
 def build_intelrdfp():
     logging.info("Checking Intel Decimal FP library...")
@@ -180,7 +181,7 @@ def codegen():
 def configure_cmake(build_type):
     logging.info(f"Configuring CMake ({build_type})...")
     os.makedirs(BUILD_DIR, exist_ok=True)
-    cmake_args = generate_cmake_args(build_type)
+    cmake_args = generate_cmake_args(build_type, True)
     run_cmd(cmake_args)
 
 def build(parallel=True, verbose=False):

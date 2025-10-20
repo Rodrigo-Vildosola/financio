@@ -4,7 +4,8 @@
 # Build directories
 build/
 .build/
-
+venv/
+.venv/
 
 # CMake files
 CMakeFiles/
