@@ -21,7 +21,7 @@ class LinearReturnModel:
         {"init", {{"w", {0.5, 0.3, -0.2}}, {"b", 0.01}}}
     };
 
-    ModelPython m;
+    Py_ReturnModel m;
     m.load(spec);
 
     FeatureVector f;

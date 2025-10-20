@@ -28,15 +28,15 @@ static py::dict to_pydict(const FeatureVector& f) {
     return d;
 }
 
-struct ModelPython::Impl {
+struct Py_ReturnModel::Impl {
     py::object instance;
 };
 
-ModelPython::ModelPython() : m_impl(std::make_unique<Impl>()) {}
-ModelPython::~ModelPython() = default;
+Py_ReturnModel::Py_ReturnModel() : m_impl(std::make_unique<Impl>()) {}
+Py_ReturnModel::~Py_ReturnModel() = default;
 
 
-void ModelPython::load(const json& spec) {
+void Py_ReturnModel::load(const json& spec) {
     using namespace std;
     cerr << "[ModelPython] Initializing Python interpreter\n";
     auto& rt = python_runtime::instance();
@@ -102,14 +102,14 @@ void ModelPython::load(const json& spec) {
 
 
 
-double ModelPython::predict(const FeatureVector& f) {
+double Py_ReturnModel::predict(const FeatureVector& f) {
     py::gil_scoped_acquire gil;
     auto d = to_pydict(f);
     py::object out = m_impl->instance.attr("predict")(d);
     return out.cast<double>();
 }
 
-void ModelPython::update(const FeatureVector& f, double target) {
+void Py_ReturnModel::update(const FeatureVector& f, double target) {
     if (!py::hasattr(m_impl->instance, "update")) return;
     py::gil_scoped_acquire gil;
     auto d = to_pydict(f);

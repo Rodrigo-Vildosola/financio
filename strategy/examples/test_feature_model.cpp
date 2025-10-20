@@ -23,7 +23,6 @@ class LinearReturnModel:
         self.b = b
     def predict(self, features):
         x = features.get('x', [])
-        print(x)
         s = sum(w*v for w,v in zip(self.w,x))
         return s + self.b
 )"},
@@ -31,7 +30,7 @@ class LinearReturnModel:
         {"init", {{"w", {0.4, 0.3, 0.2, -0.1}}, {"b", 0.0}}}
     };
 
-    ModelPython model;
+    Py_ReturnModel model;
     model.load(spec);
 
     // 2. Initialize feature extractor and register feature families
