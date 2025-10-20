@@ -79,6 +79,10 @@ void RootLayer::on_attach() {
     });
 
     m_trader->start();
+
+    m_editor.SetLanguageDefinition(TextEditor::LanguageDefinition::CPlusPlus());
+    m_editor.SetPalette(TextEditor::GetDarkPalette());
+    m_editor.SetText("# Example Python or C++ script\nprint('Hello Financio')");
 }
 
 void RootLayer::on_detach() {
@@ -159,6 +163,11 @@ void RootLayer::on_ui_render() {
         ImGui::SetScrollHereY(1.0f);
     ImGui::EndChild();
 
+    ImGui::End();
+
+    ImGui::Begin("Script Editor");
+    ImVec2 editor_size = ImVec2(0, ImGui::GetContentRegionAvail().y);
+    m_editor.Render("TextEditor", editor_size, true);
     ImGui::End();
 }
 

@@ -73,6 +73,12 @@ void Py_RiskModel::load(const json& spec) {
         instance = py_cls();
     }
 
+    py::object base_module = py::module_::import("model_base");
+    py::object model = base_module.attr("RiskModelBase");
+    if (!py::isinstance(instance, model)) {
+        throw std::runtime_error("Python model must subclass RiskModelBase");
+    }
+
     m_impl->instance = std::move(instance);
 
     if (!py::hasattr(m_impl->instance, "estimate")) {

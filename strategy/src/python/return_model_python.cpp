@@ -23,6 +23,7 @@ Py_ReturnModel::~Py_ReturnModel() = default;
 
 void Py_ReturnModel::load(const json& spec) {
     using namespace std;
+
     cerr << "[Py_ReturnModel] Initializing Python interpreter\n";
     auto& rt = python_runtime::instance();
 
@@ -73,6 +74,12 @@ void Py_ReturnModel::load(const json& spec) {
     } else {
         cerr << "[Py_ReturnModel] Creating instance without kwargs\n";
         instance = py_cls();
+    }
+
+    py::object base_module = py::module_::import("model_base");
+    py::object model = base_module.attr("ReturnModelBase");
+    if (!py::isinstance(instance, model)) {
+        throw std::runtime_error("Python model must subclass ReturnModelBase");
     }
 
     m_impl->instance = std::move(instance);

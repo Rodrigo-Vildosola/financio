@@ -2,6 +2,7 @@
 
 
 #include "financio/rpc/trader_client.h"      // the gRPC client
+#include "financio/ui/editor/text_editor.h"
 
 #include <eng/enginio.h>
 #include <eng/renderer/renderer_api.h>
@@ -62,6 +63,8 @@ private:
     };
 
     std::vector<Subscription> m_active_subs;
+
+    TextEditor m_editor;
 };
 
 }
