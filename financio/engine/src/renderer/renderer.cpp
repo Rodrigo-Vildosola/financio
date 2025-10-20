@@ -7,6 +7,7 @@
 #include "eng/renderer/context/command_queue.h"
 #include "eng/renderer/renderer.h"
 #include "eng/renderer/helpers/string.h"
+#include "eng/ui/webgpu_texture_manager.h"
 
 namespace eng {
 
@@ -22,6 +23,12 @@ void Renderer::init() {
     auto [fb_width, fb_height] = m_context.get_framebuffer_size();
 
     on_resize(fb_width, fb_height);
+
+
+    m_texture_manager = std::make_unique<WebGPUTextureManager>(
+        m_context.get_native_device(),
+        m_context.get_queue()->get_native_queue()
+    );
 }
 
 ref<Pipeline> Renderer::create_pipeline(const PipelineSpecification& spec) {

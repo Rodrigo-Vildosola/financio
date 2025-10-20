@@ -32,6 +32,8 @@ public:
     static const RendererStats& get_stats();
     static RendererStats& get_stats_mutable();
 
+    static ITextureManager* get_texture_manager();
+
     // friend class Application; 
 
     static scope<Renderer> g_renderer;

@@ -49,6 +49,11 @@ RendererStats& RendererAPI::get_stats_mutable() {
     return g_renderer->get_stats_mutable();
 }
 
+ITextureManager* RendererAPI::get_texture_manager() {
+    return g_renderer->get_texture_manager();
+}
+
+
 ref<RenderPass> RendererAPI::create_render_pass(const RenderPassDesc& spec) {
     return g_renderer->create_render_pass(spec);
 }

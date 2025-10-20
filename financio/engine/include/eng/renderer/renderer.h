@@ -5,6 +5,7 @@
 #include "eng/renderer/buffer.h"
 #include "eng/renderer/pipeline.h"
 #include "eng/renderer/render_pass.h"
+#include "eng/ui/texture_manager.h"
 
 namespace eng {
 
@@ -59,6 +60,9 @@ public:
 
     GraphicsContext& get_context() { return m_context; }
 
+    ITextureManager* get_texture_manager() { return m_texture_manager.get(); }
+    void set_texture_manager(std::unique_ptr<ITextureManager> mgr) { m_texture_manager = std::move(mgr); }
+
 
 private:
     // struct SceneData {    };
@@ -69,6 +73,8 @@ private:
     
     std::vector<ref<RenderPass>> m_owned_passes;
 
+    scope<ITextureManager> m_texture_manager;
+
     RendererStats m_stats;
 
     wgpu::Color m_clear_color;
@@ -76,6 +82,8 @@ private:
     wgpu::TextureView    m_target_texture_view{};
     wgpu::TextureView    m_depth_texture_view{};
     wgpu::TextureFormat  m_depth_texture_format = wgpu::TextureFormat::Depth24Plus;
+
+
 };
 
 }
