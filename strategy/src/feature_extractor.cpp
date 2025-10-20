@@ -23,24 +23,14 @@ FeatureVector MultiAssetFeatureExtractor::compute(const std::string& symbol, con
     fv.timestamp = w.back().timestamp;
 
     for (const auto& name : requested) {
-        auto it_feat = m_features.find(name);
-        if (it_feat == m_features.end()) {
-            // dynamic creation
-            auto family_end = name.find('_');
-            std::string family = name.substr(0, family_end);
-            auto it_fact = m_factories.find(family);
-            if (it_fact != m_factories.end()) {
-                auto feat = it_fact->second->create(name);
-                if (feat) {
-                    m_max_lookback = std::max(m_max_lookback, feat->lookback());
-                    m_features[name] = std::move(feat);
-                }
-            }
-            it_feat = m_features.find(name);
-            if (it_feat == m_features.end()) continue;
+        auto feat = get_or_create_feature(name);
+        if (!feat) {
+            std::cerr << "Warning: unknown feature '" << name << "'\n";
+            fv.x.push_back(NAN);
+            continue;
         }
 
-        double val = it_feat->second->compute(m_windows, symbol);
+        double val = feat->compute(m_windows, symbol);
         fv.named[name] = val;
         fv.x.push_back(val);
     }
@@ -50,4 +40,36 @@ FeatureVector MultiAssetFeatureExtractor::compute(const std::string& symbol, con
 void MultiAssetFeatureExtractor::reset() {
     m_windows.clear();
     m_features.clear();
+    m_max_lookback = 20;
+}
+
+IFeature* MultiAssetFeatureExtractor::get_or_create_feature(const std::string& name) {
+    auto it = m_features.find(name);
+    if (it != m_features.end())
+        return it->second.get();
+
+    IFeatureFactory* matched_factory = nullptr;
+    std::string matched_name;
+
+    for (auto& [fam_name, factory] : m_factories) {
+        if (name.rfind(fam_name, 0) == 0) {
+            if (fam_name.size() > matched_name.size()) {
+                matched_name = fam_name;
+                matched_factory = factory.get();
+            }
+        }
+    }
+
+    if (!matched_factory)
+        return nullptr;
+
+    auto feat = matched_factory->create(name);
+    if (!feat)
+        return nullptr;
+
+    m_max_lookback = std::max(m_max_lookback, feat->lookback());
+
+    auto ptr = feat.get();
+    m_features[name] = std::move(feat);
+    return ptr;
 }

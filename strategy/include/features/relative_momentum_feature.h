@@ -33,13 +33,19 @@ private:
 
 class RelativeMomentumFactory : public IFeatureFactory {
 public:
-    std::string family() const override { return "rel_momentum"; }
+    std::string family() const override { 
+        return "rel_momentum"; 
+    }
+
     std::unique_ptr<IFeature> create(const std::string& spec) override {
-        auto first = spec.find('_',0);
-        auto second = spec.find('_',first+1);
-        auto third = spec.find('_',second+1);
-        std::string ref = spec.substr(second+1, third-second-1);
-        size_t p = std::stoul(spec.substr(third+1));
-        return std::make_unique<RelativeMomentumFeature>(ref,p);
+        // Expected format: "rel_momentum_<ref>_<period>"
+        auto last_uscore = spec.rfind('_');
+        if (last_uscore == std::string::npos) return nullptr;
+        auto second_last = spec.rfind('_', last_uscore - 1);
+        if (second_last == std::string::npos) return nullptr;
+
+        std::string ref = spec.substr(second_last + 1, last_uscore - second_last - 1);
+        size_t p = std::stoul(spec.substr(last_uscore + 1));
+        return std::make_unique<RelativeMomentumFeature>(ref, p);
     }
 };

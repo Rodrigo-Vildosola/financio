@@ -33,7 +33,10 @@ private:
 
 class VolatilityFeatureFactory : public IFeatureFactory {
 public:
-    std::string family() const override { return "volatility"; }
+    std::string family() const override { 
+        return "volatility"; 
+    }
+    
     std::unique_ptr<IFeature> create(const std::string& spec) override {
         size_t pos = spec.find('_');
         size_t p = std::stoul(spec.substr(pos+1));

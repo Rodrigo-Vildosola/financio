@@ -29,7 +29,10 @@ private:
 
 class ReturnFeatureFactory : public IFeatureFactory {
 public:
-    std::string family() const override { return "return"; }
+    std::string family() const override { 
+        return "return"; 
+    }
+    
     std::unique_ptr<IFeature> create(const std::string& spec) override {
         // "return_5" → 5
         size_t pos = spec.find('_');

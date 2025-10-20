@@ -25,6 +25,8 @@ public:
     void reset();
 
 private:
+    IFeature* get_or_create_feature(const std::string& name);
+
     BarFrequency m_frequency;
     size_t m_max_lookback = 20;
     std::unordered_map<std::string, std::deque<MarketData>> m_windows;
