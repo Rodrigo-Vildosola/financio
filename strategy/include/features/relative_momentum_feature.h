@@ -35,7 +35,6 @@ class RelativeMomentumFactory : public IFeatureFactory {
 public:
     std::string family() const override { return "rel_momentum"; }
     std::unique_ptr<IFeature> create(const std::string& spec) override {
-        // "rel_momentum_SPY_10"
         auto first = spec.find('_',0);
         auto second = spec.find('_',first+1);
         auto third = spec.find('_',second+1);

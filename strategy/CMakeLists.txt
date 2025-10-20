@@ -33,3 +33,6 @@ target_link_libraries(test_feature_extractor PRIVATE strategy)
 
 add_executable(test_model_python examples/test_model_python.cpp)
 target_link_libraries(test_model_python PRIVATE strategy)
+
+add_executable(test_feature_model examples/test_feature_model.cpp)
+target_link_libraries(test_feature_model PRIVATE strategy)
