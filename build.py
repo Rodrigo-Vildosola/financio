@@ -55,11 +55,11 @@ def generate_cmake_args(build_type="Debug", include_python=False):
     # Optional Python integration
     if include_python:
         pyinfo = config.get_python_info()
-        args["Python3_EXECUTABLE"] = pyinfo["executable"]
-        args["Python3_INCLUDE_DIRS"] = pyinfo["include_dir"]
-        args["Python3_LIBRARIES"] = pyinfo["library"]
+        args["Python3_EXECUTABLE"] = pyinfo["exec"]
+        args["Python3_INCLUDE_DIRS"] = pyinfo["include"]
+        args["Python3_LIBRARIES"] = pyinfo["lib"]
         args["Python3_VERSION"] = pyinfo["version"]
-        args["pybind11_DIR"] = pyinfo["pybind11_dir"]
+        args["pybind11_DIR"] = pyinfo["pybind"]
 
     return args.as_list()
 
@@ -181,7 +181,7 @@ def codegen():
 def configure_cmake(build_type):
     logging.info(f"Configuring CMake ({build_type})...")
     os.makedirs(BUILD_DIR, exist_ok=True)
-    cmake_args = generate_cmake_args(build_type)
+    cmake_args = generate_cmake_args(build_type, True)
     run_cmd(cmake_args)
 
 def build(parallel=True, verbose=False):
