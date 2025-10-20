@@ -37,6 +37,10 @@ target_link_libraries(test_model_python PRIVATE strategy)
 add_executable(test_feature_model examples/test_feature_model.cpp)
 target_link_libraries(test_feature_model PRIVATE strategy)
 
+add_executable(test_feature_risk examples/test_feature_risk.cpp)
+target_link_libraries(test_feature_risk PRIVATE strategy)
+
+
 
 # Path to your Python source tree inside the project
 set(STRATEGY_PYTHON_DIR "${CMAKE_SOURCE_DIR}/strategy/python")

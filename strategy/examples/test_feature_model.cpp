@@ -35,7 +35,7 @@ int main() {
     model.load(spec);
 
     // 2. Initialize feature extractor and register feature families
-    MultiAssetFeatureExtractor extractor;
+    FeatureExtractor extractor;
     extractor.register_factory(std::make_unique<ReturnFeatureFactory>());
     extractor.register_factory(std::make_unique<MomentumFeatureFactory>());
     extractor.register_factory(std::make_unique<VolatilityFeatureFactory>());
