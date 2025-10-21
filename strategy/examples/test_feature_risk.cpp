@@ -50,7 +50,15 @@ int main() {
     for (int t = 0; t < num_bars; ++t) {
         // Synthetic single-asset data (AAPL)
         double price = 100.0 + 2.0 * std::sin(t / 3.0);
-        MarketData bar{"AAPL", 0.0, 0.0, 0.0, price, 1'000.0, t};
+        MarketData bar{
+            "AAPL", 
+            0.0, 
+            0.0, 
+            0.0, 
+            price, 
+            1'000.0, 
+            t
+        };
         extractor.add_bar(bar);
 
         // Feature extraction
