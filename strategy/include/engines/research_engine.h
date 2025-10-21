@@ -1,8 +1,9 @@
 #pragma once
 
-#include "python/strategy_python.h"
 #include "feature_extractor.h"
 #include "engine.h"
+#include "python/execution_model_python.h"
+#include "python/strategy_python.h"
 
 class ResearchEngine : public IEngine {
 public:
@@ -18,7 +19,7 @@ public:
 private:
     Environment m_env;
     nlohmann::json m_spec;
-    std::unique_ptr<Py_Strategy> m_strategy;
     std::unique_ptr<FeatureExtractor> m_extractor;
-
+    std::unique_ptr<Py_Strategy> m_strategy;
+    std::unique_ptr<Py_ExecutionModel> m_exec;
 };

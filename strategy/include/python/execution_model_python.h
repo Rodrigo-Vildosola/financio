@@ -9,11 +9,13 @@ public:
     Py_ExecutionModel();
     ~Py_ExecutionModel();
 
-    void load(const nlohmann::json& spec); // {"import","class","init":{...}}
+    void load(const nlohmann::json& spec) override; // {"import","class","init":{...}}
 
     // context is passed as JSON (symbol, timestamp, current_weight, portfolio_notional,...)
     // returns JSON array of order dicts
-    nlohmann::json generate_orders(double target_weight, const nlohmann::json& context);
+    nlohmann::json generate_orders(double target_weight, const nlohmann::json& context) override;
+
+    void set_environment(Environment e) override;
 
 private:
     struct Impl;

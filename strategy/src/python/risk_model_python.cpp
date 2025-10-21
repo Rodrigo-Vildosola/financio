@@ -53,3 +53,11 @@ void Py_RiskModel::update(const FeatureVector& f, double realized_return) {
     auto d = pyhelpers::to_pydict(f);
     m_impl->instance.attr("update")(d, realized_return);
 }
+
+void Py_RiskModel::set_environment(Environment e) {
+    if (!m_impl || !py::hasattr(m_impl->instance, "set_environment"))
+        return;
+    py::gil_scoped_acquire gil;
+    std::string env_str = to_string(e);
+    m_impl->instance.attr("set_environment")(env_str);
+}

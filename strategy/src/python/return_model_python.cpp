@@ -59,3 +59,11 @@ void Py_ReturnModel::update(const FeatureVector& f, double target) {
     auto d = pyhelpers::to_pydict(f);
     m_impl->instance.attr("update")(d, target);
 }
+
+void Py_ReturnModel::set_environment(Environment e) {
+    if (!m_impl || !py::hasattr(m_impl->instance, "set_environment"))
+        return;
+    py::gil_scoped_acquire gil;
+    std::string env_str = to_string(e);
+    m_impl->instance.attr("set_environment")(env_str);
+}

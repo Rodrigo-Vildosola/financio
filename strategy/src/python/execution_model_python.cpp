@@ -35,3 +35,11 @@ json Py_ExecutionModel::generate_orders(double target_weight, const json& contex
     // Convert py list/dict -> nlohmann::json
     return out.cast<json>();
 }
+
+void Py_ExecutionModel::set_environment(Environment e) {
+    if (!m_impl || !py::hasattr(m_impl->instance, "set_environment"))
+        return;
+    py::gil_scoped_acquire gil;
+    std::string env_str = to_string(e);
+    m_impl->instance.attr("set_environment")(env_str);
+}

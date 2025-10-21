@@ -40,6 +40,9 @@ target_link_libraries(test_feature_model PRIVATE strategy)
 add_executable(test_feature_risk examples/test_feature_risk.cpp)
 target_link_libraries(test_feature_risk PRIVATE strategy)
 
+add_executable(test_research_engine examples/test_research_engine.cpp)
+target_link_libraries(test_research_engine PRIVATE strategy)
+
 
 
 # Path to your Python source tree inside the project

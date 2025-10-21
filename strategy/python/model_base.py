@@ -3,6 +3,21 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from enum import Enum, auto
+from importlib import import_module
+
+def build_from_spec(spec):
+    """
+    Build a Python object given a JSON-like spec:
+    {
+        "import": "models.return_models",
+        "class": "LinearReturnModel",
+        "init": {"w": [0.3, -0.1, 0.2], "b": 0.0}
+    }
+    """
+    mod = import_module(spec["import"])
+    cls = getattr(mod, spec["class"])
+    kwargs = spec.get("init", {})
+    return cls(**kwargs)
 
 class Environment(Enum):
     """Enumerates all runtime environments for the system."""

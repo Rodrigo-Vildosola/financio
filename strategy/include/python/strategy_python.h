@@ -11,13 +11,15 @@ public:
     ~Py_Strategy();
 
     // spec: {"import","class","init":{...}}
-    void load(const nlohmann::json& spec);
+    void load(const nlohmann::json& spec) override;
 
     // Returns target weight (double)
-    double on_bar(const FeatureVector& f);
+    double on_bar(const FeatureVector& f) override;
 
     // Pass realized return to submodels via strategy.update()
-    void update(const FeatureVector& f, double realized_return);
+    void update(const FeatureVector& f, double realized_return) override;
+
+    void set_environment(Environment e) override;
 
 private:
     struct Impl;
