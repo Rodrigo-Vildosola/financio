@@ -18,8 +18,15 @@ void Py_Strategy::load(const json& spec) {
     std::string cls = spec.at("class").get<std::string>();
     py::object py_cls = pyhelpers::import_class_from_spec(spec, cls);
     py::object instance = pyhelpers::instantiate_class_with_kwargs(py_cls, spec);
+    
     // Validate base
-    pyhelpers::validate_model_instance(instance, "model_base", "StrategyBase", "on_bar");
+    pyhelpers::validate_model_instance(
+        instance, 
+        "model_base", 
+        "StrategyBase", 
+        "on_bar"
+    );
+
     m_impl->instance = std::move(instance);
 }
 

@@ -1,10 +1,11 @@
 #pragma once
+#include "model.h"
 #include "feature_vector.h"
 #include <nlohmann/json.hpp>
 #include <pybind11/embed.h>
 #include <memory>
 
-class Py_Strategy {
+class Py_Strategy : IStrategy {
 public:
     Py_Strategy();
     ~Py_Strategy();

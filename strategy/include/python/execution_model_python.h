@@ -1,12 +1,13 @@
 #pragma once
+#include "model.h"
 #include <nlohmann/json.hpp>
 #include <pybind11/embed.h>
 #include <memory>
 
-class Py_Execution {
+class Py_ExecutionModel : IExecutionModel {
 public:
-    Py_Execution();
-    ~Py_Execution();
+    Py_ExecutionModel();
+    ~Py_ExecutionModel();
 
     void load(const nlohmann::json& spec); // {"import","class","init":{...}}
 
