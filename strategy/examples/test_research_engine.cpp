@@ -1,5 +1,7 @@
 #include "feature_vector.h"
 #include "python/return_model_python.h"
+#include "engines/factory.h"
+
 #include <nlohmann/json.hpp>
 #include <iostream>
 

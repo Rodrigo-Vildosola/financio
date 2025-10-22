@@ -81,6 +81,8 @@ void ResearchEngine::run() {
                   << " | " << std::setw(7) << target_weight
                   << " | " << std::setw(9) << realized
                   << "\n";
+
+        m_exec->generate_orders(target_weight, &context)
     }
 
     std::cout << "[ResearchEngine] Simulation complete.\n";
