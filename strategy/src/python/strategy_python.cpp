@@ -30,6 +30,20 @@ void Py_Strategy::load(const json& spec) {
     m_impl->instance = std::move(instance);
 }
 
+void Py_Strategy::load_with_kwargs(const json& spec, const py::dict& kwargs) {
+    auto& rt = python_runtime::instance();
+    std::string cls = spec.at("class").get<std::string>();
+    py::object py_cls = pyhelpers::import_class_from_spec(spec, cls);
+
+    py::object instance = py_cls(**kwargs);
+
+    pyhelpers::validate_model_instance(
+        instance, "model_base", "StrategyBase", "on_bar");
+
+    m_impl->instance = std::move(instance);
+}
+
+
 double Py_Strategy::on_bar(const FeatureVector& f) {
     py::gil_scoped_acquire gil;
     auto d = pyhelpers::to_pydict(f);

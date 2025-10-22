@@ -1,6 +1,7 @@
 // environment.h
 #pragma once
 
+#include "nlohmann/json.hpp"
 #include <string>
 
 enum class Environment {
@@ -11,13 +12,14 @@ enum class Environment {
     Live
 };
 
-class Context {
+struct Context {
     Environment env;
     std::string symbol;
     long long timestamp;
     double portfolio_notional;
     bool training_mode{false};
 };
+
 
 inline constexpr const char* to_string(Environment e) {
     switch (e) {
@@ -28,4 +30,14 @@ inline constexpr const char* to_string(Environment e) {
         case Environment::Live: return "Live";
         default: return "Unknown";
     }
+}
+
+inline nlohmann::json to_json(const Context& ctx) {
+    return {
+        {"env", to_string(ctx.env)},
+        {"symbol", ctx.symbol},
+        {"timestamp", ctx.timestamp},
+        {"portfolio_notional", ctx.portfolio_notional},
+        {"training_mode", ctx.training_mode}
+    };
 }

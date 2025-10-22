@@ -15,6 +15,8 @@ public:
 
     void set_environment(Environment e) override;
 
+    const pybind11::object& instance() const;
+
 private:
     struct Impl;
     std::unique_ptr<Impl> m_impl;

@@ -131,7 +131,7 @@ public:
      * @param context Execution context: symbol, timestamp, portfolio metrics, etc.
      * @return JSON array of order dictionaries (price, size, side, etc.).
      */
-    virtual nlohmann::json generate_orders(double target_weight, const nlohmann::json& context) = 0;
+    virtual nlohmann::json generate_orders(double target_weight, const Context& context) = 0;
 };
 
 /**

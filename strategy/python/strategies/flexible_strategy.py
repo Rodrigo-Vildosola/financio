@@ -6,14 +6,10 @@ class FlexibleStrategy(StrategyBase):
     multiple return and risk models. It outputs a target portfolio weight μ/σ².
     """
 
-    def __init__(self, combine="mean", return_models=None, risk_models=None):
+    def __init__(self, return_models=None, risk_models=None, combine="mean"):
         super().__init__()
-
-        # Dynamically instantiate all submodels
-        self.return_models = [build_from_spec(rm) for rm in (return_models or [])]
-        self.risk_models   = [build_from_spec(rk) for rk in (risk_models or [])]
-
-        # Combination rule: how multiple models are merged
+        self.return_models = return_models or []
+        self.risk_models = risk_models or []
         self.combine = combine
 
     def on_bar(self, features: dict) -> float:
@@ -29,14 +25,8 @@ class FlexibleStrategy(StrategyBase):
         return float(mu / (sigma ** 2))
 
     def update(self, features: dict, realized_return: float):
-        """Propagate realized return to submodels for optional online updates."""
-        for m in self.return_models:
-            if hasattr(m, "update"):
-                m.update(features, realized_return)
-        for r in self.risk_models:
-            if hasattr(r, "update"):
-                r.update(features, realized_return)
-
+        pass
+    
     # --- internal helpers ---
     def _combine(self, vals):
         if not vals:

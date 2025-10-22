@@ -1,4 +1,5 @@
 #include "python/execution_model_python.h"
+#include "environment.h"
 #include "python/helpers.h"
 #include "python/python_runtime.h"
 #include <stdexcept>
@@ -29,11 +30,11 @@ void Py_ExecutionModel::load(const json& spec) {
     m_impl->instance = std::move(instance);
 }
 
-json Py_ExecutionModel::generate_orders(double target_weight, const json& context) {
+nlohmann::json Py_ExecutionModel::generate_orders(double target_weight, const Context& ctx) {
     py::gil_scoped_acquire gil;
-    py::object out = m_impl->instance.attr("generate_orders")(target_weight, py::cast(context));
-    // Convert py list/dict -> nlohmann::json
-    return out.cast<json>();
+    nlohmann::json ctx_json = to_json(ctx);
+    py::object out = m_impl->instance.attr("generate_orders")(target_weight, py::cast(ctx_json));
+    return out.cast<nlohmann::json>();
 }
 
 void Py_ExecutionModel::set_environment(Environment e) {

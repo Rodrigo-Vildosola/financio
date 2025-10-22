@@ -13,7 +13,7 @@ public:
 
     // context is passed as JSON (symbol, timestamp, current_weight, portfolio_notional,...)
     // returns JSON array of order dicts
-    nlohmann::json generate_orders(double target_weight, const nlohmann::json& context) override;
+    nlohmann::json generate_orders(double target_weight, const Context& context) override;
 
     void set_environment(Environment e) override;
 

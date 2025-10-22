@@ -13,6 +13,9 @@ public:
     // spec: {"import","class","init":{...}}
     void load(const nlohmann::json& spec) override;
 
+    void load_with_kwargs(const nlohmann::json& spec, const pybind11::dict& kwargs);
+
+
     // Returns target weight (double)
     double on_bar(const FeatureVector& f) override;
 

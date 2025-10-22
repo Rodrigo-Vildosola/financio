@@ -13,6 +13,8 @@ py::dict to_pydict(const FeatureVector& f);
 
 py::object import_class_from_spec(const json& spec, const std::string& cls);
 
+py::object json_to_pyobject(const json& j);
+
 py::object instantiate_class_with_kwargs(const py::object& py_cls, const json& spec);
 
 void validate_model_instance(

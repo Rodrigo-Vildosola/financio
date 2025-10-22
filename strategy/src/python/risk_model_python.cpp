@@ -19,6 +19,10 @@ struct Py_RiskModel::Impl {
 Py_RiskModel::Py_RiskModel() : m_impl(std::make_unique<Impl>()) {}
 Py_RiskModel::~Py_RiskModel() = default;
 
+const py::object& Py_RiskModel::instance() const { 
+    return m_impl->instance; 
+}
+
 void Py_RiskModel::load(const json& spec) {
     using namespace std;
     cerr << "[Py_RiskModel] Initializing Python interpreter\n";

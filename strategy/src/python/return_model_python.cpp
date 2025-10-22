@@ -20,6 +20,11 @@ struct Py_ReturnModel::Impl {
 Py_ReturnModel::Py_ReturnModel() : m_impl(std::make_unique<Impl>()) {}
 Py_ReturnModel::~Py_ReturnModel() = default;
 
+const py::object& Py_ReturnModel::instance() const { 
+    return m_impl->instance; 
+}
+
+
 
 void Py_ReturnModel::load(const json& spec) {
     using namespace std;
