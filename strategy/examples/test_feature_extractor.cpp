@@ -7,7 +7,7 @@
 #include <iomanip>
 
 int main() {
-    MultiAssetFeatureExtractor extractor;
+    FeatureExtractor extractor;
 
     // Register available feature families
     extractor.register_factory(std::make_unique<ReturnFeatureFactory>());

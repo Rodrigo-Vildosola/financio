@@ -1,6 +1,7 @@
 from model_base import RiskModelBase
 import math
 
+
 class BasicVolatility(RiskModelBase):
     """Estimates volatility as stddev of last N returns."""
     def __init__(self, window=20):
@@ -37,3 +38,16 @@ class ExponentialVolatility(RiskModelBase):
             self.initialized = True
         else:
             self.sigma2 = self.lambda_ * self.sigma2 + (1 - self.lambda_) * r2
+
+
+class VolatilityRiskModel(RiskModelBase):
+    def __init__(self, lambda_=0.94):
+        super().__init__()
+        self.lambda_ = lambda_
+        self.var = 0.0
+
+    def estimate(self, features: dict) -> float:
+        return math.sqrt(self.var + 1e-8)
+
+    def update(self, features: dict, realized_return: float):
+        self.var = self.lambda_ * self.var + (1 - self.lambda_) * (realized_return ** 2)

@@ -19,79 +19,34 @@ struct Py_RiskModel::Impl {
 Py_RiskModel::Py_RiskModel() : m_impl(std::make_unique<Impl>()) {}
 Py_RiskModel::~Py_RiskModel() = default;
 
+const py::object& Py_RiskModel::instance() const { 
+    return m_impl->instance; 
+}
+
 void Py_RiskModel::load(const json& spec) {
     using namespace std;
     cerr << "[Py_RiskModel] Initializing Python interpreter\n";
     auto& rt = python_runtime::instance();
 
-    string src = spec.at("source").get<string>();
     string cls = spec.at("class").get<string>();
-    cerr << "[Py_RiskModel] Loading class: " << cls << "\n";
+    py::object py_cls = pyhelpers::import_class_from_spec(spec, cls);
+    py::object instance = pyhelpers::instantiate_class_with_kwargs(py_cls, spec);
 
-    py::dict globals;
-    globals["__builtins__"] = py::module_::import("builtins");
-
-    try {
-        py::exec(src, globals);
-    } catch (const py::error_already_set& e) {
-        cerr << "[Py_RiskModel] Python exec error:\n" << e.what() << "\n";
-        throw;
-    }
-
-    if (!globals.contains(cls.c_str())) {
-        cerr << "[Py_RiskModel] Class not found in globals\n";
-        throw runtime_error("Class " + cls + " not found in source");
-    }
-
-    py::object py_cls = globals[cls.c_str()];
-    py::object instance;
-
-    if (spec.contains("init")) {
-        cerr << "[Py_RiskModel] Creating instance with kwargs\n";
-        py::dict kwargs;
-        for (auto it = spec["init"].begin(); it != spec["init"].end(); ++it) {
-            const auto& key = it.key();
-            if (it->is_array()) {
-                py::list arr;
-                for (auto& v : *it) arr.append(v.get<double>());
-                kwargs[py::str(key)] = arr;
-            } else if (it->is_number_float() || it->is_number_integer()) {
-                kwargs[py::str(key)] = it->get<double>();
-            } else if (it->is_string()) {
-                kwargs[py::str(key)] = py::str(it->get<string>());
-            }
-        }
-
-        try {
-            instance = py_cls(**py::kwargs(kwargs));
-        } catch (const py::error_already_set& e) {
-            cerr << "[Py_RiskModel] Instance creation failed:\n" << e.what() << "\n";
-            throw;
-        }
-    } else {
-        cerr << "[Py_RiskModel] Creating instance without kwargs\n";
-        instance = py_cls();
-    }
-
-    py::object base_module = py::module_::import("model_base");
-    py::object model = base_module.attr("RiskModelBase");
-    if (!py::isinstance(instance, model)) {
-        throw std::runtime_error("Python model must subclass RiskModelBase");
-    }
+    pyhelpers::validate_model_instance(
+        instance, 
+        "model_base", 
+        "RiskModelBase", 
+        "estimate"
+    );
 
     m_impl->instance = std::move(instance);
-
-    if (!py::hasattr(m_impl->instance, "estimate")) {
-        cerr << "[Py_RiskModel] Error: estimate() missing\n";
-        throw runtime_error("Python risk model missing estimate()");
-    }
 
     cerr << "[Py_RiskModel] Risk model loaded successfully\n";
 }
 
 double Py_RiskModel::estimate(const FeatureVector& f) {
     py::gil_scoped_acquire gil;
-    auto d = to_pydict(f);
+    auto d = pyhelpers::to_pydict(f);
     py::object out = m_impl->instance.attr("estimate")(d);
     return out.cast<double>();
 }
@@ -99,6 +54,14 @@ double Py_RiskModel::estimate(const FeatureVector& f) {
 void Py_RiskModel::update(const FeatureVector& f, double realized_return) {
     if (!py::hasattr(m_impl->instance, "update")) return;
     py::gil_scoped_acquire gil;
-    auto d = to_pydict(f);
+    auto d = pyhelpers::to_pydict(f);
     m_impl->instance.attr("update")(d, realized_return);
+}
+
+void Py_RiskModel::set_environment(Environment e) {
+    if (!m_impl || !py::hasattr(m_impl->instance, "set_environment"))
+        return;
+    py::gil_scoped_acquire gil;
+    std::string env_str = to_string(e);
+    m_impl->instance.attr("set_environment")(env_str);
 }

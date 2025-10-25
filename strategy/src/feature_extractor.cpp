@@ -2,20 +2,20 @@
 #include <algorithm>
 #include <iostream>
 
-MultiAssetFeatureExtractor::MultiAssetFeatureExtractor(BarFrequency freq) : m_frequency(freq) {}
+FeatureExtractor::FeatureExtractor(BarFrequency freq) : m_frequency(freq) {}
 
-void MultiAssetFeatureExtractor::register_factory(std::unique_ptr<IFeatureFactory> f) {
+void FeatureExtractor::register_factory(std::unique_ptr<IFeatureFactory> f) {
     m_factories[f->family()] = std::move(f);
 }
 
-void MultiAssetFeatureExtractor::add_bar(const MarketData& bar) {
+void FeatureExtractor::add_bar(const MarketData& bar) {
     auto& win = m_windows[bar.symbol];
     win.push_back(bar);
     if (win.size() > m_max_lookback)
         win.pop_front();
 }
 
-FeatureVector MultiAssetFeatureExtractor::compute(const std::string& symbol, const std::vector<std::string>& requested) {
+FeatureVector FeatureExtractor::compute(const std::string& symbol, const std::vector<std::string>& requested) {
     FeatureVector fv;
     auto& w = m_windows[symbol];
     if (w.empty()) return fv;
@@ -37,13 +37,13 @@ FeatureVector MultiAssetFeatureExtractor::compute(const std::string& symbol, con
     return fv;
 }
 
-void MultiAssetFeatureExtractor::reset() {
+void FeatureExtractor::reset() {
     m_windows.clear();
     m_features.clear();
     m_max_lookback = 20;
 }
 
-IFeature* MultiAssetFeatureExtractor::get_or_create_feature(const std::string& name) {
+IFeature* FeatureExtractor::get_or_create_feature(const std::string& name) {
     auto it = m_features.find(name);
     if (it != m_features.end())
         return it->second.get();

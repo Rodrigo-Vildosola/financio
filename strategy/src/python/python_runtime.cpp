@@ -43,6 +43,7 @@ python_runtime::python_runtime() : m_guard{} {
         std::cerr << "[python_runtime] init error: " << e.what() << "\n";
     }
 }
+
 python_runtime::~python_runtime() = default;
 
 void python_runtime::add_sys_path(const std::string& p) {

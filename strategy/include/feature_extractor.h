@@ -15,9 +15,9 @@ enum class BarFrequency {
     Day1 
 };
 
-class MultiAssetFeatureExtractor {
+class FeatureExtractor {
 public:
-    explicit MultiAssetFeatureExtractor(BarFrequency freq = BarFrequency::Day1);
+    explicit FeatureExtractor(BarFrequency freq = BarFrequency::Day1);
 
     void register_factory(std::unique_ptr<IFeatureFactory> f);
     void add_bar(const MarketData& bar);
